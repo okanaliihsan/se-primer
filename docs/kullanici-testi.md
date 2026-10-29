@@ -8,8 +8,8 @@
 | Alan | Değer |
 |---|---|
 | Kim | A. Ş. (arkadaş) |
-| Tarih / süre | 29.10.2026 / süre belirtilmedi |
-| Cihaz | Belirtilmedi |
+| Tarih / süre | 29.10.2026 / 7–8 dakika |
+| Cihaz | Kendi telefonu, iPhone 15 Pro Max (tarayıcı belirtilmedi) |
 | Seçtiği profil | Seviye: Yeni başladım · Rol: Backend · Hedef: Kriz yönetimi |
 | Kararları ve vardığı son | K1 A · K2 A (önce 1 makinede dene) · K3 A (maskele) → SON A *(son belirleme kuralına göre A-A-A)* |
 
@@ -28,9 +28,9 @@
 
 ## Sorular (bittikten sonra)
 
-1. Bu bölümden aklında kalan bir şey var mı? Ne? → Belirtilmedi
+1. Bu bölümden aklında kalan bir şey var mı? Ne? → "Slack" (Karar 1 sahnesinde geçen, üreticinin notunun düştüğü kanal)
 2. Tutor sana cevabı söyledi mi? Sorular işine yaradı mı? → Söylemedi, ısrar edince de söylemeyeceğini belirtti. İşine yarayıp yaramadığı belirtilmedi.
-3. Hangi karar en zordu, neden? → Belirtilmedi (Karar 2'de "galiba" diyerek emin olmadığını gösterdi; Karar 3'te tutora başvurdu)
+3. Hangi karar en zordu, neden? → Karar 2: önce 1 makinede denemek ile 600 makineye aynı anda uygulamak arasında kaldı.
 4. "Gerçekte ne oldu?" kutularını okudun mu? → Evet, her karardan sonra fark etti.
 5. Neyi değiştirirdin? → Belirtilmedi
 
@@ -42,10 +42,11 @@
 - Katılımcı iyi sona (SON A) ulaştı; yeni başlayan profiliyle baştan sona oynanabildi (B1).
 
 **Olumsuz:**
+- B4 tutmadı: akılda kalan kavram değil sahnedeki bir marka adı (Slack) oldu. "Bugün öğrendiğim" kartları son ekranda, oyuncu oraya gelince okumayı bırakmış olabilir.
 - Telefonda soru "?" olmadan yazıldı. Yerel tutor motoru işaretsiz soruyu gerekçe sanıyor ve "Gerekçeni görüyorum" diye başlıyordu; bu, T.C. no'yu yeterli sanan oyuncuyu onaylıyormuş gibi okunabilir. → KA-6 ile düzeltildi (`app/tutor.js`, v3).
-- "Yazılar küçüldü" gözlemi: `dist/index.html` üzerinde 390 px genişlikte 11 mesajlık yazışmada mesaj yazı boyutu sabit kaldı (15,2 px), yani yerel sürümde tekrar üretilemedi. AI Studio'daki sürüme ya da tarayıcının yakınlaştırmasına bağlı olabilir; **açık konu**.
+- "Yazılar küçüldü" gözlemi: `dist/index.html` üzerinde 390 px genişlikte 11 mesajlık yazışmada mesaj yazı boyutu sabit kaldı (15,2 px), yani yerel sürümde tekrar üretilemedi. Olası neden: iOS Safari, yazı boyutu 16 px'in altındaki bir giriş kutusuna dokunulunca sayfayı yakınlaştırır; tutor giriş kutusu 15,2 px. Klavye kapanıp yakınlaştırma değişince yazılar küçülmüş gibi görünebilir. iPhone'da doğrulanmadı; **açık konu**.
 
-**Başarı ölçütü B4 (en az 1 kavramı öğrendiğini fark etti mi?):** Belirtilmedi. Katılımcıya 1. soru sorulmadığı ya da cevabı not edilmediği için B4 bu testle doğrulanmadı.
+**Başarı ölçütü B4 (en az 1 kavramı öğrendiğini fark etti mi?):** Hayır. Aklında kalan "Slack" oldu; bu, sahnedeki bir ayrıntı, bölümün öğrettiği kavramlardan (ortak hata noktası, canary / kademeli dağıtım, veri minimizasyonu) biri değil. Karar 2'de doğru yolu seçmesine rağmen "canary" kavramını adıyla hatırlamadı. Tek katılımcıyla B4 hedefi karşılanmadı.
 
 ## Sonuç: yeni kabul örneği
 
