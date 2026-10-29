@@ -46,7 +46,7 @@
 - Telefonda soru "?" olmadan yazıldı. Yerel tutor motoru işaretsiz soruyu gerekçe sanıyor ve "Gerekçeni görüyorum" diye başlıyordu; bu, T.C. no'yu yeterli sanan oyuncuyu onaylıyormuş gibi okunabilir. → KA-6 ile düzeltildi (`app/tutor.js`, v3).
 - "Yazılar küçüldü" gözlemi: `dist/index.html` üzerinde 390 px genişlikte 11 mesajlık yazışmada mesaj yazı boyutu sabit kaldı (15,2 px), yani yerel sürümde tekrar üretilemedi. Olası neden: iOS Safari, yazı boyutu 16 px'in altındaki bir giriş kutusuna dokunulunca sayfayı yakınlaştırır; tutor giriş kutusu 15,2 px. Klavye kapanıp yakınlaştırma değişince yazılar küçülmüş gibi görünebilir. iPhone'da doğrulanmadı; **açık konu**.
 
-**Başarı ölçütü B4 (en az 1 kavramı öğrendiğini fark etti mi?):** Hayır. Aklında kalan "Slack" oldu; bu, sahnedeki bir ayrıntı, bölümün öğrettiği kavramlardan (ortak hata noktası, canary / kademeli dağıtım, veri minimizasyonu) biri değil. Karar 2'de doğru yolu seçmesine rağmen "canary" kavramını adıyla hatırlamadı. Tek katılımcıyla B4 hedefi karşılanmadı.
+**Başarı ölçütü B4 (en az 1 kavramı öğrendiğini fark etti mi?):** Hayır. Aklında kalan "Slack" oldu; bu, sahnedeki bir ayrıntı, bölümün öğrettiği kavramlardan (ortak hata noktası, canary / kademeli dağıtım, veri minimizasyonu) biri değil. Karar 2'de kademeli yolu seçti ama sonradan kavram kartlarından birini adıyla söylemedi. Tek katılımcıyla B4 hedefi karşılanmadı.
 
 ## Sonuç: yeni kabul örneği
 
