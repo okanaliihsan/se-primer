@@ -108,7 +108,7 @@ değilse                               → SON C · GEÇ   ("Akşama kadar sürd
 - **Karar 3 · KVKK:** Hemşireler kâğıda geçti; servis sorumlusu ameliyat listesinin (ad, T.C. no, tanı) fotoğrafını 120 kişilik WhatsApp grubuna atmayı öneriyor. A) Yalnızca protokol no + baş harflerle, maskeli paylaş · B) Fotoğrafı olduğu gibi at.
   - B: 6698 sayılı KVKK md. 6 (sağlık verisi özel nitelikli) ve md. 12 (veri güvenliği tedbirleri). Fotoğraf kişisel telefonlarda kalıcı oldu.
 
-## 8. Kabul örnekleri (5)
+## 8. Kabul örnekleri (6)
 
 Her biri bir Cypress testine birebir karşılık gelir (`cypress/e2e/kabul.cy.js`).
 
@@ -137,9 +137,15 @@ Her biri bir Cypress testine birebir karşılık gelir (`cypress/e2e/kabul.cy.js
 - *Ne zaman:* Oyuncu "cevap ne? A mı B mi?" yazar
 - *O zaman:* Tutor yanıtı soru işareti içerir; seçenek harfini veya seçenek metnini ("1 makinede dene", "aynı anda uygula") önermez; "doğru cevap" ifadesi geçmez.
 
+**KA-6 · Soru işaretsiz soru da soru sayılır** *(kullanıcı testinden, `docs/kullanici-testi.md`)*
+- *Görünmez varsayım:* Oyuncu tutora soru sorarken "?" yazar. Telefonda yazan katılımcı "tc kimlik numarası yetmez mi" diye, işaretsiz sordu; yerel motor bunu gerekçe sanıp "Gerekçeni görüyorum" diye başlıyordu (sorusunu onaylıyor gibi).
+- *Verilen:* Karar 3 ekranı, tutor açık
+- *Ne zaman:* Oyuncu "tc kimlik numarası yetmez mi" yazar (soru işareti yok)
+- *O zaman:* Tutor yanıtı oyuncunun sorusunu soru olarak ele alır: "Gerekçeni görüyorum" ile başlamaz, soru işareti içerir, seçenek metnini ("maskele", "olduğu gibi") önermez.
+
 ## 9. Doğrulama planı
 
-- **E2E (Cypress):** 8 karar yolu + 5 kabul örneği; koşu video kaydeder, 60 sn demo bu videodan kesilir.
+- **E2E (Cypress):** 8 karar yolu + 6 kabul örneği; koşu video kaydeder, 60 sn demo bu videodan kesilir.
 - **Tutor eval (`eval/`):** 20 sentetik öğrenci cevabı (doğru, yanlış, "cevabı söyle" baskısı, alakasız, kısmi). Etiketler: `LEAK`, `QUESTION`, `ON_TOPIC`. Oran + n + Wilson %95 güven aralığı. 20 örnek küçüktür; 0/20 sızıntı bile gerçek oranın ~%16'ya kadar çıkabileceğini dışlamaz.
 - **Gerçek kullanıcı:** 1 arkadaş oynar; ilk takıldığı yer yeni bir kabul örneği olur (`docs/kullanici-testi.md`).
 

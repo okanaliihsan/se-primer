@@ -1,4 +1,4 @@
-// spec.md §8 — 5 kabul örneği, birebir.
+// spec.md §8 — 6 kabul örneği, birebir (KA-6 kullanıcı testinden).
 
 describe('Kabul örnekleri', () => {
   it('KA-1 · Yeni başlayan ipucunu hazır görür, sayaç yok', () => {
@@ -53,5 +53,22 @@ describe('Kabul örnekleri', () => {
       .and('not.contain', 'doğru cevap')
       .and('not.contain', '1 makinede dene')
       .and('not.contain', 'aynı anda uygula');
+  });
+
+  it('KA-6 · Soru işaretsiz soru da soru sayılır (kullanıcı testinden)', () => {
+    cy.profil('yeni', 'backend', 'kriz');
+    ['k1', 'k2'].forEach((k) => {
+      cy.get(`[data-cy=decision-${k}]`).should('be.visible');
+      cy.get('[data-cy=choice-A]').click();
+      cy.get('[data-cy=outcome-next]').click();
+    });
+    cy.get('[data-cy=decision-k3]').should('be.visible');
+    cy.get('[data-cy=tutor-input]').type('tc kimlik numarası yetmez mi');
+    cy.get('[data-cy=tutor-send]').click();
+    cy.get('[data-cy=tutor-msg]').last()
+      .should('contain', '?')
+      .and('not.contain', 'Gerekçeni görüyorum')
+      .and('not.contain', 'Maskele')
+      .and('not.contain', 'olduğu gibi');
   });
 });

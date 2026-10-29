@@ -1,56 +1,55 @@
 # Kullanıcı testi · SE Primer Bölüm 1
 
-> Bu dosyayı **gerçek bir kişiye** oynattıktan sonra sen doldur. Uydurma sonuç yazma; hoca bunu özellikle istedi.
-> Süre: ~15 dakika. Gerekli: telefon + uygulama linki.
-
-## Nasıl yapılır
-
-1. Arkadaşına linki aç, **hiçbir şey açıklama**. Sadece "Bunu oyna, aklından geçeni sesli söyle" de.
-2. Sen yanında sessizce not al: nerede durdu, neyi sordu, nerede yanlış yere dokundu.
-3. Bitince aşağıdaki 5 soruyu sor.
-4. **İlk takıldığı yer**, spec'teki görünmez bir varsayımdır. Onu yeni bir kabul örneği yap (KA-6) ve `spec.md §8`'e ekle.
+> Bu test **gerçek bir kişiyle** yapıldı. Aşağıdaki gözlemler katılımcının kendi anlattıklarından alındı; boş bırakılan alanlar "belirtilmedi" diye işaretlendi, tahminle doldurulmadı.
+> Yöntem: Katılımcıya link verildi, açıklama yapılmadı; oynadıktan sonra ne yaptığını ve ne gördüğünü anlattı.
 
 ## Katılımcı
 
 | Alan | Değer |
 |---|---|
-| Kim (ad gerekmez) | [ör. "3. sınıf bilgisayar mühendisliği öğrencisi"] |
-| Tarih / süre | [ ] |
-| Cihaz | [ör. Android, Chrome] |
-| Seçtiği profil | Seviye: [ ] · Rol: [ ] · Hedef: [ ] |
-| Kararları ve vardığı son | K1 [ ] · K2 [ ] · K3 [ ] → SON [ ] |
+| Kim | A. Ş. (arkadaş) |
+| Tarih / süre | 29.10.2026 / süre belirtilmedi |
+| Cihaz | Belirtilmedi |
+| Seçtiği profil | Seviye: Yeni başladım · Rol: Backend · Hedef: Kriz yönetimi |
+| Kararları ve vardığı son | K1 A · K2 A (önce 1 makinede dene) · K3 A (maskele) → SON A *(son belirleme kuralına göre A-A-A)* |
 
 ## Gözlem (oynarken)
 
-| Zaman | Ekran | Ne oldu / ne dedi |
-|---|---|---|
-| | | |
-| | | |
-| | | |
+| Ekran | Ne oldu / ne dedi |
+|---|---|
+| Karar 1 | A'yı seçti, karar sorunsuz bitti. |
+| Karar 2 | Script'i önce 1 makineye uyguladı; "doğru karar verdim galiba" dedi, yani seçiminden emin değildi. |
+| Karar 3 · Tutor | Tutora "tc kimlik numarası yetmez mi" diye yazdı (soru işareti olmadan). Tutor cevap vermeyip soru sordu. "Cevap vermeyecek misin" diye sorunca tutor cevap vermeyeceğini söyledi. |
+| Karar 3 · Tutor | "Soru sordukça yazılar küçüldü" dedi. |
+| Karar 3 | Fotoğrafı olduğu gibi göndermedi, maskeli paylaşımı seçti. |
+| Her karar sonrası | Sonuç kartlarını ve "Gerçekte ne oldu?" bölümünü fark etti: "her karar sonrasında sonuçlarımı ve gerçekte ne olduğu yazıyor". |
 
-**İlk takıldığı yer:** [ ]
+**İlk takıldığı yer:** Karar 3'te, T.C. kimlik numarasının tek başına yeterli olup olmadığı. Bunu tutora soru işareti koymadan sordu.
 
 ## Sorular (bittikten sonra)
 
-1. Bu bölümden aklında kalan bir şey var mı? Ne? → [ ]
-2. Tutor sana cevabı söyledi mi? Sorular işine yaradı mı? → [ ]
-3. Hangi karar en zordu, neden? → [ ]
-4. "Gerçekte ne oldu?" kutularını okudun mu? → [ ]
-5. Neyi değiştirirdin? → [ ]
+1. Bu bölümden aklında kalan bir şey var mı? Ne? → Belirtilmedi
+2. Tutor sana cevabı söyledi mi? Sorular işine yaradı mı? → Söylemedi, ısrar edince de söylemeyeceğini belirtti. İşine yarayıp yaramadığı belirtilmedi.
+3. Hangi karar en zordu, neden? → Belirtilmedi (Karar 2'de "galiba" diyerek emin olmadığını gösterdi; Karar 3'te tutora başvurdu)
+4. "Gerçekte ne oldu?" kutularını okudun mu? → Evet, her karardan sonra fark etti.
+5. Neyi değiştirirdin? → Belirtilmedi
 
 ## Bulgular
 
 **Olumlu:**
-- [ ]
+- Tutor "cevabı söyle" baskısına dayandı (B2, KA-5 gerçek kullanıcıda da tuttu).
+- Sonuç kartları ve "Gerçekte ne oldu?" bölümü fark edildi.
+- Katılımcı iyi sona (SON A) ulaştı; yeni başlayan profiliyle baştan sona oynanabildi (B1).
 
 **Olumsuz:**
-- [ ]
+- Telefonda soru "?" olmadan yazıldı. Yerel tutor motoru işaretsiz soruyu gerekçe sanıyor ve "Gerekçeni görüyorum" diye başlıyordu; bu, T.C. no'yu yeterli sanan oyuncuyu onaylıyormuş gibi okunabilir. → KA-6 ile düzeltildi (`app/tutor.js`, v3).
+- "Yazılar küçüldü" gözlemi: `dist/index.html` üzerinde 390 px genişlikte 11 mesajlık yazışmada mesaj yazı boyutu sabit kaldı (15,2 px), yani yerel sürümde tekrar üretilemedi. AI Studio'daki sürüme ya da tarayıcının yakınlaştırmasına bağlı olabilir; **açık konu**.
 
-**Başarı ölçütü B4 (en az 1 kavramı öğrendiğini fark etti mi?):** [Evet/Hayır] — [hangi kavram]
+**Başarı ölçütü B4 (en az 1 kavramı öğrendiğini fark etti mi?):** Belirtilmedi. Katılımcıya 1. soru sorulmadığı ya da cevabı not edilmediği için B4 bu testle doğrulanmadı.
 
 ## Sonuç: yeni kabul örneği
 
-**KA-6 · [başlık]**
-- *Verilen:* [ ]
-- *Ne zaman:* [ ]
-- *O zaman:* [ ]
+**KA-6 · Soru işaretsiz soru da soru sayılır** (`spec.md §8`, `cypress/e2e/kabul.cy.js`)
+- *Verilen:* Karar 3 ekranı, tutor açık
+- *Ne zaman:* Oyuncu "tc kimlik numarası yetmez mi" yazar (soru işareti yok)
+- *O zaman:* Tutor yanıtı oyuncunun sorusunu soru olarak ele alır: "Gerekçeni görüyorum" ile başlamaz, soru işareti içerir, seçenek metnini önermez.

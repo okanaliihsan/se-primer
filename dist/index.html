@@ -449,6 +449,8 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); ou
     if (/(cevap|hangisi|söyle|doğru(su)?\s*(ne|hangi)|a m[ıi] b m[ıi]|ne seçmeliyim|ne yapmalıyım|yardım et|ipucu ver)/.test(t)) return 'ask-answer';
     // v2: öğrencinin kendi içerik sorusu (eval #20'de duyulmuyordu)
     if (/\?/.test(t) && /(mı|mi|mu|mü|nasıl|neden|niye|kim|hangi)(?=[\s?.,!]|$)/.test(t)) return 'student-question';
+    // v3: telefonda "?" yazılmadan sorulan soru (kullanıcı testi: "tc kimlik numarası yetmez mi")
+    if (/\s(mı|mi|mu|mü)(yım|yim|yum|yüm|sın|sin|sun|sün|yız|yiz|yuz|yüz|dır|dir|dur|dür)?[.!]*$/.test(t)) return 'student-question';
     if (/(bilmiyorum|emin değilim|kararsız|anlamadım|fikrim yok)/.test(t)) return 'unsure';
     if (/(^|\s)(a|b)(\s|$|[.,!?])/.test(t) || /(seçerim|seçtim|yaparım|derim|giderim|uygularım|beklerim|atarım|denerim|maskelerim)/.test(t)) return 'choice';
     const topicWords = ['makine', 'script', 'acil', 'ameliyat', 'test', 'dene', 'hepsi', 'bekle', 'kurtar', 'liste', 'fotoğraf', 'whatsapp', 'maske', 'veri', 'hasta', 'güncelleme', 'ekip', 'öncelik', 'risk', 'dosya', 'bitlocker', 'kvkk', 'tc', 't.c'];
