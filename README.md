@@ -6,8 +6,8 @@ Yazılım mühendisliği için **oynanan bir kitap**. 19 Temmuz 2024 CrowdStrike
 |---|---|
 | **Öğrenci** | Ali İhsan Okan · 201118042 · 201118042@samsun.edu.tr |
 | **Ders** | YZM301 · Yazılım Gerçekleme ve Test · Ödev 6 |
-| **Uygulama (AI Studio)** | [AI STUDIO LİNKİ] |
-| **Uygulama (yedek link)** | [ARTIFACT / GITHUB PAGES LİNKİ] |
+| **Uygulama (AI Studio)** | https://se-primer-2844.ai.studio |
+| **Uygulama (yedek)** | [`dist/index.html`](dist/index.html): indirip tarayıcıda açılır, internet gerektirmez |
 | **Demo video (60 sn)** | `demo/demo-60sn.mp4` · [YOUTUBE / DRIVE LİNKİ] |
 
 ## Teslim haritası (puanlama tablosuna göre)
