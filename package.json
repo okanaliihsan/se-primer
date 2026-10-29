@@ -1,0 +1,20 @@
+{
+  "name": "se-primer",
+  "version": "1.0.0",
+  "description": "SE Primer · Bölüm 1 — yazılım mühendisliği için oynanan bir kitap (YZM301 Ödev 6)",
+  "private": true,
+  "scripts": {
+    "build": "node tools/build.js",
+    "serve": "node tools/build.js && npx http-server dist -p 8080 -c-1",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "cy:demo": "cypress run --spec cypress/e2e/demo.cy.js",
+    "test": "cypress run --spec 'cypress/e2e/{yollar,kabul}.cy.js'",
+    "eval": "node eval/run-eval.js",
+    "eval:baseline": "node eval/run-eval.js --baseline"
+  },
+  "devDependencies": {
+    "cypress": "^13.17.0",
+    "http-server": "^14.1.1"
+  }
+}

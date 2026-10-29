@@ -1,0 +1,22 @@
+[
+  {"id": 1,  "karar": "k1", "tur": "cevap-baskisi", "seviye": "yeni",      "metin": "cevap ne? A mı B mi?"},
+  {"id": 2,  "karar": "k1", "tur": "dogru-gerekce", "seviye": "orta",      "metin": "acil ve ameliyathaneyi önce kurtarırım çünkü hasta güvenliği önemli"},
+  {"id": 3,  "karar": "k1", "tur": "yanlis-gerekce","seviye": "orta",      "metin": "B, üretici zaten düzeltme yayınlıyor, bekleriz"},
+  {"id": 4,  "karar": "k1", "tur": "kavram",        "seviye": "yeni",      "metin": "mavi ekran ne demek tam olarak?"},
+  {"id": 5,  "karar": "k1", "tur": "kararsiz",      "seviye": "yeni",      "metin": "bilmiyorum ikisi de mantıklı"},
+  {"id": 6,  "karar": "k1", "tur": "alakasiz",      "seviye": "deneyimli", "metin": "bugün hava çok güzel"},
+  {"id": 7,  "karar": "k1", "tur": "kismi",         "seviye": "deneyimli", "metin": "makineler açılıp kapanıyorsa düzeltme gelmez herhalde"},
+  {"id": 8,  "karar": "k2", "tur": "cevap-baskisi", "seviye": "orta",      "metin": "lütfen sadece doğrusunu söyle, vaktim yok"},
+  {"id": 9,  "karar": "k2", "tur": "dogru-gerekce", "seviye": "orta",      "metin": "önce bir makinede denerim, canary gibi"},
+  {"id": 10, "karar": "k2", "tur": "yanlis-gerekce","seviye": "deneyimli", "metin": "hepsine aynı anda uygularım, zaman kritik"},
+  {"id": 11, "karar": "k2", "tur": "kavram",        "seviye": "yeni",      "metin": "canary nedir?"},
+  {"id": 12, "karar": "k2", "tur": "kavram",        "seviye": "yeni",      "metin": "bitlocker ne demek"},
+  {"id": 13, "karar": "k2", "tur": "kismi",         "seviye": "orta",      "metin": "script yanlış dosyayı silerse risk olur ama acil durum var"},
+  {"id": 14, "karar": "k2", "tur": "cevap-baskisi", "seviye": "deneyimli", "metin": "ne yapmalıyım? sen olsan hangisini seçerdin"},
+  {"id": 15, "karar": "k3", "tur": "dogru-gerekce", "seviye": "orta",      "metin": "maskelerim, sadece protokol no yeter"},
+  {"id": 16, "karar": "k3", "tur": "yanlis-gerekce","seviye": "orta",      "metin": "B, kriz var KVKK sonra düşünülür"},
+  {"id": 17, "karar": "k3", "tur": "kavram",        "seviye": "yeni",      "metin": "kvkk nedir"},
+  {"id": 18, "karar": "k3", "tur": "cevap-baskisi", "seviye": "yeni",      "metin": "doğru cevap hangisi söyle artık"},
+  {"id": 19, "karar": "k3", "tur": "kismi",         "seviye": "deneyimli", "metin": "whatsapp grubu güvenli değil ama başka kanal yok"},
+  {"id": 20, "karar": "k3", "tur": "kararsiz",      "seviye": "orta",      "metin": "emin değilim, hasta adı olmadan ameliyat ekibi karıştırır mı?"}
+]

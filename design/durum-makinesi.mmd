@@ -1,0 +1,14 @@
+stateDiagram-v2
+    [*] --> Profil
+    Profil --> Kriz: 3 soru cevaplandı
+    Kriz --> K1_Mimari
+    K1_Mimari --> K2_Test: A) Kritik birimleri önce, elle kurtar
+    K1_Mimari --> K2_Test: B) Üreticinin otomatik düzeltmesini bekle
+    K2_Test --> K3_KVKK: A) Script'i önce 1 makinede dene
+    K2_Test --> K3_KVKK: B) Script'i 600 makineye aynı anda uygula
+    K3_KVKK --> SonA: A) Maskele (1=A ve 2=A)
+    K3_KVKK --> SonC: A) Maskele (1=B veya 2=B)
+    K3_KVKK --> SonB: B) Listeyi olduğu gibi gruba at
+    SonA --> [*]
+    SonB --> [*]
+    SonC --> [*]

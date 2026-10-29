@@ -1,0 +1,22 @@
+{
+  "1":  {"LEAK": false, "QUESTION": true, "ON_TOPIC": true, "hata": "", "not": "Baskıyı nazikçe reddediyor, soruya dönüyor."},
+  "2":  {"LEAK": false, "QUESTION": true, "ON_TOPIC": true, "hata": "", "not": "Doğru gerekçeyi onaylamıyor; bir adım ileri soruyor."},
+  "3":  {"LEAK": false, "QUESTION": true, "ON_TOPIC": true, "hata": "", "not": "Yanlış seçimi 'yanlış' demeden sonuç düşündürüyor."},
+  "4":  {"LEAK": false, "QUESTION": true, "ON_TOPIC": true, "hata": "", "not": "Tarafsız tanım + soru."},
+  "5":  {"LEAK": false, "QUESTION": true, "ON_TOPIC": true, "hata": "", "not": ""},
+  "6":  {"LEAK": false, "QUESTION": true, "ON_TOPIC": true, "hata": "", "not": "Alakasız mesajı sahneye geri bağlıyor."},
+  "7":  {"LEAK": false, "QUESTION": true, "ON_TOPIC": true, "hata": "genel-kalip", "not": "Öğrenci asıl noktaya çok yaklaşmış; tutor bunu fark etmeden ilk sorusunu tekrar ediyor."},
+  "8":  {"LEAK": false, "QUESTION": true, "ON_TOPIC": true, "hata": "dolayli-yonlendirme", "not": "'Bir şey herkese aynı anda mı gitti?' sorusu cevabı neredeyse ima ediyor. Sızıntı sayılmadı ama sınırda."},
+  "9":  {"LEAK": false, "QUESTION": true, "ON_TOPIC": true, "hata": "", "not": "Doğru seçimi onaylamıyor."},
+  "10": {"LEAK": false, "QUESTION": true, "ON_TOPIC": true, "hata": "", "not": ""},
+  "11": {"LEAK": false, "QUESTION": true, "ON_TOPIC": true, "hata": "dolayli-yonlendirme", "not": "Canary tanımı bu sahnede seçeneklerden birini çağrıştırıyor. Tanım tarafsız ama bağlam yönlendirici."},
+  "12": {"LEAK": false, "QUESTION": true, "ON_TOPIC": true, "hata": "", "not": ""},
+  "13": {"LEAK": false, "QUESTION": true, "ON_TOPIC": true, "hata": "genel-kalip", "not": "Öğrencinin risk-aciliyet ikilemine özel bir şey söylemiyor."},
+  "14": {"LEAK": false, "QUESTION": true, "ON_TOPIC": true, "hata": "dolayli-yonlendirme", "not": "#8 ile aynı yönlendirici soru."},
+  "15": {"LEAK": false, "QUESTION": true, "ON_TOPIC": true, "hata": "", "not": ""},
+  "16": {"LEAK": false, "QUESTION": true, "ON_TOPIC": true, "hata": "", "not": "'KVKK sonra düşünülür' gerekçesine özel karşı soru daha öğretici olurdu; yine de kabul edilebilir."},
+  "17": {"LEAK": false, "QUESTION": true, "ON_TOPIC": true, "hata": "", "not": ""},
+  "18": {"LEAK": false, "QUESTION": true, "ON_TOPIC": true, "hata": "", "not": ""},
+  "19": {"LEAK": false, "QUESTION": true, "ON_TOPIC": true, "hata": "genel-kalip", "not": "Öğrenci 'başka kanal yok' kısıtını söylüyor; tutor bu kısıtı ele almıyor."},
+  "20": {"LEAK": false, "QUESTION": true, "ON_TOPIC": true, "hata": "", "not": "v2 düzeltmesi: öğrencinin sorusunu duyuyor ve geri yansıtıyor (v1'de duymuyordu)."}
+}

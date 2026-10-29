@@ -1,0 +1,766 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SE Primer</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Düzen: tek sütun "gece nöbeti" kitabı; lacivert gece zemini, turuncu el feneri vurgusu,
+   kriz anları Windows durma ekranı mavisiyle işaretlenir. */
+:root {
+  --bg: #0f1830;          /* gece nöbeti laciverti (ders afişinden) */
+  --surface: #17233f;
+  --raise: #1e2d50;
+  --fg: #eef0f6;
+  --muted: #a6b0c8;
+  --line: #2c3b60;
+  --accent: #f2a65a;      /* el feneri turuncusu */
+  --accent-ink: #1a1206;
+  --bsod: #0a62c9;        /* durma ekranı mavisi */
+  --good: #6fd3a4;
+  --bad: #ff8a7a;
+  --late: #f2d06b;
+  --paper: #f4efe2;
+  --paper-ink: #2a2a2a;
+  --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --read: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #f3f5fa; --surface: #ffffff; --raise: #e8ecf5; --fg: #121e3b; --muted: #55607a; --line: #d3d9e6;
+    --accent: #c76a12; --accent-ink: #ffffff; --bsod: #0a5ab8; --good: #1c7d55; --bad: #b8382a; --late: #8a6a00;
+    --paper: #fbf7ec; --paper-ink: #2a2a2a; color-scheme: light;
+  }
+}
+:root[data-theme="light"] {
+  --bg: #f3f5fa; --surface: #ffffff; --raise: #e8ecf5; --fg: #121e3b; --muted: #55607a; --line: #d3d9e6;
+  --accent: #c76a12; --accent-ink: #ffffff; --bsod: #0a5ab8; --good: #1c7d55; --bad: #b8382a; --late: #8a6a00;
+  --paper: #fbf7ec; --paper-ink: #2a2a2a; color-scheme: light;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--read); font-size: 17px; line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+#app { max-width: 480px; margin: 0 auto; padding-block: 20px 48px; }
+.screen { display: flex; flex-direction: column; gap: 16px; }
+h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
+h1 { font-size: 2rem; line-height: 1.1; font-weight: 800; }
+h2 { font-size: 1.35rem; line-height: 1.2; font-weight: 700; }
+h3 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); font-weight: 600; margin-top: 8px; }
+p { margin: 0; }
+.eyebrow { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+/* kapak */
+.cover { display: flex; flex-direction: column; gap: 8px; padding-block: 12px 4px; border-bottom: 1px solid var(--line); padding-bottom: 18px; }
+.cover .sub { font-family: var(--display); font-size: 1.35rem; color: var(--accent); font-weight: 600; }
+.based { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); }
+.lead { color: var(--muted); }
+.group { border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.group legend { font-family: var(--display); font-weight: 600; font-size: 1rem; margin-bottom: 8px; padding: 0; }
+.chips { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.chip { font: inherit; font-size: 0.95rem; text-align: left; color: var(--fg); background: var(--surface); border: 1px solid var(--line);
+  border-radius: 10px; padding: 10px 12px; cursor: pointer; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.chip small { font-size: 0.75rem; color: var(--muted); line-height: 1.3; }
+.chip.sel { border-color: var(--accent); background: var(--raise); box-shadow: inset 0 0 0 1px var(--accent); }
+.group:first-of-type .chips, .group:last-of-type .chips { grid-template-columns: 1fr; }
+
+button { font: inherit; }
+button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.primary { font-family: var(--display); font-weight: 700; font-size: 1.05rem; background: var(--accent); color: var(--accent-ink);
+  border: 0; border-radius: 12px; padding: 14px 18px; cursor: pointer; margin-top: 4px; }
+.primary:disabled { opacity: 0.4; cursor: not-allowed; }
+.ghost { background: none; border: 1px dashed var(--line); color: var(--muted); border-radius: 10px; padding: 8px 12px; cursor: pointer; align-self: flex-start; font-size: 0.9rem; }
+
+/* sahne */
+.progress { display: flex; gap: 6px; }
+.pip { flex: 1; height: 4px; border-radius: 2px; background: var(--line); }
+.pip.on { background: var(--accent); }
+.clock { font-family: var(--mono); font-weight: 700; font-size: 3.4rem; line-height: 1; color: var(--fg); font-variant-numeric: tabular-nums; }
+.clock.small { font-size: 0.95rem; color: var(--muted); }
+.bsod { background: var(--bsod); color: #fff; font-family: "Segoe UI", system-ui, sans-serif; font-size: 0.85rem; line-height: 1.4; padding: 14px; border-radius: 6px; }
+.bsod span { display: block; font-size: 2rem; line-height: 1; margin-bottom: 6px; }
+.story { font-size: 1.05rem; }
+.fact { background: var(--surface); border-left: 3px solid var(--bsod); padding: 12px 14px; border-radius: 0 8px 8px 0; font-size: 0.92rem; color: var(--muted); display: flex; flex-direction: column; gap: 4px; }
+.fact b { font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--fg); }
+.scene-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.tag { font-family: var(--mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); }
+.picked { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); }
+.timer { margin-left: auto; font-family: var(--mono); font-weight: 700; font-variant-numeric: tabular-nums; border: 1px solid var(--line); border-radius: 999px; padding: 2px 10px; }
+.timer::after { content: " sn"; font-weight: 500; color: var(--muted); }
+.timer.low { color: var(--bad); border-color: var(--bad); }
+.lens { font-size: 0.92rem; color: var(--muted); font-style: italic; border-left: 2px solid var(--line); padding-left: 12px; }
+.question { margin-top: 4px; }
+.timeout { color: var(--bad); font-size: 0.92rem; }
+.choices { display: flex; flex-direction: column; gap: 10px; }
+.choice { display: flex; gap: 12px; align-items: flex-start; text-align: left; background: var(--surface); color: var(--fg); border: 1px solid var(--line);
+  border-radius: 12px; padding: 14px; cursor: pointer; font-size: 1rem; line-height: 1.35; }
+.choice:hover { border-color: var(--accent); }
+.letter { font-family: var(--mono); font-weight: 700; color: var(--accent); flex: none; width: 1.5em; }
+.hint { background: var(--raise); border-radius: 10px; padding: 12px 14px; font-size: 0.95rem; display: flex; flex-direction: column; gap: 4px; }
+.hint b { font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); }
+.paper { background: var(--paper); color: var(--paper-ink); font-family: var(--mono); font-size: 0.75rem; padding: 10px 12px; border-radius: 4px; transform: rotate(-0.6deg); }
+.paper-row { display: grid; grid-template-columns: 1.2fr 1.2fr 1fr; gap: 6px; padding: 4px 0; border-bottom: 1px dotted #b9b2a0; }
+.paper-row.head { font-weight: 700; }
+.paper-note { font-size: 0.65rem; text-align: right; opacity: 0.6; margin-top: 4px; }
+
+/* tutor */
+.tutor { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; margin-top: 6px; }
+.tutor-head { display: flex; align-items: center; gap: 8px; padding: 10px 14px; background: var(--surface); border-bottom: 1px solid var(--line); font-family: var(--display); }
+.tutor-head small { margin-left: auto; font-family: var(--read); color: var(--muted); font-size: 0.78rem; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--good); }
+.thread { display: flex; flex-direction: column; gap: 8px; padding: 12px 14px; max-height: 260px; overflow-y: auto; }
+.msg { font-size: 0.95rem; padding: 8px 12px; border-radius: 12px; max-width: 88%; }
+.msg.tutor { background: var(--raise); align-self: flex-start; border-bottom-left-radius: 4px; }
+.msg.me { background: var(--accent); color: var(--accent-ink); align-self: flex-end; border-bottom-right-radius: 4px; }
+.ask { display: flex; gap: 8px; padding: 10px; border-top: 1px solid var(--line); }
+.ask input { flex: 1; min-width: 0; font: inherit; font-size: 0.95rem; background: var(--bg); color: var(--fg); border: 1px solid var(--line); border-radius: 10px; padding: 10px; }
+.ask button { background: var(--raise); color: var(--fg); border: 1px solid var(--line); border-radius: 10px; padding: 0 14px; cursor: pointer; }
+
+/* sonuç */
+.outcome-title { font-size: 1.6rem; }
+.ledger { margin: 0; display: flex; flex-direction: column; gap: 12px; }
+.ledger dt { font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); margin-bottom: 2px; }
+.ledger dd { margin: 0; }
+.ledger .real { background: var(--surface); border-left: 3px solid var(--bsod); padding: 10px 12px; border-radius: 0 8px 8px 0; }
+.concept { border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; }
+.concept b { font-family: var(--display); }
+
+/* son */
+.ending h1 { font-size: 1.8rem; }
+.tone-iyi .eyebrow { color: var(--good); }
+.tone-kötü .eyebrow { color: var(--bad); }
+.tone-geç .eyebrow { color: var(--late); }
+.trail { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; counter-reset: s; }
+.trail li { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 0.95rem; }
+.t-tag { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; min-width: 8.5em; }
+.pressure { font-style: normal; font-family: var(--mono); font-size: 0.7rem; color: var(--bad); border: 1px solid var(--bad); border-radius: 999px; padding: 0 8px; }
+.lessons { display: flex; flex-direction: column; gap: 8px; }
+.lesson { display: flex; gap: 10px; align-items: flex-start; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px; font-size: 0.95rem; cursor: pointer; }
+.lesson.goal { border-color: var(--accent); }
+.lesson b { display: block; font-family: var(--display); }
+.lesson input { margin-top: 4px; accent-color: var(--accent); }
+.credit { font-size: 0.78rem; color: var(--muted); }
+@media (prefers-reduced-motion: no-preference) {
+  .screen { animation: rise 0.28s ease-out; }
+  @keyframes rise { from { transform: translateY(6px); opacity: 0.6; } to { transform: none; opacity: 1; } }
+}
+</style>
+</head>
+<body>
+<div id="app" aria-live="polite"></div>
+<script>
+/* SE Primer · Bölüm 1 — anlatı verisi (ADR-1: içerik koddan ayrı).
+   Gerçek olay: 19 Temmuz 2024 CrowdStrike kesintisi. Hastane ve kişiler kurgusaldır. */
+(function (root) {
+  const STORY = {
+    id: 'bolum-1',
+    title: '07:09, ekranlar maviye döndü',
+    subtitle: 'Nöbetçi sensin.',
+    realEvent: '19 Temmuz 2024 · CrowdStrike Falcon güncellemesi',
+
+    profile: {
+      level: {
+        label: 'Seviyen',
+        options: [
+          { id: 'yeni', label: 'Yeni başladım', note: 'Her kararda ipucu açık gelir' },
+          { id: 'orta', label: 'Biraz deneyimim var', note: 'İpucu istersen bir dokunuş uzakta' },
+          { id: 'deneyimli', label: 'Deneyimliyim', note: 'İpucu yok, her karar 60 saniye' }
+        ]
+      },
+      role: {
+        label: 'Kendini hangi rolde görüyorsun?',
+        options: [
+          { id: 'backend', label: 'Backend' },
+          { id: 'devops', label: 'DevOps / Nöbetçi' },
+          { id: 'qa', label: 'Test / QA' },
+          { id: 'mobil', label: 'Mobil' }
+        ]
+      },
+      goal: {
+        label: 'Bu bölümden ne öğrenmek istiyorsun?',
+        options: [
+          { id: 'mimari', label: 'Mimariyi anlamak' },
+          { id: 'kriz', label: 'Kriz yönetimi' },
+          { id: 'kvkk', label: 'Güvenlik ve KVKK' }
+        ]
+      }
+    },
+
+    intro: {
+      clock: '07:09',
+      text: [
+        'Cuma sabahı. Şehir hastanesinde nöbetçi BT mühendisi sensin.',
+        'Telefonun titriyor: acil servisteki triyaj ekranı mavi. Sonra laboratuvar. Sonra poliklinik. Yeniden başlatılan makineler birkaç saniye sonra yine çöküyor.',
+        'Hastanedeki 600 Windows makinenin çoğu aynı durumda. 08:30\'da 14 ameliyat planlı. Ekipte sen ve iki kişi daha var.'
+      ],
+      fact: 'Gerçekte: 19 Temmuz 2024\'te 04:09 UTC\'de (Türkiye saatiyle 07:09) CrowdStrike Falcon sensörüne giden bir içerik güncellemesi, dünya genelinde yaklaşık 8,5 milyon Windows makineyi mavi ekrana düşürdü.'
+    },
+
+    decisions: [
+      {
+        id: 'k1',
+        tag: 'Karar 1 · Mimari',
+        clock: '07:24',
+        topic: 'mimari',
+        situation: 'Güvenlik ekibinin Slack kanalına üreticiden ilk not düştü: sorun bir içerik güncellemesinden kaynaklanıyor, düzeltme üzerinde çalışılıyor. Başhekim yardımcısı arıyor: "Ne zaman açılır?"',
+        question: 'İlk saatini neye harcayacaksın?',
+        options: {
+          A: { label: 'Kritik birimleri belirle, önce onları elle kurtar', short: 'Önce kritik birimler, elle' },
+          B: { label: 'Üreticinin otomatik düzeltmesini bekle', short: 'Otomatik düzeltmeyi bekle' }
+        },
+        roleLens: {
+          backend: 'Senin gözünden: Hasta kayıt servisi ayakta ama ona bağlanan istemciler yok. Sunucu çalışıyor diye sistem çalışıyor mu?',
+          devops: 'Senin gözünden: Filodaki her makinede aynı ajan var. Ortak bağımlılık, ortak hata noktası demek mi?',
+          qa: 'Senin gözünden: Bu güncelleme müşteriye çıkmadan önce hangi testten geçmiş olmalıydı?',
+          mobil: 'Senin gözünden: Hastanenin mobil randevu uygulaması açık ama arka uçtaki personel ekranları kapalı. Kullanıcı ne görüyor?'
+        },
+        hint: 'Bir makine açılır açılmaz çöküyorsa, internetten düzeltme indirecek kadar açık kalabilir mi?',
+        socratic: [
+          'Çöken bir makine, üreticinin gönderdiği düzeltmeyi hangi anda indirebilir?',
+          'Hastanede hangi ekranın bir saat kapalı kalması bir hastaya zarar verir, hangisininki vermez?',
+          'Üç kişilik bir ekiple 600 makineye ulaşamıyorsan, sırayı neye göre belirlersin?',
+          'Bu kadar makinenin aynı anda düşmesi, mimaride neyin ortak olduğunu gösteriyor?'
+        ],
+        outcomes: {
+          A: {
+            title: 'Acil 08:40\'ta açıldı',
+            what: 'Acil, ameliyathane ve laboratuvardaki 46 makineyi listeledin. Her birini kurtarma moduna alıp hatalı dosyayı elle sildiniz. Acil servis 08:40\'ta yeniden hasta kabul ediyor.',
+            why: 'Çöken makine düzeltmeyi indirecek kadar açık kalamıyor; bu yüzden kurtarma elle yapılmak zorundaydı. Kısıtlı ekiple önce hasta güvenliğine dokunan ekranları seçmek, toplam zararı azalttı.',
+            real: 'Gerçekte üretici hatalı içeriği 05:27 UTC\'de geri çekti, ama zaten çökmüş makinelerin çoğu kendiliğinden düzelmedi. Güvenli mod veya kurtarma ortamında dosyanın elle silinmesi gerekti.'
+          },
+          B: {
+            title: '1,5 saat kaybedildi',
+            what: 'Üretici içeriği geri çekti ama makineler hâlâ açılıp çöküyor. 08:55\'te elle kurtarmaya başladığınızda ameliyat saati çoktan geçmişti.',
+            why: 'Düzeltme ağdan geliyordu; çöken makine ağa bağlanacak kadar ayakta kalamıyordu. Beklemek, sorunun kendini çözeceğini varsaydı.',
+            real: 'Gerçekte bazı makineler birkaç kez yeniden başlatılınca düzeltmeyi alabildi, ama çoğu kuruluş elle müdahale etmek zorunda kaldı.'
+          }
+        },
+        lesson: {
+          term: 'Ortak hata noktası',
+          text: 'Çekirdek seviyesinde çalışan tek bir ajan, tüm filoyu aynı anda düşürebilir. Mimari karar sadece kodda değil, neyin her yerde aynı olduğunda da verilir.'
+        }
+      },
+      {
+        id: 'k2',
+        tag: 'Karar 2 · Test',
+        clock: '09:05',
+        topic: 'test',
+        situation: 'Ekipten Emre heyecanla geliyor: "Forumda bir script buldum. Ağ üzerinden bütün makinelerde C-00000291*.sys dosyasını siliyor. 600 makineyi bir dakikada hallederiz."',
+        question: 'Script\'i nasıl kullanacaksın?',
+        options: {
+          A: { label: 'Önce 1 makinede dene, sonra genişlet', short: 'Önce 1 makinede dene' },
+          B: { label: '600 makineye aynı anda uygula', short: 'Hepsine aynı anda uygula' }
+        },
+        roleLens: {
+          backend: 'Senin gözünden: Bir veritabanı göçünü hiç test etmeden 600 sunucuda koşar mıydın?',
+          devops: 'Senin gözünden: Canary dağıtım tam olarak bu durum için mi var?',
+          qa: 'Senin gözünden: Bu script\'in başarılı olduğunu hangi gözlemle anlarsın?',
+          mobil: 'Senin gözünden: Bir uygulama güncellemesini kullanıcıların %1\'ine açmakla %100\'üne açmak arasındaki fark ne?'
+        },
+        hint: 'Sabah her şeyi bozan şey neydi? Bu script onunla aynı yolu mu izliyor?',
+        socratic: [
+          'Bu sabahki kesinti nasıl başlamıştı? Bir şey herkese aynı anda mı gitti?',
+          'Script\'in dosya deseni, silmesi gerekenden fazlasını siliyorsa bunu ne zaman fark edersin?',
+          'BitLocker şifrelemesi olan bir makinede bu script dosyaya ulaşabilir mi?',
+          'Beş dakika beklemenin maliyeti ile 600 makineyi bozmanın maliyetini nasıl karşılaştırırsın?'
+        ],
+        outcomes: {
+          A: {
+            title: 'Beş dakikada iki hata yakalandı',
+            what: 'Script\'i laboratuvardaki bir test makinesinde denedin. Silme deseninin başka bir sürücü dosyasını da yakaladığı ve BitLocker\'lı makinelerde hiç çalışmadığı görüldü. Deseni düzelttiniz, BitLocker için ayrı yol açtınız.',
+            why: 'Küçük bir örneklemde denemek (canary), hatanın etki alanını 1 makineyle sınırladı. Bu sabahki krizi yaratan şey, kontrolsüz toplu dağıtımın ta kendisiydi.',
+            real: 'Gerçekte şirketin sonradan açıkladığı önlemlerden biri, içerik güncellemelerini önce küçük bir gruba, sonra kademeli olarak dağıtmaktı.'
+          },
+          B: {
+            title: '40 makine daha gitti',
+            what: 'Script tüm ağda koştu. Geniş silme deseni bir sürücü dosyasını da sildi; laboratuvardaki 40 makine artık hiç açılmıyor. BitLocker\'lı makinelerde ise hiçbir şey değişmedi.',
+            why: 'Test edilmemiş bir değişikliği bütün filoya aynı anda uygulamak, sabahki olayın aynısını küçük ölçekte tekrarladı.',
+            real: 'Gerçek olayda kök neden, hatalı bir içeriğin doğrulama aşamasında yakalanmayıp herkese aynı anda dağıtılmasıydı.'
+          }
+        },
+        lesson: {
+          term: 'Canary / kademeli dağıtım',
+          text: 'Değişikliği önce küçük bir gruba uygula, gözle, sonra genişlet. Hatanın bedeli, kaç makineye aynı anda ulaştığıyla çarpılır.'
+        }
+      },
+      {
+        id: 'k3',
+        tag: 'Karar 3 · KVKK',
+        clock: '10:20',
+        topic: 'kvkk',
+        situation: 'Servisler kâğıda geçti. Ameliyathane sorumlusu, öğleden sonraki ameliyat listesinin fotoğrafını çekmiş: hasta adı, T.C. kimlik no, tanı. "Bunu 120 kişilik hastane WhatsApp grubuna atalım, herkes görsün" diyor.',
+        question: 'Listeyi nasıl paylaşacaksın?',
+        sample: { name: 'Ayşe K*** ', tc: '123******01', protocol: 'P-48213', dx: 'Kolesistektomi' },
+        options: {
+          A: { label: 'Maskele: yalnızca protokol no ve baş harflerle paylaş', short: 'Maskeleyerek paylaş' },
+          B: { label: 'Fotoğrafı olduğu gibi gruba at', short: 'Olduğu gibi at' }
+        },
+        roleLens: {
+          backend: 'Senin gözünden: Log\'a T.C. numarası yazan bir servis yazsaydın, kod incelemesinde kim fark ederdi?',
+          devops: 'Senin gözünden: Kriz anında kurulan geçici kanal, ne kadar süre "geçici" kalır?',
+          qa: 'Senin gözünden: Maskeleme kuralının doğru çalıştığını hangi örnekle test ederdin?',
+          mobil: 'Senin gözünden: Bir fotoğraf 120 telefona indiğinde, onu geri alma şansın var mı?'
+        },
+        hint: 'Ameliyathanedeki ekibin hastayı tanımak için gerçekten hangi bilgiye ihtiyacı var?',
+        socratic: [
+          'Ameliyathane ekibi hastayı doğru tanımak için en az hangi bilgilere ihtiyaç duyar?',
+          'Tanı bilgisi, sıradan bir kişisel veriden farklı mı korunuyor? Neden?',
+          'Bir fotoğraf 120 kişisel telefona indiğinde, o veri üzerindeki kontrol kimde kalır?',
+          'Kriz bir kuralı askıya almak için yeterli bir gerekçe mi, yoksa kuralların asıl sınandığı an mı?'
+        ],
+        outcomes: {
+          A: {
+            title: 'Liste işini gördü, veri güvende',
+            what: 'Listeyi protokol numarası, baş harfler ve ameliyat saatiyle yeniden yazdın. Ameliyathane kimlik doğrulamasını bilekliklerden yaptı. Gruba giden mesajda tanı ve T.C. no yoktu.',
+            why: 'Amaç için gereken en az veriyi paylaşmak (veri minimizasyonu), işi durdurmadan riski düşürdü.',
+            real: 'KVKK\'da sağlık verisi özel nitelikli kişisel veridir (md. 6) ve veri sorumlusu yetkisiz erişimi önleyecek teknik ve idari tedbirleri almakla yükümlüdür (md. 12).'
+          },
+          B: {
+            title: 'Fotoğraf 120 telefonda',
+            what: 'Liste gruba gitti. Bir saat sonra gruptaki biri fotoğrafı başka bir gruba iletti. Ad, T.C. no ve tanı artık kimin telefonunda olduğu bilinmeyen bir yerde.',
+            why: 'Kriz baskısı, en az veri ilkesini atlatmayı "mantıklı" gösterdi. Ama paylaşılan bir fotoğraf geri alınamaz.',
+            real: 'Sağlık verisinin yetkisiz paylaşımı KVKK md. 6 ve md. 12 kapsamında ihlaldir; veri sorumlusunun ihlali Kurula bildirme yükümlülüğü doğar.'
+          }
+        },
+        lesson: {
+          term: 'Veri minimizasyonu',
+          text: 'Amaç için gereken en az veriyi paylaş. Sağlık verisi özel nitelikli kişisel veridir; kriz anı istisna değildir.'
+        }
+      }
+    ],
+
+    endings: {
+      A: {
+        code: 'SON A',
+        tone: 'iyi',
+        title: '11:30 · Acil ve ameliyathane ayakta, veri güvende',
+        text: 'Kritik birimleri öne aldın, düzeltmeyi önce bir makinede denedin ve listeyi maskeledin. Öğleden sonraki ameliyatların çoğu yapıldı. Akşamki olay sonrası toplantıda raporun, hastanenin yeni "kriz runbook"unun ilk sayfası oldu.'
+      },
+      B: {
+        code: 'SON B',
+        tone: 'kötü',
+        title: 'Sistemler ayakta ama KVKK ihlali',
+        text: 'Ekranlar akşama doğru açıldı. Pazartesi sabahı hukuk birimi seni arıyor: ameliyat listesinin fotoğrafı hastane dışına çıkmış. Teknik kriz bitti, hukuki kriz başlıyor.'
+      },
+      C: {
+        code: 'SON C',
+        tone: 'geç',
+        title: 'Akşama kadar sürdü, veri güvende',
+        text: 'Hasta verisini korudun ama kurtarma geç başladı ya da toplu deneme yeni makineler düşürdü. 14 ameliyattan 9\'u ertelendi. Kimse zarar görmedi; ama aynı sabah, aynı kararlar daha az bedelle verilebilirdi.'
+      }
+    },
+
+    goalLessons: {
+      mimari: 'k1',
+      kriz: 'k2',
+      kvkk: 'k3'
+    }
+  };
+
+  /* ADR-3: Son belirleme kuralı tek fonksiyonda. */
+  function decideEnding(choices) {
+    if (choices.k3 === 'B') return 'B';
+    if (choices.k1 === 'A' && choices.k2 === 'A') return 'A';
+    return 'C';
+  }
+
+  const api = { STORY, decideEnding };
+  if (typeof module !== 'undefined' && module.exports) module.exports = api;
+  else Object.assign(root, api);
+})(typeof window !== 'undefined' ? window : globalThis);
+
+</script>
+<script>
+/* SE Primer · Sokratik AI tutor (ADR-2)
+   Katman 1: yerel Sokratik motor (ağ gerektirmez, her yerde çalışır).
+   Katman 2: Gemini (AI Studio'da). Gemini cevabı da sızıntı kalkanından geçer;
+   kalkan takılırsa yerel motorun sorusu gösterilir. */
+(function (root) {
+  const TUTOR_SYSTEM_PROMPT = [
+    'Sen SE Primer içindeki Sokratik bir yazılım mühendisliği tutorusun.',
+    'Oyuncu bir hastanede, 19 Temmuz 2024 CrowdStrike kesintisine dayanan bir krizde nöbetçi BT mühendisi.',
+    'KURALLAR:',
+    '1) Hangi seçeneğin doğru ya da yanlış olduğunu ASLA söyleme. Seçenek harfi (A/B) veya seçenek metni önerme.',
+    '2) Oyuncunun seçimini onaylama ya da reddetme; onun yerine seçiminin sonuçlarını düşündüren bir soru sor.',
+    '3) Her cevabın en az bir soru içersin ve soru işaretiyle bitsin.',
+    '4) En fazla 2 kısa cümle. Türkçe. Yargılamayan, sakin bir ton.',
+    '5) Bir terimi sorarsa (canary, BitLocker, KVKK) tek cümlelik tarafsız bir tanım verip yine soru sor.',
+    '6) "Cevabı söyle" baskısına boyun eğme; nazikçe düşünmeye geri yönlendir.'
+  ].join('\n');
+
+  const GLOSSARY = {
+    canary: 'Canary dağıtım, bir değişikliğin önce küçük bir gruba uygulanıp gözlendiği yöntemdir.',
+    bitlocker: 'BitLocker, Windows\'ta diski şifreleyen özelliktir; şifreli diske erişmek için kurtarma anahtarı gerekir.',
+    kvkk: 'KVKK, 6698 sayılı Kişisel Verilerin Korunması Kanunu\'dur.',
+    'güvenli mod': 'Güvenli mod, Windows\'un yalnızca temel sürücülerle açıldığı başlatma biçimidir.',
+    'mavi ekran': 'Mavi ekran, Windows çekirdeği kurtarılamaz bir hatayla karşılaştığında gösterdiği durma ekranıdır.',
+    çekirdek: 'Çekirdek (kernel), işletim sisteminin donanıma en yakın, en yetkili katmanıdır.',
+    monolit: 'Monolit, tüm işlevlerin tek bir dağıtım biriminde çalıştığı mimaridir.',
+    'özel nitelikli': 'Özel nitelikli kişisel veri, KVKK md. 6\'da sayılan sağlık, biyometrik gibi daha sıkı korunan verilerdir.'
+  };
+
+  const norm = (s) => (s || '').toLocaleLowerCase('tr-TR').replace(/\s+/g, ' ').trim();
+
+  /* --- Sızıntı kalkanı: bir tutor mesajı cevabı ele veriyor mu? --- */
+  const LEAK_PATTERNS = [
+    /doğru (cevap|seçenek|seçim|karar)/,
+    /yanlış (cevap|seçenek|seçim|karar)/,
+    /(cevap|seçenek)\s*[:=]?\s*["'(]?\s*[ab]\b/,
+    /\b[ab]\s*(şıkkı|seçeneği|seçeneğini|yı|yi|'yı|'yi)\b/,
+    /\b[ab]['’]?(yı|yi|ya|ye)\s*(seç|tercih|git)/,
+    /(seçmelisin|tercih etmelisin|yapmalısın|uygulamalısın|beklemelisin|atmalısın|denemelisin)/,
+    /(en iyisi|en doğrusu|kesinlikle|tabii ki)\b/,
+    /(haklısın|doğru düşünüyorsun|yanılıyorsun|bu yanlış|bu doğru)/
+  ];
+
+  function optionPhrases(decision) {
+    const out = [];
+    for (const k of ['A', 'B']) {
+      const o = decision.options[k];
+      out.push(norm(o.label), norm(o.short));
+    }
+    return out;
+  }
+
+  function leakCheck(text, decision) {
+    const t = norm(text);
+    const reasons = [];
+    LEAK_PATTERNS.forEach((p, i) => { if (p.test(t)) reasons.push('desen-' + (i + 1)); });
+    if (decision) {
+      for (const ph of optionPhrases(decision)) {
+        if (ph.length > 8 && t.includes(ph)) reasons.push('seçenek-metni');
+      }
+    }
+    return { leak: reasons.length > 0, reasons };
+  }
+
+  /* --- Öğrenci mesajını sınıflandır --- */
+  function classify(text, decision) {
+    const t = norm(text);
+    if (!t) return 'empty';
+    for (const term of Object.keys(GLOSSARY)) {
+      if (t.includes(term) && /(ne demek|nedir|ne\b|anlamadım|ne işe)/.test(t)) return 'concept:' + term;
+    }
+    if (/(cevap|hangisi|söyle|doğru(su)?\s*(ne|hangi)|a m[ıi] b m[ıi]|ne seçmeliyim|ne yapmalıyım|yardım et|ipucu ver)/.test(t)) return 'ask-answer';
+    // v2: öğrencinin kendi içerik sorusu (eval #20'de duyulmuyordu)
+    if (/\?/.test(t) && /(mı|mi|mu|mü|nasıl|neden|niye|kim|hangi)(?=[\s?.,!]|$)/.test(t)) return 'student-question';
+    if (/(bilmiyorum|emin değilim|kararsız|anlamadım|fikrim yok)/.test(t)) return 'unsure';
+    if (/(^|\s)(a|b)(\s|$|[.,!?])/.test(t) || /(seçerim|seçtim|yaparım|derim|giderim|uygularım|beklerim|atarım|denerim|maskelerim)/.test(t)) return 'choice';
+    const topicWords = ['makine', 'script', 'acil', 'ameliyat', 'test', 'dene', 'hepsi', 'bekle', 'kurtar', 'liste', 'fotoğraf', 'whatsapp', 'maske', 'veri', 'hasta', 'güncelleme', 'ekip', 'öncelik', 'risk', 'dosya', 'bitlocker', 'kvkk', 'tc', 't.c'];
+    if (topicWords.some((w) => t.includes(w))) return 'reasoning';
+    return 'off-topic';
+  }
+
+  function pick(list, used) {
+    const fresh = list.filter((q) => !used.includes(q));
+    return (fresh.length ? fresh : list)[0];
+  }
+
+  /* --- Katman 1: yerel Sokratik motor --- */
+  function localReply(decision, studentText, profile, used) {
+    used = used || [];
+    const kind = classify(studentText, decision);
+    const beginner = profile && profile.level === 'yeni';
+    const q = pick(decision.socratic, used);
+    let msg;
+    if (kind.startsWith('concept:')) {
+      const term = kind.slice(8);
+      msg = GLOSSARY[term] + ' Bunu bildiğinde, bu durumda neyi farklı görüyorsun?';
+    } else if (kind === 'ask-answer') {
+      msg = (beginner
+        ? 'Cevabı söylemeyeceğim, çünkü bu kararı sen vereceksin; ama birlikte düşünebiliriz. '
+        : 'Kararı ben vermeyeceğim. ') + q;
+    } else if (kind === 'unsure') {
+      msg = 'Kararsız kalmak normal; küçük bir adımla başlayalım. ' + q;
+    } else if (kind === 'student-question') {
+      const asked = String(studentText).trim().replace(/\s+/g, ' ').slice(0, 90);
+      msg = '"' + asked + '" diye sorman önemli. Bunu bu sahnede kimden ya da neyden öğrenebilirsin, ve öğrendiğin şey seçimini nasıl değiştirir?';
+    } else if (kind === 'choice') {
+      // v2: tek soru (v1'de iki soru üst üste geliyordu)
+      msg = 'Bu yolu seçersen, ilk 10 dakikada ne olacağını ve bunu nasıl gözlemleyeceğini düşündün mü?';
+    } else if (kind === 'reasoning') {
+      msg = 'Gerekçeni görüyorum. Bunu bir adım ileri götürelim: ' + q;
+    } else if (kind === 'empty') {
+      msg = q;
+    } else {
+      msg = 'Sahneye dönelim. ' + q;
+    }
+    return { text: msg, kind, question: q, source: 'local' };
+  }
+
+  /* --- Katman 2: Gemini (yalnızca anahtar varsa; AI Studio'da process.env.API_KEY) --- */
+  async function geminiReply(decision, studentText, profile, apiKey) {
+    const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' + encodeURIComponent(apiKey);
+    const ctx = 'Sahne: ' + decision.situation + '\nSoru: ' + decision.question +
+      '\nSeçenekler (ASLA önerme): A) ' + decision.options.A.label + ' B) ' + decision.options.B.label +
+      '\nOyuncu profili: seviye=' + profile.level + ', rol=' + profile.role + ', hedef=' + profile.goal;
+    const body = {
+      systemInstruction: { parts: [{ text: TUTOR_SYSTEM_PROMPT }] },
+      contents: [{ role: 'user', parts: [{ text: ctx + '\n\nOyuncunun mesajı: ' + studentText }] }],
+      generationConfig: { temperature: 0.4, maxOutputTokens: 120 }
+    };
+    const r = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    const j = await r.json();
+    return (j.candidates && j.candidates[0].content.parts.map((p) => p.text).join('')) || '';
+  }
+
+  async function reply(decision, studentText, profile, used, apiKey) {
+    const local = localReply(decision, studentText, profile, used);
+    if (!apiKey) return local;
+    try {
+      const g = await geminiReply(decision, studentText, profile, apiKey);
+      const chk = leakCheck(g, decision);
+      if (!g || chk.leak || !g.includes('?')) return Object.assign(local, { source: 'local(kalkan)', blocked: g });
+      return { text: g.trim(), kind: local.kind, question: local.question, source: 'gemini' };
+    } catch (e) {
+      return Object.assign(local, { source: 'local(ağ yok)' });
+    }
+  }
+
+  function firstQuestion(decision, profile) {
+    const STORY = root.STORY || (typeof require !== 'undefined' ? require('./story.js').STORY : null);
+    const goalDecision = STORY && STORY.goalLessons[profile.goal];
+    const q = decision.socratic[decision.id === goalDecision ? 3 : 0];
+    return q;
+  }
+
+  const api = { TUTOR_SYSTEM_PROMPT, GLOSSARY, classify, localReply, reply, leakCheck, firstQuestion };
+  if (typeof module !== 'undefined' && module.exports) module.exports = api;
+  else root.Tutor = api;
+})(typeof window !== 'undefined' ? window : globalThis);
+
+</script>
+<script>
+/* SE Primer · uygulama (durum makinesi + arayüz). Bağımlılık yok. */
+(function () {
+  const S = window.STORY;
+  const T = window.Tutor;
+  const app = document.getElementById('app');
+  const GEMINI_KEY = window.SE_PRIMER_GEMINI_KEY || null; // AI Studio'da process.env.API_KEY ile doldurulur
+
+  const state = {
+    screen: 'profile', // profile | intro | decision | outcome | ending
+    profile: { level: null, role: null, goal: null },
+    step: 0,
+    choices: {},
+    pressured: {}, // deneyimli oyuncuda süresi dolan kararlar
+    tutorLog: [],
+    usedQuestions: [],
+    timerLeft: 60,
+    timerId: null,
+    hintOpen: false
+  };
+
+  try {
+    const saved = JSON.parse(localStorage.getItem('se-primer-profile') || 'null');
+    if (saved && saved.level) state.profile = saved;
+  } catch (e) { /* depolama yoksa sorun değil */ }
+
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const h = (html) => { app.innerHTML = html; app.scrollTop = 0; window.scrollTo(0, 0); };
+
+  function stopTimer() { if (state.timerId) { clearInterval(state.timerId); state.timerId = null; } }
+
+  function progressBar() {
+    const total = S.decisions.length;
+    const done = state.screen === 'ending' ? total : Math.min(state.step + (state.screen === 'outcome' ? 1 : 0), total);
+    let dots = '';
+    for (let i = 0; i < total; i++) dots += '<span class="pip ' + (i < done ? 'on' : '') + '"></span>';
+    return '<div class="progress" aria-label="İlerleme: ' + done + '/' + total + '">' + dots + '</div>';
+  }
+
+  /* ---------- Ekran 1: Profil ---------- */
+  function renderProfile() {
+    const group = (key) => {
+      const g = S.profile[key];
+      return '<fieldset class="group"><legend>' + esc(g.label) + '</legend><div class="chips">' +
+        g.options.map((o) => '<button type="button" class="chip ' + (state.profile[key] === o.id ? 'sel' : '') + '" data-key="' + key + '" data-val="' + o.id + '" data-cy="opt-' + key + '-' + o.id + '" aria-pressed="' + (state.profile[key] === o.id) + '">' +
+          '<span>' + esc(o.label) + '</span>' + (o.note ? '<small>' + esc(o.note) + '</small>' : '') + '</button>').join('') +
+        '</div></fieldset>';
+    };
+    const ready = state.profile.level && state.profile.role && state.profile.goal;
+    h('<main class="screen profile" data-cy="screen-profile">' +
+      '<header class="cover"><p class="eyebrow">SE Primer · Bölüm 1</p>' +
+      '<h1>' + esc(S.title) + '</h1><p class="sub">' + esc(S.subtitle) + '</p>' +
+      '<p class="based">Gerçek olaya dayanır: ' + esc(S.realEvent) + '</p></header>' +
+      '<p class="lead">Bu kitap sana göre yazılır. Üç soru:</p>' +
+      group('level') + group('role') + group('goal') +
+      '<button class="primary" data-cy="start" ' + (ready ? '' : 'disabled') + '>Bölümü başlat</button>' +
+      '</main>');
+    app.querySelectorAll('.chip').forEach((b) => b.addEventListener('click', () => {
+      state.profile[b.dataset.key] = b.dataset.val;
+      renderProfile();
+    }));
+    app.querySelector('[data-cy=start]').addEventListener('click', () => {
+      try { localStorage.setItem('se-primer-profile', JSON.stringify(state.profile)); } catch (e) {}
+      state.screen = 'intro'; render();
+    });
+  }
+
+  /* ---------- Giriş sahnesi ---------- */
+  function renderIntro() {
+    h('<main class="screen scene" data-cy="screen-intro">' + progressBar() +
+      '<div class="clock" aria-label="Saat">' + esc(S.intro.clock) + '</div>' +
+      '<div class="bsod" aria-hidden="true"><span>:(</span> Bilgisayarınız bir sorunla karşılaştı ve yeniden başlatılması gerekiyor.</div>' +
+      S.intro.text.map((p) => '<p class="story">' + esc(p) + '</p>').join('') +
+      '<aside class="fact"><b>Gerçek olay</b>' + esc(S.intro.fact) + '</aside>' +
+      '<button class="primary" data-cy="intro-next">İlk karara geç</button></main>');
+    app.querySelector('[data-cy=intro-next]').addEventListener('click', () => { state.screen = 'decision'; state.step = 0; render(); });
+  }
+
+  /* ---------- Ekran 2: Karar sahnesi ---------- */
+  function renderDecision() {
+    stopTimer();
+    const d = S.decisions[state.step];
+    const lvl = state.profile.level;
+    const showHintPanel = lvl === 'yeni' || (lvl === 'orta' && state.hintOpen);
+    const timed = lvl === 'deneyimli';
+    state.timerLeft = 60;
+
+    let hintBlock = '';
+    if (lvl === 'yeni' || lvl === 'orta') {
+      hintBlock = (lvl === 'orta' ? '<button class="ghost" data-cy="hint-toggle" aria-expanded="' + showHintPanel + '">' + (showHintPanel ? 'İpucunu gizle' : 'İpucu göster') + '</button>' : '') +
+        (showHintPanel ? '<div class="hint" data-cy="hint-panel"><b>İpucu</b>' + esc(d.hint) + '</div>' : '');
+    }
+
+    const sample = d.sample ? '<div class="paper" aria-label="Ameliyat listesi örneği (sahte veri)"><div class="paper-row head"><span>Hasta</span><span>T.C. no</span><span>Tanı</span></div>' +
+      '<div class="paper-row"><span>Ayşe Kaya</span><span>12345678901</span><span>' + esc(d.sample.dx) + '</span></div>' +
+      '<div class="paper-row"><span>Mehmet Demir</span><span>23456789012</span><span>Herni onarımı</span></div><p class="paper-note">Sahte veri</p></div>' : '';
+
+    h('<main class="screen scene" data-cy="decision-' + d.id + '">' + progressBar() +
+      '<div class="scene-head"><span class="tag">' + esc(d.tag) + '</span><span class="clock small">' + esc(d.clock) + '</span>' +
+      (timed ? '<span class="timer" data-cy="timer" role="timer" aria-live="off">60</span>' : '') + '</div>' +
+      '<p class="story">' + esc(d.situation) + '</p>' + sample +
+      '<p class="lens" data-cy="role-lens">' + esc(d.roleLens[state.profile.role]) + '</p>' +
+      '<h2 class="question">' + esc(d.question) + '</h2>' +
+      '<div class="timeout" data-cy="timeout-msg" hidden>Süre doldu. Karar yine senin; ama bu karar raporda "süre baskısı" olarak görünecek.</div>' +
+      '<div class="choices">' +
+      ['A', 'B'].map((k) => '<button class="choice" data-cy="choice-' + k + '" data-k="' + k + '"><span class="letter">' + k + '</span><span>' + esc(d.options[k].label) + '</span></button>').join('') +
+      '</div>' + hintBlock +
+      tutorPanel(d) +
+      '</main>');
+
+    app.querySelectorAll('.choice').forEach((b) => b.addEventListener('click', () => choose(b.dataset.k)));
+    const tg = app.querySelector('[data-cy=hint-toggle]');
+    if (tg) tg.addEventListener('click', () => { state.hintOpen = !state.hintOpen; renderDecision(); });
+    wireTutor(d);
+
+    if (timed) {
+      const el = app.querySelector('[data-cy=timer]');
+      state.timerId = setInterval(() => {
+        state.timerLeft -= 1;
+        el.textContent = String(Math.max(state.timerLeft, 0));
+        if (state.timerLeft <= 10) el.classList.add('low');
+        if (state.timerLeft <= 0) {
+          stopTimer();
+          state.pressured[d.id] = true;
+          el.textContent = '0';
+          app.querySelector('[data-cy=timeout-msg]').hidden = false;
+        }
+      }, 1000);
+    }
+  }
+
+  function tutorPanel(d) {
+    const log = state.tutorLog.filter((m) => m.d === d.id);
+    const first = T.firstQuestion(d, state.profile);
+    const msgs = [{ who: 'tutor', text: first }].concat(log);
+    return '<section class="tutor" aria-label="Tutor">' +
+      '<div class="tutor-head"><span class="dot" aria-hidden="true"></span><b>Tutor</b><small>Cevabı söylemez, soru sorar</small></div>' +
+      '<div class="thread" data-cy="tutor-thread">' +
+      msgs.map((m) => '<p class="msg ' + m.who + '" ' + (m.who === 'tutor' ? 'data-cy="tutor-msg"' : 'data-cy="me-msg"') + '>' + esc(m.text) + '</p>').join('') +
+      '</div><form class="ask" data-cy="tutor-form"><label for="tutor-input-' + d.id + '" class="sr">Tutor\'a yaz</label>' +
+      '<input id="tutor-input-' + d.id + '" data-cy="tutor-input" placeholder="Düşündüğünü yaz ya da soru sor" autocomplete="off">' +
+      '<button data-cy="tutor-send" type="submit">Gönder</button></form></section>';
+  }
+
+  function wireTutor(d) {
+    const form = app.querySelector('[data-cy=tutor-form]');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const input = form.querySelector('input');
+      const text = input.value.trim();
+      if (!text) return;
+      state.tutorLog.push({ d: d.id, who: 'me', text });
+      const used = state.usedQuestions.concat([T.firstQuestion(d, state.profile)]);
+      const r = await T.reply(d, text, state.profile, used, GEMINI_KEY);
+      state.usedQuestions.push(r.question);
+      state.tutorLog.push({ d: d.id, who: 'tutor', text: r.text });
+      const thread = app.querySelector('[data-cy=tutor-thread]');
+      thread.insertAdjacentHTML('beforeend', '<p class="msg me" data-cy="me-msg">' + esc(text) + '</p><p class="msg tutor" data-cy="tutor-msg">' + esc(r.text) + '</p>');
+      input.value = '';
+      thread.lastElementChild.scrollIntoView({ block: 'nearest' });
+    });
+  }
+
+  function choose(k) {
+    stopTimer();
+    const d = S.decisions[state.step];
+    state.choices[d.id] = k;
+    state.screen = 'outcome';
+    render();
+  }
+
+  /* ---------- Sonuç kartı ---------- */
+  function renderOutcome() {
+    const d = S.decisions[state.step];
+    const k = state.choices[d.id];
+    const o = d.outcomes[k];
+    const last = state.step === S.decisions.length - 1;
+    h('<main class="screen scene" data-cy="outcome">' + progressBar() +
+      '<div class="scene-head"><span class="tag">' + esc(d.tag) + '</span><span class="picked">Seçimin: ' + k + ' · ' + esc(d.options[k].short) + '</span></div>' +
+      '<h2 class="outcome-title" data-cy="outcome-title">' + esc(o.title) + '</h2>' +
+      '<dl class="ledger">' +
+      '<div><dt>Ne oldu?</dt><dd>' + esc(o.what) + '</dd></div>' +
+      '<div><dt>Neden oldu?</dt><dd>' + esc(o.why) + '</dd></div>' +
+      '<div class="real"><dt>Gerçekte ne oldu?</dt><dd>' + esc(o.real) + '</dd></div>' +
+      '</dl>' +
+      '<div class="concept"><b>' + esc(d.lesson.term) + '</b><p>' + esc(d.lesson.text) + '</p></div>' +
+      '<button class="primary" data-cy="outcome-next">' + (last ? 'Sonu gör' : 'Sonraki karar') + '</button></main>');
+    app.querySelector('[data-cy=outcome-next]').addEventListener('click', () => {
+      if (last) state.screen = 'ending';
+      else { state.step += 1; state.screen = 'decision'; state.hintOpen = false; }
+      render();
+    });
+  }
+
+  /* ---------- Ekran 3: Son ---------- */
+  function renderEnding() {
+    const code = window.decideEnding(state.choices);
+    const e = S.endings[code];
+    const goalId = S.goalLessons[state.profile.goal];
+    const ordered = S.decisions.slice().sort((a, b) => (a.id === goalId ? -1 : b.id === goalId ? 1 : 0));
+    h('<main class="screen ending tone-' + e.tone + '" data-cy="ending">' +
+      '<p class="eyebrow">' + esc(e.code) + '</p><h1>' + esc(e.title) + '</h1><p class="story">' + esc(e.text) + '</p>' +
+      '<h3>Karar izin</h3><ol class="trail" data-cy="trail">' +
+      S.decisions.map((d) => {
+        const k = state.choices[d.id];
+        return '<li><span class="t-tag">' + esc(d.tag) + '</span><span>' + k + ' · ' + esc(d.options[k].short) + '</span>' +
+          (state.pressured[d.id] ? '<em class="pressure" data-cy="pressure-' + d.id + '">süre baskısı</em>' : '') + '</li>';
+      }).join('') + '</ol>' +
+      '<h3>Bugün öğrendiğim</h3><div class="lessons" data-cy="lessons">' +
+      ordered.map((d) => '<label class="lesson ' + (d.id === goalId ? 'goal' : '') + '"><input type="checkbox" id="learned-' + d.id + '" data-cy="learned-' + d.id + '"><span><b>' + esc(d.lesson.term) + '</b>' + esc(d.lesson.text) + '</span></label>').join('') +
+      '</div><button class="primary" data-cy="restart">Baştan oyna</button>' +
+      '<p class="credit">Olay: 19 Temmuz 2024 CrowdStrike kesintisi. Hastane, kişiler ve hasta verileri kurgusaldır.</p></main>');
+    app.querySelector('[data-cy=restart]').addEventListener('click', () => {
+      state.choices = {}; state.pressured = {}; state.tutorLog = []; state.usedQuestions = []; state.step = 0;
+      state.screen = 'profile'; render();
+    });
+  }
+
+  function render() {
+    if (state.screen !== 'decision') stopTimer();
+    ({ profile: renderProfile, intro: renderIntro, decision: renderDecision, outcome: renderOutcome, ending: renderEnding })[state.screen]();
+  }
+  render();
+})();
+
+</script>
+
+</body>
+</html>
