@@ -8,7 +8,7 @@ Yazılım mühendisliği için **oynanan bir kitap**. 19 Temmuz 2024 CrowdStrike
 | **Ders** | YZM301 · Yazılım Gerçekleme ve Test · Ödev 6 |
 | **Uygulama (AI Studio)** | https://se-primer-2844.ai.studio |
 | **Uygulama (yedek)** | [`dist/index.html`](dist/index.html): indirip tarayıcıda açılır, internet gerektirmez |
-| **Demo video (60 sn)** | `demo/demo-60sn.mp4` · [YOUTUBE / DRIVE LİNKİ] |
+| **Demo video (47 sn)** | https://youtube.com/shorts/cWdUto_j9fM · dosya: `demo/demo-60sn.mp4` |
 
 ## Teslim haritası (puanlama tablosuna göre)
 
