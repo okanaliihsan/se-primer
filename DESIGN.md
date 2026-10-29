@@ -53,6 +53,10 @@ Gece nöbetinde elinde fenerle okunan bir kitap. Zemin lacivert gece, vurgu fene
 - **Hareket:** Ekran geçişinde 0,28 sn hafif yükselme; `prefers-reduced-motion` açıksa yok.
 - **Test kancaları:** Her etkileşimli öğede `data-cy` vardır (bkz. `cypress/`).
 
+## Stitch
+
+Ekranlar önce Google Stitch'te üretildi (`design/stitch/`). Stitch'ten görsel dili aldım; uydurduğu teknik ayrıntıları ve cevabı ele veren "risk" etiketlerini almadım. Gerekçeler: [`design/stitch/README.md`](design/stitch/README.md).
+
 ## Durum makinesi
 
 `design/durum-makinesi.png` (kaynak: `design/durum-makinesi.mmd`, spec.md §6 ile aynı).

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;background-color:#09122a;color:#dae1ff;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "surface": "#09122a", "on-tertiary-fixed-variant": "#5e4100", "on-background": "#dae1ff", "secondary": "#adc6ff", "on-secondary-fixed": "#001a41", "surface-tint": "#ffb873", "secondary-fixed": "#d8e2ff", "on-error": "#690005", "on-tertiary": "#422c00", "surface-variant": "#2b344d", "surface-container": "#161f37", "inverse-surface": "#dae1ff", "error": "#ffb4ab", "surface-container-low": "#121b33", "on-tertiary-container": "#5f4200", "primary-container": "#f2a65a", "tertiary": "#f8cb7f", "on-secondary-fixed-variant": "#004493", "tertiary-container": "#dab067", "surface-container-highest": "#2b344d", "tertiary-fixed-dim": "#ebc075", "on-surface-variant": "#d7c3b3", "on-error-container": "#ffdad6", "on-secondary-container": "#f2f4ff", "surface-container-lowest": "#040d25", "inverse-primary": "#8b5006", "outline-variant": "#524438", "inverse-on-surface": "#273049", "surface-bright": "#303852", "primary-fixed": "#ffdcbf", "primary": "#ffc794", "background": "#09122a", "secondary-container": "#036be0", "tertiary-fixed": "#ffdea9", "surface-dim": "#09122a", "primary-fixed-dim": "#ffb873", "on-primary": "#4b2800", "error-container": "#93000a", "on-primary-fixed": "#2d1600", "on-primary-container": "#6b3c00", "secondary-fixed-dim": "#adc6ff", "on-surface": "#dae1ff", "on-secondary": "#002e68", "on-tertiary-fixed": "#271900", "surface-container-high": "#202942", "outline": "#9f8d7f", "on-primary-fixed-variant": "#6a3b00" }, borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, spacing: { "margin": "1rem", "gutter": "1rem", "space-md": "1rem", "margin-desktop": "3rem", "space-xl": "2.5rem", "gutter-desktop": "1.5rem", "space-xs": "0.25rem", "space-sm": "0.5rem", "space-lg": "1.5rem" }, fontFamily: { "headline-lg-mobile": ["Space Grotesk"], "code-inline": ["JetBrains Mono"], "body-lg": ["Merriweather"], "display-mobile": ["Space Grotesk"], "incident-mono": ["JetBrains Mono"], "label-mono": ["JetBrains Mono"], "display": ["Space Grotesk"], "headline-lg": ["Space Grotesk"], "body-sm": ["Merriweather"], "body-md": ["Merriweather"], "headline-sm": ["Space Grotesk"] }, fontSize: { "headline-lg-mobile": ["1.5rem", { "lineHeight": "2rem", "letterSpacing": "-0.01em", "fontWeight": "700" }], "code-inline": ["0.875rem", { "lineHeight": "1.25rem", "fontWeight": "500" }], "body-lg": ["1.125rem", { "lineHeight": "1.875rem", "letterSpacing": "0.01em", "fontWeight": "400" }], "display-mobile": ["2.25rem", { "lineHeight": "2.75rem", "letterSpacing": "-0.02em", "fontWeight": "700" }], "incident-mono": ["0.8125rem", { "lineHeight": "1.25rem", "letterSpacing": "0.04em", "fontWeight": "700" }], "label-mono": ["0.75rem", { "lineHeight": "1rem", "letterSpacing": "0.06em", "fontWeight": "500" }], "display": ["3rem", { "lineHeight": "3.5rem", "letterSpacing": "-0.03em", "fontWeight": "700" }], "headline-lg": ["2rem", { "lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "700" }], "body-sm": ["0.875rem", { "lineHeight": "1.5rem", "fontWeight": "300" }], "body-md": ["1rem", { "lineHeight": "1.65rem", "letterSpacing": "0.01em", "fontWeight": "400" }], "headline-sm": ["1.25rem", { "lineHeight": "1.75rem", "letterSpacing": "-0.01em", "fontWeight": "600" }] } } } }</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface text-on-surface font-body-md text-body-md flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/85 backdrop-blur-xl shadow-[0_1px_12px_rgba(0,0,0,0.25)]"><div class="h-16 px-space-sm flex items-center justify-between"><div class="flex items-center gap-space-xs"><button aria-label="Return to chronicle" class="w-11 h-11 flex items-center justify-center text-on-surface hover:text-primary transition-colors" onclick="history.back()"><span class="material-symbols-outlined text-[22px]">arrow_back</span></button><div class="flex flex-col"><span class="font-incident-mono text-incident-mono text-tertiary tracking-wide">DECISION CHECKPOINT</span><h1 class="font-headline-sm text-headline-sm text-on-surface font-bold truncate max-w-[200px]">Postmortem Analysis</h1></div></div><div class="flex items-center gap-space-xs"><button aria-label="Lantern bloom control" class="w-11 h-11 flex items-center justify-center text-primary hover:text-primary-container transition-colors"><span class="material-symbols-outlined text-[20px]">wb_incandescent</span></button><button aria-label="Bookmark choice node" class="w-11 h-11 flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[20px]">bookmark_border</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center ml-space-xs"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div><div class="w-full h-[2px] bg-surface-container-high"><div class="h-full bg-primary-container w-2/3 shadow-[0_0_8px_rgba(242,166,90,0.6)]"></div></div></header><main class="flex flex-col relative w-full pt-16 bg-surface min-h-screen pb-safe"><div class="flex flex-col w-full px-margin pb-space-xl">
+<!-- Dawn Horizon Ambient Light Glow -->
+<div class="relative w-full overflow-hidden rounded-xl bg-surface-container-low p-space-md shadow-md mb-space-lg">
+<div class="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-primary-container/20 blur-3xl pointer-events-none"></div>
+<div class="absolute -bottom-8 -left-8 w-36 h-36 rounded-full bg-secondary-container/15 blur-2xl pointer-events-none"></div>
+<!-- Editorial Header & Resolution Eyebrow -->
+<div class="relative z-10 flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-surface-container-high text-tertiary font-incident-mono text-incident-mono">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>
+          BAŞARILI ÇÖZÜM · SON A
+        </span>
+<span class="font-label-mono text-label-mono text-secondary ml-auto">03:00 - 11:30 NÖBETİ</span>
+</div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface font-bold tracking-tight mt-space-xs">
+        11:30 · Acil ve ameliyathane ayakta, veri güvende
+      </h2>
+<!-- Atmosphere Visual Framing Placeholder -->
+<div class="relative w-full h-36 rounded-lg overflow-hidden my-space-xs shadow-sm bg-surface-container-highest">
+<img class="w-full h-full object-cover opacity-75" data-alt="A moody, atmospheric hospital IT operations terminal at dawn with warm amber lamplight reflecting on glass monitors, deep navy-blue night sky shifting into subtle soft golden morning twilight outside modern windows, cinematic tactile tech noir aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5_Y4T-CZrHHgFAIv7ENMG9EZ5FDZdZ07QzkxJtdFll0wYuiVzUJ9ojq5XctKNtQKL_n2yLghahRF89ll728PmRSin_FwBMUTnkL3xECtE9UtEAOXdSjQBZ-e1ewteWu8LEaznHCFJsW_mEwefY4Yx07x5cplVU7yeONA07d3FTPCvzADGNQ7RB_osRZ8EUPeKdODpTBUHEnlFfq5_QozFecmOnJLWcmND1NvHyAql"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-low via-surface-container-low/40 to-transparent"></div>
+<div class="absolute bottom-2 left-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]" style="font-variation-settings: 'FILL' 1;">wb_twilight</span>
+<span class="font-incident-mono text-incident-mono text-primary-fixed">ŞAFAK DEVİR PROTOKOLÜ AKTİF</span>
+</div>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed italic">
+        Fenerin ışığında aldığın tedbirli kararlar sistemi felaketten kurtardı. Tek bir makinede denediğin canary yaklaşımı scriptteki ölümcül bayrak hatasını fark etmeni sağladı; ameliyathaneler ve hasta kayıtları sıfır veri kaybıyla yeniden ayağa kalktı. Nöbet devri yaklaşıyor.
+      </p>
+</div>
+</div>
+<!-- Telemetry Snapshot / Incident Audit -->
+<div class="flex items-center justify-between px-space-xs mb-space-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">account_tree</span>
+<span class="font-incident-mono text-incident-mono text-tertiary">KARAR İZİ VE ROTASI</span>
+</div>
+<span class="font-label-mono text-label-mono text-on-surface-variant">3/3 ONAYLANDI</span>
+</div>
+<!-- Decision Trail Cards -->
+<div class="flex flex-col gap-space-xs mb-space-lg">
+<!-- Decision 1 -->
+<div class="bg-surface-container rounded-lg p-space-sm shadow-sm flex items-start gap-space-sm transition-all hover:bg-surface-container-high">
+<div class="mt-0.5 w-6 h-6 rounded bg-primary-container/20 flex items-center justify-center flex-shrink-0 text-primary">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="flex flex-col min-w-0 flex-1">
+<div class="flex items-center justify-between">
+<span class="font-incident-mono text-incident-mono text-primary">07:30 · Karar 1: Kriz İletişimi</span>
+<span class="font-label-mono text-label-mono text-secondary">SEÇİLDİ</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface mt-0.5">
+          Yönetimi ve nöbetçi hekimleri anında bilgilendir, şeffaf durum sayfası aç
+        </p>
+</div>
+</div>
+<!-- Decision 2 -->
+<div class="bg-surface-container rounded-lg p-space-sm shadow-sm flex items-start gap-space-sm transition-all hover:bg-surface-container-high">
+<div class="mt-0.5 w-6 h-6 rounded bg-primary-container/20 flex items-center justify-center flex-shrink-0 text-primary">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="flex flex-col min-w-0 flex-1">
+<div class="flex items-center justify-between">
+<span class="font-incident-mono text-incident-mono text-primary">09:05 · Karar 2: Script Dağıtımı</span>
+<span class="font-label-mono text-label-mono text-secondary">SEÇİLDİ</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface mt-0.5">
+          Önce 1 makinede dene, sonra genişlet (Canary test)
+        </p>
+</div>
+</div>
+<!-- Decision 3 -->
+<div class="bg-surface-container rounded-lg p-space-sm shadow-sm flex items-start gap-space-sm transition-all hover:bg-surface-container-high">
+<div class="mt-0.5 w-6 h-6 rounded bg-primary-container/20 flex items-center justify-center flex-shrink-0 text-primary">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="flex flex-col min-w-0 flex-1">
+<div class="flex items-center justify-between">
+<span class="font-incident-mono text-incident-mono text-primary">10:15 · Karar 3: Yeniden Başlatma Protokolü</span>
+<span class="font-label-mono text-label-mono text-secondary">SEÇİLDİ</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface mt-0.5">
+          Ağ bağlantısını keserek güvenli modda sürücü temizliği
+        </p>
+</div>
+</div>
+</div>
+<!-- Key Insights Section Header -->
+<div class="flex items-center justify-between px-space-xs mb-space-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">menu_book</span>
+<span class="font-incident-mono text-incident-mono text-tertiary">BUGÜN ÖĞRENDİĞİM İLKELER</span>
+</div>
+<span class="font-label-mono text-label-mono text-on-surface-variant">OPERASYONEL ARŞİV</span>
+</div>
+<!-- Learning Bento Cards -->
+<div class="flex flex-col gap-space-sm mb-space-xl">
+<!-- Featured Card 1: Canary Deployment (Lantern Highlight) -->
+<div class="relative bg-surface-container-high rounded-xl p-space-md shadow-xl overflow-hidden group">
+<!-- Amber ambient lantern illumination -->
+<div class="absolute -top-10 -right-10 w-32 h-32 bg-primary-container/30 blur-2xl pointer-events-none"></div>
+<div class="relative flex items-start gap-space-sm">
+<div class="w-6 h-6 rounded bg-primary-container flex items-center justify-center flex-shrink-0 text-on-primary-container shadow-sm mt-0.5">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<div class="flex flex-col min-w-0 flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="px-1.5 py-0.5 rounded bg-primary text-on-primary font-label-mono text-label-mono uppercase tracking-wider font-bold">ÖNE ÇIKAN</span>
+<span class="font-incident-mono text-incident-mono text-primary font-bold">MİMARİ DERS</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary-fixed font-bold leading-snug">
+            Canary / kademeli dağıtım
+          </h3>
+<p class="font-body-sm text-body-sm text-on-surface mt-1.5 leading-relaxed">
+            Tüm sisteme yaymadan önce küçük bir örneklemde doğrulama yaparak felaket çapını minimize etme.
+          </p>
+</div>
+</div>
+</div>
+<!-- Card 2: SPOF -->
+<div class="bg-surface-container rounded-xl p-space-md shadow-sm transition-all hover:bg-surface-container-high">
+<div class="flex items-start gap-space-sm">
+<div class="w-6 h-6 rounded bg-surface-variant flex items-center justify-center flex-shrink-0 text-primary mt-0.5">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<div class="flex flex-col min-w-0 flex-1">
+<span class="font-incident-mono text-incident-mono text-secondary mb-0.5">ALTYAPI DAYANIKLILIĞI</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">
+            Ortak hata noktası (Single Point of Failure)
+          </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1.5 leading-relaxed">
+            Aynı çekirdek sürücüsünün tüm filoda eşzamanlı güncellenmesinin getirdiği risk.
+          </p>
+</div>
+</div>
+</div>
+<!-- Card 3: Data Minimization -->
+<div class="bg-surface-container rounded-xl p-space-md shadow-sm transition-all hover:bg-surface-container-high">
+<div class="flex items-start gap-space-sm">
+<div class="w-6 h-6 rounded bg-surface-variant flex items-center justify-center flex-shrink-0 text-primary mt-0.5">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<div class="flex flex-col min-w-0 flex-1">
+<span class="font-incident-mono text-incident-mono text-secondary mb-0.5">KRİZ TRİYAJI</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">
+            Veri minimizasyonu
+          </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1.5 leading-relaxed">
+            Kriz anında sadece hayatî kritik servislerin önceliklendirilmesi ve veri güvenliği.
+          </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Replay & Incident Sign-off Action Dock -->
+<div class="w-full flex flex-col gap-space-xs">
+<button class="w-full py-3.5 px-space-md rounded-xl bg-primary text-on-primary font-headline-sm text-headline-sm flex items-center justify-center gap-2 shadow-lg hover:bg-primary-container hover:text-on-primary-container transition-all active:scale-[0.98]" id="btn-replay">
+<span class="material-symbols-outlined text-[20px] transition-transform duration-500 group-hover:rotate-180">replay</span>
+<span>Baştan oyna</span>
+</button>
+<div class="flex items-center justify-center gap-1.5 py-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]">lock_reset</span>
+<span class="font-label-mono text-label-mono text-center">NÖBET DEFTERİ KAYDEDİLDİ · 03:00 NÖBETİ TAMAMLANDI</span>
+</div>
+</div>
+</div>
+<script>
+  (function() {
+    const replayBtn = document.getElementById('btn-replay');
+    if (replayBtn) {
+      replayBtn.addEventListener('click', function() {
+        const icon = replayBtn.querySelector('.material-symbols-outlined');
+        if (icon) {
+          icon.classList.add('rotate-180');
+        }
+        setTimeout(() => {
+          window.location.reload();
+        }, 250);
+      });
+    }
+  })();
+</script></main></body></html>

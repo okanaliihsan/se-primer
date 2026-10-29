@@ -15,7 +15,7 @@ Yazılım mühendisliği için **oynanan bir kitap**. 19 Temmuz 2024 CrowdStrike
 | Teslim | Kanıt | Dosya |
 |---|---|---|
 | spec.md (20) | Problem, başarı ölçütü, kapsam dışı, 5 kabul örneği, akış şeması | [`spec.md`](spec.md) |
-| Tasarım (15) | 3 mobil ekran (+ sonuç kartı), DESIGN.md, durum makinesi | [`DESIGN.md`](DESIGN.md), [`design/`](design/) |
+| Tasarım (15) | Stitch'te 3 ekran (+ neyi alıp neyi almadığım), DESIGN.md, uygulamanın son ekranları, durum makinesi | [`design/stitch/`](design/stitch/), [`DESIGN.md`](DESIGN.md), [`design/`](design/) |
 | Çalışan uygulama (20) | Telefonda baştan sona oynanır | [`app/`](app/), [`dist/index.html`](dist/index.html) |
 | Tutor eval (25) | 20 cevap, hata türleri, oran + n + %95 GA, baseline ile doğrulama | [`eval/RAPOR.md`](eval/RAPOR.md) |
 | Cypress demo (10) | 8/8 yol + 5 kabul örneği E2E; demo video | [`cypress/`](cypress/), [`demo/`](demo/) |

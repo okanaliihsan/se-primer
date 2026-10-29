@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;background-color:#09122a;color:#dae1ff;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "surface": "#09122a", "on-tertiary-fixed-variant": "#5e4100", "on-background": "#dae1ff", "secondary": "#adc6ff", "on-secondary-fixed": "#001a41", "surface-tint": "#ffb873", "secondary-fixed": "#d8e2ff", "on-error": "#690005", "on-tertiary": "#422c00", "surface-variant": "#2b344d", "surface-container": "#161f37", "inverse-surface": "#dae1ff", "error": "#ffb4ab", "surface-container-low": "#121b33", "on-tertiary-container": "#5f4200", "primary-container": "#f2a65a", "tertiary": "#f8cb7f", "on-secondary-fixed-variant": "#004493", "tertiary-container": "#dab067", "surface-container-highest": "#2b344d", "tertiary-fixed-dim": "#ebc075", "on-surface-variant": "#d7c3b3", "on-error-container": "#ffdad6", "on-secondary-container": "#f2f4ff", "surface-container-lowest": "#040d25", "inverse-primary": "#8b5006", "outline-variant": "#524438", "inverse-on-surface": "#273049", "surface-bright": "#303852", "primary-fixed": "#ffdcbf", "primary": "#ffc794", "background": "#09122a", "secondary-container": "#036be0", "tertiary-fixed": "#ffdea9", "surface-dim": "#09122a", "primary-fixed-dim": "#ffb873", "on-primary": "#4b2800", "error-container": "#93000a", "on-primary-fixed": "#2d1600", "on-primary-container": "#6b3c00", "secondary-fixed-dim": "#adc6ff", "on-surface": "#dae1ff", "on-secondary": "#002e68", "on-tertiary-fixed": "#271900", "surface-container-high": "#202942", "outline": "#9f8d7f", "on-primary-fixed-variant": "#6a3b00" }, borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, spacing: { "margin": "1rem", "gutter": "1rem", "space-md": "1rem", "margin-desktop": "3rem", "space-xl": "2.5rem", "gutter-desktop": "1.5rem", "space-xs": "0.25rem", "space-sm": "0.5rem", "space-lg": "1.5rem" }, fontFamily: { "headline-lg-mobile": ["Space Grotesk"], "code-inline": ["JetBrains Mono"], "body-lg": ["Merriweather"], "display-mobile": ["Space Grotesk"], "incident-mono": ["JetBrains Mono"], "label-mono": ["JetBrains Mono"], "display": ["Space Grotesk"], "headline-lg": ["Space Grotesk"], "body-sm": ["Merriweather"], "body-md": ["Merriweather"], "headline-sm": ["Space Grotesk"] }, fontSize: { "headline-lg-mobile": ["1.5rem", { "lineHeight": "2rem", "letterSpacing": "-0.01em", "fontWeight": "700" }], "code-inline": ["0.875rem", { "lineHeight": "1.25rem", "fontWeight": "500" }], "body-lg": ["1.125rem", { "lineHeight": "1.875rem", "letterSpacing": "0.01em", "fontWeight": "400" }], "display-mobile": ["2.25rem", { "lineHeight": "2.75rem", "letterSpacing": "-0.02em", "fontWeight": "700" }], "incident-mono": ["0.8125rem", { "lineHeight": "1.25rem", "letterSpacing": "0.04em", "fontWeight": "700" }], "label-mono": ["0.75rem", { "lineHeight": "1rem", "letterSpacing": "0.06em", "fontWeight": "500" }], "display": ["3rem", { "lineHeight": "3.5rem", "letterSpacing": "-0.03em", "fontWeight": "700" }], "headline-lg": ["2rem", { "lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "700" }], "body-sm": ["0.875rem", { "lineHeight": "1.5rem", "fontWeight": "300" }], "body-md": ["1rem", { "lineHeight": "1.65rem", "letterSpacing": "0.01em", "fontWeight": "400" }], "headline-sm": ["1.25rem", { "lineHeight": "1.75rem", "letterSpacing": "-0.01em", "fontWeight": "600" }] } } } }</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface text-on-surface font-body-md text-body-md flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/85 backdrop-blur-xl shadow-[0_1px_12px_rgba(0,0,0,0.25)]"><div class="h-16 px-space-sm flex items-center justify-between"><div class="flex items-center gap-space-xs"><button aria-label="Return to chronicle" class="w-11 h-11 flex items-center justify-center text-on-surface hover:text-primary transition-colors" onclick="history.back()"><span class="material-symbols-outlined text-[22px]">arrow_back</span></button><div class="flex flex-col"><span class="font-incident-mono text-incident-mono text-tertiary tracking-wide">DECISION CHECKPOINT</span><h1 class="font-headline-sm text-headline-sm text-on-surface font-bold truncate max-w-[200px]">Critical Decision Branch</h1></div></div><div class="flex items-center gap-space-xs"><button aria-label="Lantern bloom control" class="w-11 h-11 flex items-center justify-center text-primary hover:text-primary-container transition-colors"><span class="material-symbols-outlined text-[20px]">wb_incandescent</span></button><button aria-label="Bookmark choice node" class="w-11 h-11 flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[20px]">bookmark_border</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center ml-space-xs"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div><div class="w-full h-[2px] bg-surface-container-high"><div class="h-full bg-primary-container w-2/3 shadow-[0_0_8px_rgba(242,166,90,0.6)]"></div></div></header><main class="flex flex-col relative w-full pt-16 bg-surface min-h-screen pb-safe"><div class="flex flex-col w-full px-margin pb-space-xl max-w-[680px] mx-auto space-y-space-lg select-none">
+<!-- Phase 1: Operational Header & Ambient Heartbeat Countdown -->
+<section class="flex flex-col space-y-space-sm pt-space-xs">
+<!-- 3-Segment Progress Bar -->
+<div class="flex items-center gap-1.5 w-full h-1.5 rounded-full overflow-hidden bg-surface-container-lowest p-[1px]">
+<div class="h-full flex-1 rounded-full bg-primary-container"></div>
+<div class="h-full flex-1 rounded-full bg-primary animate-pulse shadow-[0_0_12px_rgba(242,166,90,0.8)]"></div>
+<div class="h-full flex-1 rounded-full bg-surface-variant/40"></div>
+</div>
+<!-- Metadata & Crisis Telemetry Bar -->
+<div class="flex items-center justify-between mt-space-xs">
+<div class="flex items-center gap-space-xs bg-surface-container-high px-2.5 py-1 rounded">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-ping"></span>
+<span class="font-incident-mono text-incident-mono text-primary font-bold tracking-wider">KARAR 2 · TEST</span>
+<span class="text-outline-variant font-label-mono text-label-mono">/</span>
+<span class="font-incident-mono text-incident-mono text-on-surface-variant">09:05 UTC</span>
+</div>
+<!-- Urgency Pulsing Pill -->
+<div class="flex items-center gap-1.5 bg-error-container/40 text-on-error-container px-3 py-1 rounded-full shadow-[0_0_14px_-2px_rgba(147,0,10,0.5)]" id="countdown-pill">
+<span class="material-symbols-outlined text-[16px] text-error animate-pulse">timer</span>
+<span class="font-incident-mono text-incident-mono font-bold text-error tracking-widest" id="countdown-timer">00:54</span>
+</div>
+</div>
+</section>
+<!-- Narrative Vessel: Book-feel prose & Terminal Reality -->
+<article class="relative flex flex-col space-y-space-md bg-surface-container-low p-space-lg rounded-xl shadow-lg overflow-hidden">
+<!-- Ambient Lantern Bloom Gradient in corner -->
+<div class="absolute -top-12 -right-12 w-48 h-48 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
+<!-- Terminal Alert Callout (BSOD Incident Context) -->
+<div class="flex items-start gap-space-sm bg-surface-container-lowest p-space-sm rounded">
+<div class="p-1 rounded bg-secondary-container/20 text-secondary mt-0.5">
+<span class="material-symbols-outlined text-[18px]">terminal</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-mono text-label-mono text-secondary tracking-wider">SYSTEM FAULT: 0x00000050 · CRITICAL DRIVER</span>
+<span class="font-code-inline text-code-inline text-on-surface-variant truncate">PATH: %WINDIR%\System32\drivers\CrowdStrike\C-00000291*.sys</span>
+</div>
+</div>
+<!-- Literary Narrative -->
+<p class="font-body-lg text-body-lg text-on-surface leading-relaxed text-justify">
+      Hastanenin kritik sistemleri kilitlenmişken yan masadaki kıdemli mühendis nefes nefese foruma düşen bir topluluk script'i bulduğunu söylüyor. Bu script, tüm 600 hastane makinesinde <code class="font-code-inline text-code-inline px-1 py-0.5 rounded bg-surface-container-highest text-primary">C-00000291*.sys</code> bozuk sürücü dosyasını tek seferde silecek powershell komutunu içeriyor. Acil servis monitörleri hala karanlık.
+    </p>
+<!-- Asymmetrical Internal Monologue Note -->
+<aside class="relative flex gap-space-sm p-space-md bg-surface-container rounded-lg">
+<div class="w-1 rounded-full bg-primary-container shrink-0"></div>
+<div class="flex flex-col">
+<span class="font-label-mono text-label-mono text-primary font-bold uppercase tracking-wider mb-0.5">İç Ses</span>
+<p class="font-body-md text-body-md italic text-on-surface-variant">
+          "Senin gözünden: Canary dağıtım tam olarak bu durum için mi var?"
+        </p>
+</div>
+</aside>
+</article>
+<!-- Decision Fork Section -->
+<section class="flex flex-col space-y-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">call_split</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-bold">Script'i nasıl kullanacaksın?</h2>
+</div>
+<!-- Choice Option A -->
+<button class="group text-left relative flex items-start p-space-md rounded-xl bg-surface-container hover:bg-surface-container-high active:scale-[0.99] transition-all duration-200 shadow-md" id="option-btn-A" onclick="selectDecision('A')" type="button">
+<div class="w-1.5 absolute left-0 top-0 bottom-0 rounded-l-xl bg-primary-container shadow-[0_0_12px_rgba(242,166,90,0.4)]"></div>
+<div class="flex items-start gap-space-md ml-space-xs w-full">
+<div class="flex items-center justify-center w-8 h-8 rounded bg-primary-container/20 text-primary shrink-0 group-hover:bg-primary-container group-hover:text-on-primary-container transition-colors">
+<span class="font-label-mono text-label-mono font-bold text-base">A</span>
+</div>
+<div class="flex flex-col min-w-0 pr-space-xs">
+<span class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors">
+            Önce 1 makinede dene, sonra genişlet
+          </span>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+            Kademeli / canary test yap, yan etkileri acil servisteki yedek laptopta gör.
+          </span>
+<div class="flex items-center gap-2 mt-2">
+<span class="font-label-mono text-label-mono px-2 py-0.5 rounded bg-surface-container-highest text-secondary">RİSK: DÜŞÜK</span>
+<span class="font-label-mono text-label-mono px-2 py-0.5 rounded bg-surface-container-highest text-tertiary">SÜRE: +4 DK</span>
+</div>
+</div>
+</div>
+</button>
+<!-- Choice Option B -->
+<button class="group text-left relative flex items-start p-space-md rounded-xl bg-surface-container hover:bg-surface-container-high active:scale-[0.99] transition-all duration-200 shadow-md" id="option-btn-B" onclick="selectDecision('B')" type="button">
+<div class="w-1.5 absolute left-0 top-0 bottom-0 rounded-l-xl bg-secondary-container shadow-[0_0_12px_rgba(3,107,224,0.4)]"></div>
+<div class="flex items-start gap-space-md ml-space-xs w-full">
+<div class="flex items-center justify-center w-8 h-8 rounded bg-secondary-container/20 text-secondary shrink-0 group-hover:bg-secondary-container group-hover:text-on-secondary-container transition-colors">
+<span class="font-label-mono text-label-mono font-bold text-base">B</span>
+</div>
+<div class="flex flex-col min-w-0 pr-space-xs">
+<span class="font-headline-sm text-headline-sm text-on-surface group-hover:text-secondary transition-colors">
+            600 makineye aynı anda uygula
+          </span>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+            Zaman daralıyor, tüm hastaneyi tek komutla kurtarmayı dene.
+          </span>
+<div class="flex items-center gap-2 mt-2">
+<span class="font-label-mono text-label-mono px-2 py-0.5 rounded bg-error-container/40 text-error font-bold">RİSK: KRİTİK</span>
+<span class="font-label-mono text-label-mono px-2 py-0.5 rounded bg-surface-container-highest text-on-surface-variant">SÜRE: ANINDA</span>
+</div>
+</div>
+</div>
+</button>
+</section>
+<!-- Socratic Mentor Console: The Owl of Night Incident -->
+<section class="flex flex-col bg-surface-container-lowest rounded-xl p-space-md space-y-space-sm shadow-xl">
+<!-- Mentor Header & State Ping -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="relative flex items-center justify-center w-3 h-3">
+<span class="absolute inline-flex w-full h-full rounded-full bg-emerald-400 opacity-75 animate-ping"></span>
+<span class="relative inline-flex w-2 h-2 rounded-full bg-emerald-500"></span>
+</div>
+<span class="font-incident-mono text-incident-mono font-bold text-on-surface">TUTOR</span>
+<span class="text-outline-variant">·</span>
+<span class="font-label-mono text-label-mono text-on-surface-variant">Cevabı söylemez, soru sorar</span>
+</div>
+<div class="flex items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-[16px]">school</span>
+<span class="font-label-mono text-label-mono font-bold tracking-wider">SOKRATİK REHBER</span>
+</div>
+</div>
+<!-- Speech Balloon with tactile elevation -->
+<div class="relative flex items-start gap-space-sm p-space-md bg-surface-container rounded-lg">
+<div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center shrink-0 text-primary">
+<span class="material-symbols-outlined text-[20px]">psychology</span>
+</div>
+<div class="flex flex-col space-y-1">
+<span class="font-label-mono text-label-mono text-primary tracking-wide">GÖZLEM VE SORGULAMA</span>
+<p class="font-body-md text-body-md text-on-surface leading-snug">
+          "600 makineye aynı anda gönderdiğinde betik bir sözdizimi hatası verirse veya makineler yeniden döngüye girerse geri dönüş planın (rollback) ne olacak?"
+        </p>
+</div>
+</div>
+<!-- Dynamic Interactive Inquiry Chat Input -->
+<form class="relative flex items-center mt-space-xs gap-space-xs" id="tutor-form" onsubmit="handleTutorSubmit(event)">
+<div class="relative flex-1">
+<input class="w-full h-11 pl-3 pr-10 bg-surface-container text-on-surface placeholder:text-on-surface-variant/60 font-body-sm text-body-sm rounded-lg focus:outline-none focus:bg-surface-container-high transition-colors" id="tutor-input" placeholder="Rehbere bir soru sor..." type="text"/>
+<button class="absolute right-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary transition-colors" onclick="suggestTutorQuery()" title="Hızlı Argüman İpucu" type="button">
+<span class="material-symbols-outlined text-[18px]">lightbulb</span>
+</button>
+</div>
+<button class="h-11 px-4 bg-primary text-on-primary font-incident-mono text-incident-mono font-bold rounded-lg flex items-center justify-center gap-1 shadow-md hover:bg-primary-container transition-all active:scale-95" type="submit">
+<span>GÖNDER</span>
+<span class="material-symbols-outlined text-[16px]">send</span>
+</button>
+</form>
+<!-- Contextual Response Dock (Hidden initially) -->
+<div class="hidden flex-col p-space-sm bg-surface-container-high rounded-lg text-primary text-body-sm transition-all duration-300" id="tutor-feedback-dock">
+<div class="flex items-center gap-1 font-label-mono text-label-mono font-bold mb-1">
+<span class="material-symbols-outlined text-[16px] text-tertiary">chat</span>
+<span class="text-tertiary">TUTOR YANITI</span>
+</div>
+<p class="italic text-on-surface-variant font-body-sm" id="tutor-response-text"></p>
+</div>
+</section>
+</div>
+<script>
+  // Countdown Timer Micro-behavior
+  (function initCountdown() {
+    let secondsLeft = 54;
+    const timerElement = document.getElementById('countdown-timer');
+    const pillElement = document.getElementById('countdown-pill');
+
+    if (!timerElement) return;
+
+    const interval = setInterval(() => {
+      if (secondsLeft <= 0) {
+        clearInterval(interval);
+        timerElement.textContent = "00:00";
+        return;
+      }
+      secondsLeft--;
+      const formatted = secondsLeft < 10 ? `00:0${secondsLeft}` : `00:${secondsLeft}`;
+      timerElement.textContent = formatted;
+
+      if (secondsLeft <= 15) {
+        pillElement.classList.add('animate-bounce');
+      }
+    }, 1000);
+  })();
+
+  // Decision Button Selection state
+  function selectDecision(option) {
+    const btnA = document.getElementById('option-btn-A');
+    const btnB = document.getElementById('option-btn-B');
+    const tutorText = document.getElementById('tutor-response-text');
+    const feedbackDock = document.getElementById('tutor-feedback-dock');
+
+    if (option === 'A') {
+      btnA.classList.add('bg-surface-container-highest');
+      btnB.classList.remove('bg-surface-container-highest');
+      if (feedbackDock && tutorText) {
+        feedbackDock.classList.remove('hidden');
+        feedbackDock.classList.add('flex');
+        tutorText.textContent = "Tutor: Tedbirli bir yaklaşım. İlk makinede onay alırsan dağıtımı hangi hızla dalgalandıracaksın (rollout phases)?";
+      }
+    } else {
+      btnB.classList.add('bg-surface-container-highest');
+      btnA.classList.remove('bg-surface-container-highest');
+      if (feedbackDock && tutorText) {
+        feedbackDock.classList.remove('hidden');
+        feedbackDock.classList.add('flex');
+        tutorText.textContent = "Tutor: Risk katsayısı tavan yaptı. Ya betik çalışırken DC sunucusu kilitlenirse? Hastane yönetimine ilk arama ne zaman gider?";
+      }
+    }
+  }
+
+  // Socratic Dialog micro-submission
+  function handleTutorSubmit(e) {
+    e.preventDefault();
+    const input = document.getElementById('tutor-input');
+    const feedbackDock = document.getElementById('tutor-feedback-dock');
+    const tutorText = document.getElementById('tutor-response-text');
+    
+    if (!input || !input.value.trim()) return;
+
+    feedbackDock.classList.remove('hidden');
+    feedbackDock.classList.add('flex');
+    tutorText.textContent = `Tutor: "${input.value.trim()}" sorusu yerinde. Peki acil servis telsizinden gelecek olası bir anons kararını geciktirirse bedeli ne olacak?`;
+    input.value = '';
+  }
+
+  function suggestTutorQuery() {
+    const input = document.getElementById('tutor-input');
+    if (input) {
+      input.value = "PowerShell script'inin dijital imzası var mı?";
+      input.focus();
+    }
+  }
+</script></main></body></html>

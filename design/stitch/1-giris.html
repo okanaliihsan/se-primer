@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_blank" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;background-color:#09122a;color:#dae1ff;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "surface": "#09122a", "on-tertiary-fixed-variant": "#5e4100", "on-background": "#dae1ff", "secondary": "#adc6ff", "on-secondary-fixed": "#001a41", "surface-tint": "#ffb873", "secondary-fixed": "#d8e2ff", "on-error": "#690005", "on-tertiary": "#422c00", "surface-variant": "#2b344d", "surface-container": "#161f37", "inverse-surface": "#dae1ff", "error": "#ffb4ab", "surface-container-low": "#121b33", "on-tertiary-container": "#5f4200", "primary-container": "#f2a65a", "tertiary": "#f8cb7f", "on-secondary-fixed-variant": "#004493", "tertiary-container": "#dab067", "surface-container-highest": "#2b344d", "tertiary-fixed-dim": "#ebc075", "on-surface-variant": "#d7c3b3", "on-error-container": "#ffdad6", "on-secondary-container": "#f2f4ff", "surface-container-lowest": "#040d25", "inverse-primary": "#8b5006", "outline-variant": "#524438", "inverse-on-surface": "#273049", "surface-bright": "#303852", "primary-fixed": "#ffdcbf", "primary": "#ffc794", "background": "#09122a", "secondary-container": "#036be0", "tertiary-fixed": "#ffdea9", "surface-dim": "#09122a", "primary-fixed-dim": "#ffb873", "on-primary": "#4b2800", "error-container": "#93000a", "on-primary-fixed": "#2d1600", "on-primary-container": "#6b3c00", "secondary-fixed-dim": "#adc6ff", "on-surface": "#dae1ff", "on-secondary": "#002e68", "on-tertiary-fixed": "#271900", "surface-container-high": "#202942", "outline": "#9f8d7f", "on-primary-fixed-variant": "#6a3b00" }, borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, spacing: { "margin": "1rem", "gutter": "1rem", "space-md": "1rem", "margin-desktop": "3rem", "space-xl": "2.5rem", "gutter-desktop": "1.5rem", "space-xs": "0.25rem", "space-sm": "0.5rem", "space-lg": "1.5rem" }, fontFamily: { "headline-lg-mobile": ["Space Grotesk"], "code-inline": ["JetBrains Mono"], "body-lg": ["Merriweather"], "display-mobile": ["Space Grotesk"], "incident-mono": ["JetBrains Mono"], "label-mono": ["JetBrains Mono"], "display": ["Space Grotesk"], "headline-lg": ["Space Grotesk"], "body-sm": ["Merriweather"], "body-md": ["Merriweather"], "headline-sm": ["Space Grotesk"] }, fontSize: { "headline-lg-mobile": ["1.5rem", { "lineHeight": "2rem", "letterSpacing": "-0.01em", "fontWeight": "700" }], "code-inline": ["0.875rem", { "lineHeight": "1.25rem", "fontWeight": "500" }], "body-lg": ["1.125rem", { "lineHeight": "1.875rem", "letterSpacing": "0.01em", "fontWeight": "400" }], "display-mobile": ["2.25rem", { "lineHeight": "2.75rem", "letterSpacing": "-0.02em", "fontWeight": "700" }], "incident-mono": ["0.8125rem", { "lineHeight": "1.25rem", "letterSpacing": "0.04em", "fontWeight": "700" }], "label-mono": ["0.75rem", { "lineHeight": "1rem", "letterSpacing": "0.06em", "fontWeight": "500" }], "display": ["3rem", { "lineHeight": "3.5rem", "letterSpacing": "-0.03em", "fontWeight": "700" }], "headline-lg": ["2rem", { "lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "700" }], "body-sm": ["0.875rem", { "lineHeight": "1.5rem", "fontWeight": "300" }], "body-md": ["1rem", { "lineHeight": "1.65rem", "letterSpacing": "0.01em", "fontWeight": "400" }], "headline-sm": ["1.25rem", { "lineHeight": "1.75rem", "letterSpacing": "-0.01em", "fontWeight": "600" }] } } } }</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface text-on-surface font-body-md text-body-md flex flex-col min-h-screen pt-safe pb-safe"><main class="flex flex-col relative w-full bg-surface min-h-screen"><div class="flex flex-col w-full px-margin pb-space-xl">
+<!-- Eyebrow & Ambient Telemetry Bar -->
+<div class="flex items-center justify-between pt-space-md pb-space-xs">
+<div class="flex items-center space-x-2">
+<span class="inline-block w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px_#f2a65a]"></span>
+<span class="font-label-mono text-label-mono text-primary uppercase tracking-widest">SE PRIMER · BÖLÜM 1</span>
+</div>
+<div class="bg-surface-container px-2 py-0.5 rounded-DEFAULT">
+<span class="font-incident-mono text-incident-mono text-secondary">07:09 UTC</span>
+</div>
+</div>
+<!-- Narrative Headline & Hook -->
+<div class="mt-space-sm mb-space-lg">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface tracking-tight">
+      07:09, ekranlar maviye döndü
+    </h1>
+<p class="font-headline-sm text-headline-sm text-primary-container mt-1 flex items-center gap-2">
+<span>Nöbetçi sensin.</span>
+<span class="material-symbols-outlined text-primary text-base">flashlight_on</span>
+</p>
+<p class="font-body-md text-body-md text-on-surface-variant mt-space-sm leading-relaxed">
+      Sabahın ilk sessizliğinde çağrı cihazı titreşiyor. Küresel veri akışı aniden sıfırlandı; kritik sistemler peş peşe çöküyor.
+    </p>
+</div>
+<!-- Crisis Incident Banner (CrowdStrike Outage Archetype) -->
+<div class="mb-space-lg rounded-xl bg-secondary-container text-on-secondary-container p-space-md shadow-[0_8px_24px_-4px_rgba(3,107,224,0.3)]">
+<div class="flex items-start gap-3">
+<div class="bg-surface-container-lowest text-secondary p-2 rounded-lg flex items-center justify-center">
+<span class="font-incident-mono text-incident-mono font-bold leading-none">:(</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-label-mono text-label-mono text-secondary-fixed uppercase tracking-wider">GERÇEK OLAYA DAYANIR</span>
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-error animate-ping"></span>
+</div>
+<p class="font-incident-mono text-incident-mono text-on-secondary-container font-semibold mt-0.5">
+          19 Temmuz 2024 · CrowdStrike Falcon Güncellemesi
+        </p>
+<p class="font-label-mono text-label-mono text-secondary-fixed-dim mt-1 opacity-90 leading-tight">
+          Hata Kodu: DRIVER_IRQL_NOT_LESS_OR_EQUAL (csagent.sys null pointer)
+        </p>
+</div>
+</div>
+</div>
+<!-- Context Visual Storytelling -->
+<div class="mb-space-lg rounded-xl overflow-hidden shadow-lg bg-surface-container-low">
+<div class="bg-cover bg-center w-full h-36 relative flex items-end p-space-md" data-alt="A moody, cinematic midnight shot of an empty engineering operations room with dim warm desk lamp glow reflecting on dark monitors displaying critical system blue crash diagnostics and code telemetry in deep navy blue and amber tones." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBEfoOSnXPDjKwI-EaO5LjlCdGyQMzTMSdmSuRCFlnVVOfuNveC_X0fC76uP0PQkEAxU750gm4zGWba-TdWyB72SfGhWemnj5XqAaJfuRoZZkeqvWvqSFHVWN9rOkkxeBla0iHpijNgEZ2W4-YCaHf9C1A606VxANPn0vKeX1szSfBhvdwk_97zrGk2bhhtP84HDF-_jihw8JnGyFk8a8PP0IytbiI1_YX7eyyX5dOH')">
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/60 to-transparent"></div>
+<div class="relative z-10 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm">terminal</span>
+<span class="font-label-mono text-label-mono text-on-surface">WAR_ROOM_INCIDENT_0411.log</span>
+</div>
+</div>
+</div>
+<!-- SECTION 1: Level Selection -->
+<div class="mb-space-lg">
+<div class="flex items-center justify-between mb-space-sm">
+<label class="font-label-mono text-label-mono text-tertiary-fixed tracking-wider uppercase flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-primary">signal_cellular_alt</span>
+        SEVİYEN
+      </label>
+<span class="font-label-mono text-label-mono text-outline">1 / 3 SEÇİLDİ</span>
+</div>
+<div class="space-y-2" id="level-group">
+<!-- Option 1 -->
+<button class="level-card w-full text-left p-space-md rounded-xl bg-surface-container-high transition-all duration-200" onclick="selectLevel(this)" type="button">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="font-label-mono text-label-mono text-outline">[LVL 1]</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Yeni başladım</span>
+</div>
+<span class="radio-indicator w-4 h-4 rounded-full bg-surface-container flex items-center justify-center">
+<span class="w-2 h-2 rounded-full bg-transparent"></span>
+</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Temel kavramlar ve kılavuzlu adımlar</p>
+</button>
+<!-- Option 2 (Active Lantern Glow by default) -->
+<button class="level-card active-card w-full text-left p-space-md rounded-xl bg-surface-container-highest transition-all duration-200 shadow-[0_0_20px_-4px_rgba(242,166,90,0.25)]" onclick="selectLevel(this)" type="button">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="font-label-mono text-label-mono text-primary">[LVL 2]</span>
+<span class="font-headline-sm text-headline-sm text-primary">Biraz deneyimim var</span>
+</div>
+<span class="radio-indicator w-4 h-4 rounded-full bg-primary flex items-center justify-center">
+<span class="w-2 h-2 rounded-full bg-on-primary"></span>
+</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface mt-1">Sistem dinamiklerini ve arıza kök nedenlerini keşfet</p>
+</button>
+<!-- Option 3 -->
+<button class="level-card w-full text-left p-space-md rounded-xl bg-surface-container-high transition-all duration-200" onclick="selectLevel(this)" type="button">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="font-label-mono text-label-mono text-outline">[LVL 3]</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Deneyimliyim</span>
+</div>
+<span class="radio-indicator w-4 h-4 rounded-full bg-surface-container flex items-center justify-center">
+<span class="w-2 h-2 rounded-full bg-transparent"></span>
+</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Doğrudan kriz baskısı ve serbest seçim kararları</p>
+</button>
+</div>
+</div>
+<!-- SECTION 2: Role Selection (2x2 Grid) -->
+<div class="mb-space-lg">
+<div class="flex items-center justify-between mb-space-sm">
+<label class="font-label-mono text-label-mono text-tertiary-fixed tracking-wider uppercase flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-primary">badge</span>
+        KENDİNİ HANGİ ROLDE GÖRÜYORSUN?
+      </label>
+<span class="font-incident-mono text-incident-mono text-secondary">PROJE: FALCON-DOWN</span>
+</div>
+<div class="grid grid-cols-2 gap-2" id="role-group">
+<!-- Role 1: Backend -->
+<button class="role-card text-left p-space-md rounded-xl bg-surface-container-high transition-all duration-200 flex flex-col justify-between min-h-[104px]" onclick="selectRole(this)" type="button">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="material-symbols-outlined text-outline role-icon">dns</span>
+<span class="role-indicator w-2 h-2 rounded-full bg-transparent"></span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface block leading-tight role-title">Backend</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant block mt-1 line-clamp-1">API &amp; Veri hattı</span>
+</button>
+<!-- Role 2: DevOps / Nöbetçi (Selected by default) -->
+<button class="role-card active-role text-left p-space-md rounded-xl bg-surface-container-highest transition-all duration-200 flex flex-col justify-between min-h-[104px] shadow-[0_0_16px_-2px_rgba(242,166,90,0.3)]" onclick="selectRole(this)" type="button">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="material-symbols-outlined text-primary role-icon">terminal</span>
+<span class="role-indicator w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+</div>
+<span class="font-headline-sm text-headline-sm text-primary block leading-tight role-title">DevOps / Nöbetçi</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface block mt-1 line-clamp-1">SRE &amp; Dağıtım mimarisi</span>
+</button>
+<!-- Role 3: Test / QA -->
+<button class="role-card text-left p-space-md rounded-xl bg-surface-container-high transition-all duration-200 flex flex-col justify-between min-h-[104px]" onclick="selectRole(this)" type="button">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="material-symbols-outlined text-outline role-icon">bug_report</span>
+<span class="role-indicator w-2 h-2 rounded-full bg-transparent"></span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface block leading-tight role-title">Test / QA</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant block mt-1 line-clamp-1">Stres testleri &amp; Kaos</span>
+</button>
+<!-- Role 4: Mobil -->
+<button class="role-card text-left p-space-md rounded-xl bg-surface-container-high transition-all duration-200 flex flex-col justify-between min-h-[104px]" onclick="selectRole(this)" type="button">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="material-symbols-outlined text-outline role-icon">smartphone</span>
+<span class="role-indicator w-2 h-2 rounded-full bg-transparent"></span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface block leading-tight role-title">Mobil</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant block mt-1 line-clamp-1">İstemci dayanıklılığı</span>
+</button>
+</div>
+</div>
+<!-- SECTION 3: Learning Objectives -->
+<div class="mb-space-xl">
+<div class="flex items-center justify-between mb-space-sm">
+<label class="font-label-mono text-label-mono text-tertiary-fixed tracking-wider uppercase flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-primary">school</span>
+        BU BÖLÜMDEN NE ÖĞRENMEK İSTİYORSUN?
+      </label>
+</div>
+<div class="flex flex-col gap-2" id="goal-group">
+<!-- Goal 1 (Active) -->
+<button class="goal-chip active-goal w-full flex items-center justify-between p-space-md rounded-xl bg-surface-container-highest transition-all duration-150 shadow-[0_0_12px_-2px_rgba(242,166,90,0.2)]" onclick="toggleGoal(this)" type="button">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary goal-icon">account_tree</span>
+<span class="font-body-md text-body-md text-primary font-medium goal-text">Mimariyi anlamak</span>
+</div>
+<span class="material-symbols-outlined text-primary text-lg goal-check">check_circle</span>
+</button>
+<!-- Goal 2 -->
+<button class="goal-chip w-full flex items-center justify-between p-space-md rounded-xl bg-surface-container-high transition-all duration-150" onclick="toggleGoal(this)" type="button">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-outline goal-icon">crisis_alert</span>
+<span class="font-body-md text-body-md text-on-surface goal-text">Kriz yönetimi &amp; Karar anları</span>
+</div>
+<span class="material-symbols-outlined text-outline text-lg goal-check">radio_button_unchecked</span>
+</button>
+<!-- Goal 3 -->
+<button class="goal-chip w-full flex items-center justify-between p-space-md rounded-xl bg-surface-container-high transition-all duration-150" onclick="toggleGoal(this)" type="button">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-outline goal-icon">security</span>
+<span class="font-body-md text-body-md text-on-surface goal-text">Güvenlik ve KVKK uyumluluğu</span>
+</div>
+<span class="material-symbols-outlined text-outline text-lg goal-check">radio_button_unchecked</span>
+</button>
+</div>
+</div>
+<!-- Primary Interactive Trigger Dock (Full Width Lantern Amber CTA) -->
+<div class="sticky bottom-4 z-20 w-full pt-space-xs">
+<button class="w-full bg-primary-container hover:bg-primary active:scale-[0.99] text-on-primary-container p-space-md rounded-xl font-headline-sm text-headline-sm flex items-center justify-center gap-2 transition-all duration-200 shadow-[0_4px_24px_rgba(242,166,90,0.4)]" id="start-btn" onclick="launchIncident()" type="button">
+<span class="material-symbols-outlined text-on-primary-container">play_arrow</span>
+<span>Bölümü başlat</span>
+<span class="font-label-mono text-label-mono px-2 py-0.5 rounded bg-on-primary-container/10 text-on-primary-container ml-1">07:09:12</span>
+</button>
+<p class="font-label-mono text-label-mono text-center text-outline mt-2">
+      Simülasyon başlatıldığında kararlar geri alınamaz.
+    </p>
+</div>
+</div>
+<script>
+  function selectLevel(element) {
+    document.querySelectorAll('.level-card').forEach(card => {
+      card.classList.remove('bg-surface-container-highest', 'active-card', 'shadow-[0_0_20px_-4px_rgba(242,166,90,0.25)]');
+      card.classList.add('bg-surface-container-high');
+      
+      const badge = card.querySelector('.font-label-mono');
+      const title = card.querySelector('.font-headline-sm');
+      const note = card.querySelector('.font-body-sm');
+      const indicator = card.querySelector('.radio-indicator');
+      const dot = indicator.querySelector('span');
+
+      badge.classList.remove('text-primary');
+      badge.classList.add('text-outline');
+      title.classList.remove('text-primary');
+      title.classList.add('text-on-surface');
+      note.classList.remove('text-on-surface');
+      note.classList.add('text-on-surface-variant');
+      indicator.classList.remove('bg-primary');
+      indicator.classList.add('bg-surface-container');
+      dot.classList.remove('bg-on-primary');
+      dot.classList.add('bg-transparent');
+    });
+
+    element.classList.remove('bg-surface-container-high');
+    element.classList.add('bg-surface-container-highest', 'active-card', 'shadow-[0_0_20px_-4px_rgba(242,166,90,0.25)]');
+    
+    const badge = element.querySelector('.font-label-mono');
+    const title = element.querySelector('.font-headline-sm');
+    const note = element.querySelector('.font-body-sm');
+    const indicator = element.querySelector('.radio-indicator');
+    const dot = indicator.querySelector('span');
+
+    badge.classList.add('text-primary');
+    badge.classList.remove('text-outline');
+    title.classList.add('text-primary');
+    title.classList.remove('text-on-surface');
+    note.classList.add('text-on-surface');
+    note.classList.remove('text-on-surface-variant');
+    indicator.classList.add('bg-primary');
+    indicator.classList.remove('bg-surface-container');
+    dot.classList.add('bg-on-primary');
+    dot.classList.remove('bg-transparent');
+  }
+
+  function selectRole(element) {
+    document.querySelectorAll('.role-card').forEach(card => {
+      card.classList.remove('bg-surface-container-highest', 'active-role', 'shadow-[0_0_16px_-2px_rgba(242,166,90,0.3)]');
+      card.classList.add('bg-surface-container-high');
+      
+      const icon = card.querySelector('.role-icon');
+      const title = card.querySelector('.role-title');
+      const indicator = card.querySelector('.role-indicator');
+      const desc = card.querySelector('.font-body-sm');
+
+      icon.classList.remove('text-primary');
+      icon.classList.add('text-outline');
+      title.classList.remove('text-primary');
+      title.classList.add('text-on-surface');
+      indicator.classList.remove('bg-primary', 'animate-pulse');
+      indicator.classList.add('bg-transparent');
+      desc.classList.remove('text-on-surface');
+      desc.classList.add('text-on-surface-variant');
+    });
+
+    element.classList.remove('bg-surface-container-high');
+    element.classList.add('bg-surface-container-highest', 'active-role', 'shadow-[0_0_16px_-2px_rgba(242,166,90,0.3)]');
+    
+    const icon = element.querySelector('.role-icon');
+    const title = element.querySelector('.role-title');
+    const indicator = element.querySelector('.role-indicator');
+    const desc = element.querySelector('.font-body-sm');
+
+    icon.classList.add('text-primary');
+    icon.classList.remove('text-outline');
+    title.classList.add('text-primary');
+    title.classList.remove('text-on-surface');
+    indicator.classList.add('bg-primary', 'animate-pulse');
+    indicator.classList.remove('bg-transparent');
+    desc.classList.add('text-on-surface');
+    desc.classList.remove('text-on-surface-variant');
+  }
+
+  function toggleGoal(element) {
+    const isSelected = element.classList.contains('active-goal');
+    const icon = element.querySelector('.goal-icon');
+    const text = element.querySelector('.goal-text');
+    const check = element.querySelector('.goal-check');
+
+    if (isSelected) {
+      element.classList.remove('active-goal', 'bg-surface-container-highest', 'shadow-[0_0_12px_-2px_rgba(242,166,90,0.2)]');
+      element.classList.add('bg-surface-container-high');
+      icon.classList.remove('text-primary');
+      icon.classList.add('text-outline');
+      text.classList.remove('text-primary', 'font-medium');
+      text.classList.add('text-on-surface');
+      check.classList.remove('text-primary');
+      check.classList.add('text-outline');
+      check.textContent = 'radio_button_unchecked';
+    } else {
+      element.classList.add('active-goal', 'bg-surface-container-highest', 'shadow-[0_0_12px_-2px_rgba(242,166,90,0.2)]');
+      element.classList.remove('bg-surface-container-high');
+      icon.classList.add('text-primary');
+      icon.classList.remove('text-outline');
+      text.classList.add('text-primary', 'font-medium');
+      text.classList.remove('text-on-surface');
+      check.classList.add('text-primary');
+      check.classList.remove('text-outline');
+      check.textContent = 'check_circle';
+    }
+  }
+
+  function launchIncident() {
+    const btn = document.getElementById('start-btn');
+    btn.innerHTML = `
+      <span class="material-symbols-outlined animate-spin text-on-primary-container">sync</span>
+      <span>Sistem Yükleniyor...</span>
+    `;
+    setTimeout(() => {
+      btn.innerHTML = `
+        <span class="material-symbols-outlined text-on-primary-container">lock_open</span>
+        <span>Konsol Açıldı (07:09 UTC)</span>
+      `;
+    }, 600);
+  }
+</script></main></body></html>
