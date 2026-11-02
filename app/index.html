@@ -140,12 +140,39 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); ou
 .lesson b { display: block; font-family: var(--display); }
 .lesson input { margin-top: 4px; accent-color: var(--accent); }
 .credit { font-size: 0.78rem; color: var(--muted); }
+
+/* v2: veri modu, model müdahalesi, parite */
+.veri-band { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.04em; color: var(--accent-ink); background: var(--accent); border-radius: 8px; padding: 6px 10px; }
+.kod { font: inherit; font-family: var(--mono); font-size: 1.1rem; text-transform: uppercase; background: var(--surface); color: var(--fg); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; width: 100%; }
+.hint-small { color: var(--muted); font-size: 0.8rem; }
+.mudahale { border: 1px solid var(--accent); background: var(--raise); border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 6px; }
+.mudahale b { font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); }
+.mudahale small { color: var(--muted); font-size: 0.78rem; }
+.model-rozet { font-family: var(--mono); font-size: 0.7rem; color: var(--muted); }
+.pressure.tut { color: var(--accent); border-color: var(--accent); }
+.veri-kutu { border: 1px dashed var(--accent); border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; }
+.veri-dugmeler { display: flex; flex-wrap: wrap; gap: 8px; }
+.veri-dugmeler .primary { margin-top: 0; }
+.kisi-liste { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.kisi-liste li { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--line); font-family: var(--mono); font-size: 0.9rem; }
+.durum { color: var(--good); font-size: 0.9rem; min-height: 1.2em; }
+.csv-alan { width: 100%; min-height: 140px; font-family: var(--mono); font-size: 0.7rem; background: var(--surface); color: var(--fg); border: 1px solid var(--line); border-radius: 8px; }
+.tehlike summary { color: var(--muted); cursor: pointer; font-size: 0.9rem; }
+.tehlike-btn { color: var(--bad); border-color: var(--bad); margin-top: 8px; }
+.tablo-kap { overflow-x: auto; }
+.parite { border-collapse: collapse; width: 100%; font-family: var(--mono); font-size: 0.8rem; font-variant-numeric: tabular-nums; }
+.parite th, .parite td { text-align: right; padding: 6px 8px; border-bottom: 1px solid var(--line); }
 @media (prefers-reduced-motion: no-preference) {
   .screen { animation: rise 0.28s ease-out; }
   @keyframes rise { from { transform: translateY(6px); opacity: 0.6; } to { transform: none; opacity: 1; } }
 }
 </style>
 <div id="app" aria-live="polite"></div>
+<script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.22.0/dist/ort.min.js"></script>
+<script>if (window.ort) ort.env.wasm.wasmPaths = "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.22.0/dist/";</script>
+<script src="onnx-mini.js"></script>
+<script src="telemetry.js"></script>
+<script src="model.js"></script>
 <script src="story.js"></script>
 <script src="tutor.js"></script>
 <script src="app.js"></script>

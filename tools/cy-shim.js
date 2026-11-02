@@ -7,7 +7,7 @@ const fs = require('fs');
 const { chromium } = require(process.env.PW_PATH || '/opt/node22/lib/node_modules/playwright');
 
 const ROOT = path.join(__dirname, '..');
-const BASE = 'file://' + path.join(ROOT, 'dist', 'index.html');
+const BASE = process.env.BASE_URL || 'http://localhost:8080/';
 const args = process.argv.slice(2);
 const videoDir = args.includes('--video') ? args[args.indexOf('--video') + 1] : null;
 const specs = args.filter((a) => a.endsWith('.cy.js'));
@@ -38,6 +38,9 @@ async function assert(loc, chainer, val) {
   } else if (c === 'be.visible') {
     const v = await loc.first().isVisible();
     if (neg ? v : !v) throw new Error(`beklenen ${chainer}`);
+  } else if (c === 'be.disabled') {
+    const v = await loc.first().isDisabled();
+    if (neg ? v : !v) throw new Error(`beklenen ${chainer}`);
   } else if (c === 'contain') {
     const t = (await loc.first().innerText()).replace(/\s+/g, ' ');
     const has = t.includes(val);
@@ -61,7 +64,7 @@ function chain() {
 }
 
 global.cy = {
-  visit: (u) => enqueue('visit ' + u, async () => { await ctx.page.goto(BASE); }),
+  visit: (u) => enqueue('visit ' + u, async () => { await ctx.page.goto(new URL(u.replace(/^\//, ''), BASE).href); }),
   get: (sel) => { enqueue('get ' + sel, async () => { ctx.subject = ctx.page.locator(sel); }); return chain(); },
   wait: (ms) => enqueue('wait ' + ms, async () => { await ctx.page.waitForTimeout(ms); }),
   clock: () => enqueue('clock', async () => { await ctx.page.clock.install(); }),
