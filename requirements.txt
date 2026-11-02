@@ -1,0 +1,7 @@
+# SE Primer v2 · Python (3.11+). Kurulum: pip install -r requirements.txt
+scikit-learn==1.9.1
+pandas
+numpy
+onnxruntime
+skl2onnx      # sklearn → ONNX (yoksa train.py tools/mini_onnx.py'ye düşer)
+onnx

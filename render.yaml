@@ -1,0 +1,12 @@
+# Render.com ücretsiz web servisi: kendi sunucunuzda üçüncü tüketici (bonus).
+# Render panelinde "New → Blueprint" ile bu repo seçilir. MODEL_URL, RELEASE.md'deki commit'e sabit klasör URL'sidir.
+services:
+  - type: web
+    name: se-primer-api
+    runtime: python
+    plan: free
+    buildCommand: pip install -r server/requirements.txt
+    startCommand: gunicorn --chdir server app:app --bind 0.0.0.0:$PORT
+    envVars:
+      - key: MODEL_URL
+        sync: false
