@@ -1175,7 +1175,9 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); ou
       }
       if (!mud) return;
       const soru = T.firstQuestion(d, state.profile);
-      const alt = d.socratic.find((x) => x !== soru) || soru;
+      // Müdahale sorusu, tutorun ilk sorusundan farklı ve 1. sıradaki soru değil: v1 eval'inde (eval/RAPOR.md)
+      // k2'nin 1. sorusu "cevabı ima ediyor" (dolaylı yönlendirme) diye işaretlenmişti.
+      const alt = [1, 2, 3, 0].map((i) => d.socratic[i]).find((x) => x && x !== soru) || soru;
       app.querySelector('#mudahale-slot').innerHTML =
         '<aside class="mudahale" data-cy="model-mudahale"><b>Seçmeden önce bir dakika</b>' +
         '<p>' + esc(alt) + '</p><small>Bu soruyu, senin gibi oynayanların bu noktada sık yanıldığını gören model gösteriyor. Cevabı söylemez.</small></aside>';
