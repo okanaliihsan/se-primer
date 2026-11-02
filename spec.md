@@ -1,7 +1,9 @@
 # spec.md — SE Primer · Bölüm 1: "07:09, ekranlar maviye döndü. Nöbetçi sensin."
 
 > YZM301 · Yazılım Gerçekleme ve Test · Ödev 6 (AI Tutor: SE Primer)
-> Öğrenci: **Ali İhsan Okan** · 201118042 · 201118042@samsun.edu.tr · Sürüm: 1.0 · 26 Ekim 2026
+> Öğrenci: **Ali İhsan Okan** · 201118042 · 201118042@samsun.edu.tr · Sürüm: **2.0** (v1: 26 Ekim 2026 · v2: 2 Kasım 2026)
+>
+> **v2'de ne değişti?** Uyum artık yalnız girişteki 3 soruya bağlı sabit kurallar değil: oyuncunun davranışından öğrenen küçük bir model, her karar ekranında "bu oyuncu riskli seçeneğe gidecek mi?" diye tahmin ediyor ve gerekirse tutor seçimden önce devreye giriyor. Yeni bölümler: **§11–§14**. v1 bölümleri (§1–§10) aynen geçerli; v1 kabul örnekleri artık regresyon testi.
 
 ---
 
@@ -158,3 +160,79 @@ Her biri bir Cypress testine birebir karşılık gelir (`cypress/e2e/kabul.cy.js
 | ADR-3 | Son belirleme kuralı tek fonksiyonda | 8 yol tek yerden türetilir ve test edilir. |
 | ADR-4 | İlerleme yalnızca cihazda | Hesap yok → kişisel veri tutulmaz. |
 | ADR-5 | Gerçek olay + dramatize edilen kısımlar ayrı işaretlenir | Öğrenci neyin gerçek olduğunu bilmeli; uydurma olgu öğretilmez. |
+
+
+---
+
+# v2 · Uyum modeli (The Primer v2)
+
+> Bu bölüm (§11–§14) **model eğitilmeden önce** yazıldı ve commit'lendi. Eşik, veriye bakılarak sonradan değiştirilmez. Eşiği geçmeyen model yayınlanmaz.
+
+## 11. Model gereksinimi
+
+**Soru:** Oyuncu bir karar ekranına geldiği anda, bu kararda **riskli seçeneği** (her kararın daha kötü sonuçlanan yolu, `B`) seçecek mi?
+
+**Neden bu soru?** v1'de tutor herkese aynı anda, aynı yoğunlukla yardım ediyordu. Hocanın "kırmızı hapı seçecek mi" örneğindeki gibi, seçimden **önce** tahmin edebilirsek tutor yalnız ihtiyacı olana, tam karar anında, cevabı söylemeden bir soru sorabilir. Hedef, kötü sona giden yolu kapatmak değil, oyuncuyu **durup düşünmeye** davet etmek.
+
+| | |
+|---|---|
+| Görev | İkili sınıflandırma, tabular veri |
+| Etiket | `riskli_secti` (1 = riskli seçenek, 0 = diğeri) |
+| Tahmin anı | Karar ekranı açıldığında (seçimden önce bilinen bilgilerle) |
+| Girdiler (sıra = sözleşme) | `seviye`, `sahne_no`, `oturum_no`, `onceki_sahne_sure_sn`, `onceki_karar_sure_sn`, `onceki_riskli_sayisi`, `tutor_mesaj_onceki`, `ipucu_acma_onceki` (tanımlar: `data/SOZLUK.md`) |
+| Model | `Pipeline(StandardScaler → LogisticRegression(class_weight="balanced"))`, `random_state=13` |
+| Artefakt | `model/model.onnx` + `model/config.json` (sözleşme) + `model/README.md` (model kartı) |
+| Uygulamadaki etkisi | `p ≥ karar_esigi` (0,50) → seçimden önce **tutor müdahale kartı** (Sokratik soru); seviye "orta" ise ipucu kendiliğinden açılır. `p < 0,50` → v1 akışı aynen. Model yüklenemezse v1 kuralları (yedek). |
+
+**Bilerek yapmadıklarım:** Seçimi model yapmaz, seçenekleri gizlemez veya sıralamaz, cevabı söylemez. Yanlış bir müdahalenin bedeli (gereksiz bir soru) düşüktür; yanlış bir otomatik karar ise öğrenmeyi öldürür.
+
+**Veri ilkesi:** Seçenek sırası her kararda rastgele karıştırılır (`riskli_ustte` sütunu), böylece model "hep alttakini seçiyor" gibi sıra alışkanlığı öğrenmez. Veri toplama modunda model **kapalıdır**: müdahale, toplanan veriyi kirletmesin.
+
+## 12. Değerlendirme ve kabul eşiği (altın standart)
+
+- **Bölme:** 5 katlı, **oturum gruplu** ve sınıf dengeli çapraz doğrulama (`StratifiedGroupKFold`, `random_state=13`). Aynı oturumun 3 kararı aynı katta kalır; aksi hâlde model oturumu ezberleyip olduğundan iyi görünür.
+- **Birincil metrik:** ROC-AUC (katların ortalaması).
+- **İkincil metrik:** dengeli doğruluk (balanced accuracy, eşik 0,50).
+- **Taban (karşılaştırma):** Yalnız `seviye` ile tahmin yapan kural (v1'in bildiği tek bilgi). Model bundan iyi değilse model kullanmanın anlamı yok.
+
+**Kabul kriteri: hepsi birlikte sağlanmalı, yoksa `train.py` hata vererek durur ve artefakt üretilmez:**
+
+| # | Koşul | Eşik |
+|---|---|---|
+| E1 | Gerçek oturum sayısı (`kaynak = gercek`) | ≥ 15 |
+| E2 | CV ROC-AUC (ortalama) | ≥ **0,65** |
+| E3 | CV dengeli doğruluk (ortalama) | ≥ **0,60** |
+| E4 | CV ROC-AUC, tabandan | > taban AUC |
+| E5 | ONNX ↔ sklearn olasılık farkı (maks) | ≤ 1e-4 |
+
+Eşiklerin gerekçesi: 0,5 AUC yazı-turadır. Bir müdahalenin bedeli düşük olduğundan çıtayı "yazı-turadan anlamlı ölçüde iyi" (0,65) koydum; 45 civarı satırla bundan yükseğini istemek, veriyi zorlamak olurdu. Küçük veriyle ölçülen her metrik geniştir; `config.json` katlar arası standart sapmayı da yazar.
+
+## 13. Yeni kabul örnekleri
+
+Her biri bir Cypress testine birebir karşılık gelir (`cypress/e2e/model.cy.js`, `cypress/e2e/parite.cy.js`). Testler modelin gerçek olasılığına bağlı kalmasın diye müdahale politikası eşik parametresiyle sınanır (`?esik=0` her zaman, `?esik=1.01` hiçbir zaman).
+
+**KA-7 · Risk eşiği geçince tutor seçimden önce devreye girer**
+- *Verilen:* Model yüklü, seviye "orta", eşik 0 (`?esik=0`)
+- *Ne zaman:* Karar 1 ekranı açılır
+- *O zaman:* Seçeneklerden önce `[data-cy=model-mudahale]` kartı görünür; kart bir soru içerir ve seçenek metnini içermez; ipucu paneli kendiliğinden açılır; son ekranın karar izinde bu karar "tutor devreye girdi" etiketini taşır.
+
+**KA-8 · Eşik altında v1 akışı aynen sürer**
+- *Verilen:* Model yüklü, seviye "orta", eşik 1,01 (`?esik=1.01`)
+- *Ne zaman:* Karar 1 ekranı açılır
+- *O zaman:* Müdahale kartı yoktur, ipucu paneli kapalıdır; model rozeti "müdahale yok" der.
+
+**KA-9 · Diferansiyel test: uygulama ile Python aynı cevabı verir**
+- *Verilen:* `tests/parite.json` içindeki 5 referans girdi ve Python test kahininin (`tests/parite.py`, onnxruntime) olasılıkları
+- *Ne zaman:* Uygulamanın parite ekranı (`?parite=1`) aynı `model.onnx` ile bu girdileri çalıştırır
+- *O zaman:* 5 girdinin her birinde `|p_uygulama − p_python| < 1e-4`.
+
+**Regresyon:** v1'in 8 yol testi ve KA-1…KA-6, model devredeyken de değişmeden geçer (`yollar.cy.js`, `kabul.cy.js`).
+
+## 14. v2 karar kaydı
+
+| # | Karar | Gerekçe |
+|---|---|---|
+| ADR-6 | Model tarayıcıda çalışır (`onnxruntime-web`), dosya Hugging Face'ten commit'e sabit URL ile iner | Veri cihazdan çıkmaz (KVKK), sunucu maliyeti yok. Bedeli: model dosyası herkese açık. Ayrıntı: `RELEASE.md` ödünleşim matrisi. |
+| ADR-7 | Yedek çıkarım motoru (`app/onnx-mini.js`) | CDN'e ulaşılamayan ağda da **aynı** `model.onnx` çalışsın; desteklemediği operatörde sessizce yanlış değil, açık hata verir. Parite testi her iki motoru da kapsar. |
+| ADR-8 | Müdahale yalnız soru sorar | Yanlış pozitifin bedeli düşük (fazladan bir soru), yanlış negatifinki v1 ile aynı. |
+| ADR-9 | Veri toplama modunda model kapalı | Modelin kendi müdahalesi, eğitileceği veriyi değiştirmesin. |
