@@ -73,6 +73,16 @@ global.cy = {
 global.Cypress = { Commands: { add: (name, fn) => { global.cy[name] = (...a) => fn(...a); } } };
 
 require(path.join(ROOT, 'cypress/support/e2e.js'));
+// Playwright karşılığı (shim .each desteklemez)
+global.cy.farklarKucuk = (tol) => enqueue('farklarKucuk ' + tol, async () => {
+  const satirlar = ctx.page.locator('[data-cy=parite-vaka]');
+  await retry(async () => { if ((await satirlar.count()) < 5) throw new Error('satır yok'); }, 'parite satırları', 10000);
+  for (let i = 0; i < await satirlar.count(); i++) {
+    const r = satirlar.nth(i);
+    const fark = Math.abs(parseFloat(await r.getAttribute('data-p')) - parseFloat(await r.getAttribute('data-py')));
+    if (!(fark < tol)) throw new Error(`satır ${i}: fark ${fark} ≥ ${tol}`);
+  }
+});
 specs.forEach((s) => require(path.resolve(s)));
 
 (async () => {

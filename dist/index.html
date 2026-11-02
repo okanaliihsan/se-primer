@@ -1338,18 +1338,18 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); ou
     h('<main class="screen" data-cy="screen-parite"><p class="eyebrow">Diferansiyel test · uygulama tarafı</p><h1>Parite</h1>' +
       '<p class="story">Python (test kahini) ile aynı 5 girdiyi bu uygulamanın çıkarım motoruna veriyoruz.</p>' +
       '<p class="based">Motor: <span data-cy="motor">yükleniyor…</span> · Kaynak: <span data-cy="model-kaynak">—</span></p>' +
-      '<div class="tablo-kap"><table class="parite"><thead><tr><th>#</th><th>Uygulama p</th><th>Python p</th><th>|fark|</th></tr></thead><tbody data-cy="parite-satirlar"></tbody></table></div></main>');
+      '<div class="tablo-kap"><table class="parite"><thead><tr><th>#</th><th>Uygulama p</th><th>Python p</th><th>|fark|</th></tr></thead><tbody data-cy="parite-tablo"></tbody></table></div></main>');
     try {
       const vakalar = await (await fetch('tests/parite.json', { cache: 'no-store' })).json();
       await M.yukle();
       app.querySelector('[data-cy=motor]').textContent = M.durum.motor || ('yok: ' + M.durum.hata);
       app.querySelector('[data-cy=model-kaynak]').textContent = M.durum.kaynak || '—';
-      const tb = app.querySelector('[data-cy=parite-satirlar]');
+      const tb = app.querySelector('[data-cy=parite-tablo]');
       for (let i = 0; i < vakalar.vakalar.length; i++) {
         const v = vakalar.vakalar[i];
         const p = await M.tahmin(v.girdi);
         const fark = Math.abs(p - v.p_python);
-        tb.insertAdjacentHTML('beforeend', '<tr data-cy="parite-' + i + '"><td>' + (i + 1) + '</td><td data-cy="p">' + p.toFixed(6) +
+        tb.insertAdjacentHTML('beforeend', '<tr data-cy="parite-vaka" data-p="' + p + '" data-py="' + v.p_python + '"><td>' + (i + 1) + '</td><td data-cy="p">' + p.toFixed(6) +
           '</td><td data-cy="p-python">' + v.p_python.toFixed(6) + '</td><td data-cy="fark">' + fark.toExponential(2) + '</td></tr>');
       }
     } catch (e) {

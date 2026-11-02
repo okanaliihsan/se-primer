@@ -18,3 +18,12 @@ Cypress.Commands.add('oyna', (yol) => {
     cy.get('[data-cy=outcome-next]').click();
   });
 });
+
+// Diferansiyel test: her satırda uygulamanın tam hassasiyetli olasılığı (data-p) ile
+// Python test kahininin olasılığı (data-py) arasındaki fark toleranstan küçük olmalı.
+Cypress.Commands.add('farklarKucuk', (tolerans) => {
+  cy.get('[data-cy=parite-vaka]').each(($tr) => {
+    const fark = Math.abs(parseFloat($tr.attr('data-p')) - parseFloat($tr.attr('data-py')));
+    expect(fark, 'fark').to.be.lessThan(tolerans);
+  });
+});
