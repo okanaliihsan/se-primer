@@ -8,7 +8,7 @@ Yazılım mühendisliği için **oynanan bir kitap**. 19 Temmuz 2024 CrowdStrike
 | **Ders** | YZM301 · The Primer v2 (Modelden Ürüne) · teslim 6 Kasım 2026 |
 | **Canlı uygulama (v2, GitHub Pages)** | https://okanaliihsan.github.io/se-primer/ · veri toplama modu: [`?mod=veri`](https://okanaliihsan.github.io/se-primer/?mod=veri) · diferansiyel test ekranı: [`?parite=1`](https://okanaliihsan.github.io/se-primer/?parite=1) |
 | **Hugging Face model (commit'e sabit)** | https://huggingface.co/aliihsanokan/se-primer-risk · sabit sürüm: [`4715488`](https://huggingface.co/aliihsanokan/se-primer-risk/tree/471548857ca8f6b0c58f190a605a913da1f710e2) · `https://huggingface.co/aliihsanokan/se-primer-risk/resolve/471548857ca8f6b0c58f190a605a913da1f710e2/model.onnx` |
-| **Demo video (v2)** | `<VIDEO_LINKI>` |
+| **Demo video (v2, 85 sn)** | https://youtube.com/shorts/FQf7SWkXlA0 · dosya: `demo/demo-v2.mp4` |
 | **v1 (Ödev 6)** | https://se-primer-2844.ai.studio · [aşağıda](#bölüm-1-ödev-6) |
 
 ## Sonuç: model eval kapısını geçemedi → gölge modda yayında
