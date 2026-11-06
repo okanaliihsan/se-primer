@@ -1,0 +1,21 @@
+{
+  "durum": "reddedildi",
+  "hatalar": [
+    "E2 ROC-AUC 0.557 < 0.65",
+    "E3 dengeli doğruluk 0.542 < 0.6"
+  ],
+  "cv": {
+    "cv_auc": 0.5572,
+    "cv_auc_std": 0.1479,
+    "cv_dengeli_dogruluk": 0.5417,
+    "cv_dengeli_dogruluk_std": 0.0527,
+    "taban_auc": 0.5102,
+    "kat_sayisi": 5
+  },
+  "esikler": {
+    "min_gercek_oturum": 15,
+    "cv_auc": 0.65,
+    "cv_dengeli_dogruluk": 0.6,
+    "onnx_fark": 0.0001
+  }
+}
