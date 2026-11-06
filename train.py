@@ -159,6 +159,11 @@ Eğitim: Python {c["python_version"]}, scikit-learn {c["sklearn_version"]}. ONNX
 | Taban ROC-AUC (yalnız seviye) | {m["taban_auc"]:.3f} | model bundan iyi olmalı |
 | ONNX ↔ sklearn maks fark | {m["onnx_sklearn_maks_fark"]:.1e} | ≤ {c["esikler"]["onnx_fark"]} |
 
+## Veriden bulgular
+- Hiç değişmeyen girdiler (veride hep aynı değer, modelde etkisiz): {", ".join(f"`{x}`" for x in c["veri_bulgulari"]["sabit_ozellikler"]) or "yok"}. Veri toplarken hiçbir oyuncu tutora yazmadı ve ipucu açmadı; model bu iki davranıştan hiçbir şey öğrenemedi.
+- Medyan karar süresi {c["veri_bulgulari"]["medyan_karar_suresi_sn"]} sn; kararların %{round(100 * c["veri_bulgulari"]["karar_suresi_3sn_alti_oran"])}'i 3 saniyenin altında verildi. Bu sürede metin okunamaz; bu kararlar davranıştan çok gürültü taşır.
+- Mutlak değerce en büyük iki katsayı: {", ".join(f"`{k}` ({v:+.2f})" for k, v in sorted(c["katsayilar"].items(), key=lambda kv: -abs(kv[1]))[:2])}. `oturum_no` negatifse: aynı kişi tekrar oynadıkça daha az riskli seçiyor, yani model kısmen "hikâyeyi ezberleme"yi öğreniyor.
+
 ## Sınırlar
 - **Çok küçük veri.** {m["n_oturum"]} oturumla ölçülen her metriğin belirsizliği büyüktür; katlar arası standart sapmaya bakın.
 - **Az ve benzer kişi.** Oyuncular az sayıda ve büyük ihtimalle aynı çevreden (öğrenci arkadaşları). Başka kitleye genellenmez.
@@ -267,6 +272,11 @@ def main():
                         n_oturum=int(df[GRUP].nunique()), n_oyuncu=int(df["oyuncu_kodu"].nunique()) if "oyuncu_kodu" in df else None,
                         pozitif_oran=round(float(y.mean()), 4)),
         "katsayilar": {n: round(float(c), 4) for n, c in zip(OZ, lr.coef_[0])},
+        "veri_bulgulari": {
+            "sabit_ozellikler": [n for n in OZ if X[n].nunique() == 1],
+            "medyan_karar_suresi_sn": round(float(df["karar_sure_sn"].median()), 1) if "karar_sure_sn" in df else None,
+            "karar_suresi_3sn_alti_oran": round(float((df["karar_sure_sn"] < 3).mean()), 3) if "karar_sure_sn" in df else None,
+        },
         "veri": {"dosya": "data/oturumlar.csv", "sha256": hashlib.sha256(ham).hexdigest(),
                  "kaynak": {k: int(v) for k, v in df.groupby("kaynak")[GRUP].nunique().items()}},
         "seed": SEED,

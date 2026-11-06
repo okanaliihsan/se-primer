@@ -47,6 +47,11 @@ Eğitim: Python 3.13, scikit-learn 1.9.1. ONNX: tools/mini_onnx.py (skl2onnx yok
 | Taban ROC-AUC (yalnız seviye) | 0.510 | model bundan iyi olmalı |
 | ONNX ↔ sklearn maks fark | 5.9e-08 | ≤ 0.0001 |
 
+## Veriden bulgular
+- Hiç değişmeyen girdiler (veride hep aynı değer, modelde etkisiz): `tutor_mesaj_onceki`, `ipucu_acma_onceki`. Veri toplarken hiçbir oyuncu tutora yazmadı ve ipucu açmadı; model bu iki davranıştan hiçbir şey öğrenemedi.
+- Medyan karar süresi 5.0 sn; kararların %25'i 3 saniyenin altında verildi. Bu sürede metin okunamaz; bu kararlar davranıştan çok gürültü taşır.
+- Mutlak değerce en büyük iki katsayı: `oturum_no` (-0.50), `onceki_riskli_sayisi` (-0.31). `oturum_no` negatifse: aynı kişi tekrar oynadıkça daha az riskli seçiyor, yani model kısmen "hikâyeyi ezberleme"yi öğreniyor.
+
 ## Sınırlar
 - **Çok küçük veri.** 20 oturumla ölçülen her metriğin belirsizliği büyüktür; katlar arası standart sapmaya bakın.
 - **Az ve benzer kişi.** Oyuncular az sayıda ve büyük ihtimalle aynı çevreden (öğrenci arkadaşları). Başka kitleye genellenmez.

@@ -236,3 +236,27 @@ Her biri bir Cypress testine birebir karşılık gelir (`cypress/e2e/model.cy.js
 | ADR-7 | Yedek çıkarım motoru (`app/onnx-mini.js`) | CDN'e ulaşılamayan ağda da **aynı** `model.onnx` çalışsın; desteklemediği operatörde sessizce yanlış değil, açık hata verir. Parite testi her iki motoru da kapsar. |
 | ADR-8 | Müdahale yalnız soru sorar | Yanlış pozitifin bedeli düşük (fazladan bir soru), yanlış negatifinki v1 ile aynı. |
 | ADR-9 | Veri toplama modunda model kapalı | Modelin kendi müdahalesi, eğitileceği veriyi değiştirmesin. |
+
+## 15. Eğitim sonuçları ve gölge mod kararı (6 Kasım 2026, sonuçlar GÖRÜLDÜKTEN SONRA yazıldı)
+
+> Bu bölüm §11–§14'ü değiştirmez. Eşikler (E1–E5) aynen duruyor. Burada yalnız eşik geçilemeyince ne yaptığımız yazıyor.
+
+| Deneme | Veri | ROC-AUC | Dengeli doğruluk | Taban AUC | Sonuç | Kayıt |
+|---|---|---|---|---|---|---|
+| 1 | 15 gerçek oturum, 5 kişi (45 karar) | 0,687 ✅ | 0,545 ❌ | 0,450 | **Reddedildi** (E3) | `raporlar/egitim-1-reddedildi.json` |
+| 2 | 20 gerçek oturum, 8 kişi (60 karar) | 0,557 ❌ | 0,542 ❌ | 0,510 | **Reddedildi** (E2, E3) | `raporlar/egitim-2-reddedildi.json` |
+
+**Yorum.** Veri artınca AUC düştü: 1. denemedeki 0,687 büyük ihtimalle küçük örneklem şansıydı. Bu girdilerle ve bu kadar veriyle riskli seçim tahmin edilemiyor. Ayrıca: (1) veri toplarken hiçbir oyuncu tutora yazmadı ve ipucu açmadı (iki girdi sabit kaldı); (2) kararların yaklaşık dörtte biri 3 saniyenin altında verildi (okumadan tıklama); (3) model en çok `oturum_no`dan öğreniyor, bu da kısmen "hikâyeyi ezberleme" demek.
+
+**Yapmadıklarım.** Eşiği düşürmedim. Model türünü ya da girdileri sonuca bakarak değiştirmedim. İkinci denemeye geçme gerekçesi "veri yetmedi" idi ve önceden söylendi: sonuç ne çıkarsa ona uyulacaktı.
+
+**ADR-10 · Reddedilen aday yalnız gölge modda yayına girer.**
+- Eval kapısının görevi, eşiği geçmeyen bir modelin **oyunu değiştirmesini** engellemek. `python train.py` hâlâ hata verip durur.
+- Açık bir bayrakla (`python train.py --golge-aday`) artefakt `config.json → "durum": "reddedildi", "mod": "golge"` olarak yazılır. Uygulama bu modeli çalıştırır; tahmini ve "müdahale ederdi/etmezdi" kararını ekranda gösterir ve kaydeder, ama **müdahale kartı ve ipucu açılışı devre dışıdır.**
+- Gerekçe: Dersteki gölge dağıtım (shadow deployment) tam bu durum için var. Yeni model gerçek kullanımda çalışır, kararı kullanıcıya ulaşmaz, mevcut sürümle kıyaslanır. Modelin gerçek oyunlarda ne yapacağını kimseyi etkilemeden ölçmeye devam ediyoruz; daha fazla veri gelince aynı eşiklerle yeniden eğitilir.
+- Bedeli (açıkça): Ödevin "model kararı oyunun davranışını değiştiriyor" beklentisi canlıda karşılanmıyor. Müdahale politikası kodda hazır ve test ediliyor (KA-7/KA-8, `?golge=kapali`), ama kapı onu kapalı tutuyor. Bunu bilerek seçtim: geçemeyen bir modelin oyuncuya soru dayatması, ödevin kendi kuralını çiğnemek olurdu.
+
+**KA-10 · Gölge mod: model müdahale ederdi ama oyun değişmez**
+- *Verilen:* Yayındaki model `mod = golge`, eşik 0 (`?esik=0`)
+- *Ne zaman:* Karar 1 ekranı açılır
+- *O zaman:* Model rozeti "gölge mod" ve "EDERDİ" der; müdahale kartı yoktur; ipucu açılmaz; son ekranda bu karar "gölge: model müdahale ederdi" etiketini taşır, "tutor devreye girdi" etiketini taşımaz.

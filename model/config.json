@@ -147,6 +147,14 @@
     "tutor_mesaj_onceki": 0.0,
     "ipucu_acma_onceki": 0.0
   },
+  "veri_bulgulari": {
+    "sabit_ozellikler": [
+      "tutor_mesaj_onceki",
+      "ipucu_acma_onceki"
+    ],
+    "medyan_karar_suresi_sn": 5.0,
+    "karar_suresi_3sn_alti_oran": 0.25
+  },
   "veri": {
     "dosya": "data/oturumlar.csv",
     "sha256": "c82b3b40a5c505378133126fc31a830b32f8407521dde47882ba56abb31c2049",
