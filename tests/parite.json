@@ -1,0 +1,78 @@
+{
+  "aciklama": "Diferansiyel test referansı: Python + onnxruntime (test kahini) olasılıkları. Uygulama aynı girdilerde < tolerans farkla aynı sonucu vermeli.",
+  "tolerans": 0.0001,
+  "model_surum": "2.0.0",
+  "onnxruntime": "1.29.0",
+  "vakalar": [
+    {
+      "ad": "tipik yeni başlayan, 1. karar",
+      "girdi": {
+        "seviye": 0,
+        "sahne_no": 1,
+        "oturum_no": 1,
+        "onceki_sahne_sure_sn": 14.2,
+        "onceki_karar_sure_sn": 0,
+        "onceki_riskli_sayisi": 0,
+        "tutor_mesaj_onceki": 0,
+        "ipucu_acma_onceki": 0
+      },
+      "p_python": 0.71503818
+    },
+    {
+      "ad": "aceleci, önceki kararda riskli",
+      "girdi": {
+        "seviye": 1,
+        "sahne_no": 2,
+        "oturum_no": 1,
+        "onceki_sahne_sure_sn": 2.1,
+        "onceki_karar_sure_sn": 3.4,
+        "onceki_riskli_sayisi": 1,
+        "tutor_mesaj_onceki": 0,
+        "ipucu_acma_onceki": 2
+      },
+      "p_python": 0.5224936
+    },
+    {
+      "ad": "deneyimli, 4. oyun, son karar",
+      "girdi": {
+        "seviye": 2,
+        "sahne_no": 3,
+        "oturum_no": 4,
+        "onceki_sahne_sure_sn": 9.8,
+        "onceki_karar_sure_sn": 21.0,
+        "onceki_riskli_sayisi": 0,
+        "tutor_mesaj_onceki": 3,
+        "ipucu_acma_onceki": 0
+      },
+      "p_python": 0.1565038
+    },
+    {
+      "ad": "uç: tüm değerler sıfır",
+      "girdi": {
+        "seviye": 0,
+        "sahne_no": 1,
+        "oturum_no": 0,
+        "onceki_sahne_sure_sn": 0,
+        "onceki_karar_sure_sn": 0,
+        "onceki_riskli_sayisi": 0,
+        "tutor_mesaj_onceki": 0,
+        "ipucu_acma_onceki": 0
+      },
+      "p_python": 0.81538713
+    },
+    {
+      "ad": "uç: çok uzun süreler, 2 riskli",
+      "girdi": {
+        "seviye": 1,
+        "sahne_no": 3,
+        "oturum_no": 9,
+        "onceki_sahne_sure_sn": 240.0,
+        "onceki_karar_sure_sn": 180.5,
+        "onceki_riskli_sayisi": 2,
+        "tutor_mesaj_onceki": 7,
+        "ipucu_acma_onceki": 4
+      },
+      "p_python": 0.00035101
+    }
+  ]
+}

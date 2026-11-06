@@ -1,0 +1,162 @@
+{
+  "title": "SE Primer v2 · Riskli seçim tahmini",
+  "description": "Oyuncu bir karar ekranına geldiğinde riskli seçeneği seçme olasılığını tahmin eder. Yalnız eğitim uygulamasındaki tutorun ne zaman soru soracağına yardım eder; öğrenci hakkında karar vermek için KULLANILMAZ.",
+  "surum": "2.0.0",
+  "deneme": false,
+  "durum": "reddedildi",
+  "mod": "golge",
+  "kapi_hatalari": [
+    "E2 ROC-AUC 0.557 < 0.65",
+    "E3 dengeli doğruluk 0.542 < 0.6"
+  ],
+  "target": "riskli_secti",
+  "classes": [
+    "0",
+    "1"
+  ],
+  "class_labels": {
+    "0": "riskli olmayan seçim",
+    "1": "riskli seçim"
+  },
+  "features": [
+    {
+      "name": "seviye",
+      "label": "Seviye (0 yeni, 1 orta, 2 deneyimli)",
+      "birim": "kod",
+      "example": 1.0
+    },
+    {
+      "name": "sahne_no",
+      "label": "Karar numarası (1 mimari, 2 test, 3 KVKK)",
+      "birim": "kod",
+      "example": 2.0
+    },
+    {
+      "name": "oturum_no",
+      "label": "Oyuncunun kaçıncı oyunu",
+      "birim": "adet",
+      "example": 2.0
+    },
+    {
+      "name": "onceki_sahne_sure_sn",
+      "label": "Önceki ekranda geçen süre",
+      "birim": "sn",
+      "example": 9.4
+    },
+    {
+      "name": "onceki_karar_sure_sn",
+      "label": "Önceki kararın süresi",
+      "birim": "sn",
+      "example": 3.1
+    },
+    {
+      "name": "onceki_riskli_sayisi",
+      "label": "Bu oyunda önceki riskli seçim sayısı",
+      "birim": "adet",
+      "example": 0.0
+    },
+    {
+      "name": "tutor_mesaj_onceki",
+      "label": "Bu karardan önce tutora yazılan mesaj",
+      "birim": "adet",
+      "example": 0.0
+    },
+    {
+      "name": "ipucu_acma_onceki",
+      "label": "Bu karardan önce ipucu açma",
+      "birim": "adet",
+      "example": 0.0
+    }
+  ],
+  "girdi_semasi": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "seviye",
+      "sahne_no",
+      "oturum_no",
+      "onceki_sahne_sure_sn",
+      "onceki_karar_sure_sn",
+      "onceki_riskli_sayisi",
+      "tutor_mesaj_onceki",
+      "ipucu_acma_onceki"
+    ],
+    "properties": {
+      "seviye": {
+        "type": "number",
+        "minimum": 0
+      },
+      "sahne_no": {
+        "type": "number",
+        "minimum": 0
+      },
+      "oturum_no": {
+        "type": "number",
+        "minimum": 0
+      },
+      "onceki_sahne_sure_sn": {
+        "type": "number",
+        "minimum": 0
+      },
+      "onceki_karar_sure_sn": {
+        "type": "number",
+        "minimum": 0
+      },
+      "onceki_riskli_sayisi": {
+        "type": "number",
+        "minimum": 0
+      },
+      "tutor_mesaj_onceki": {
+        "type": "number",
+        "minimum": 0
+      },
+      "ipucu_acma_onceki": {
+        "type": "number",
+        "minimum": 0
+      }
+    }
+  },
+  "karar_esigi": 0.5,
+  "esikler": {
+    "min_gercek_oturum": 15,
+    "cv_auc": 0.65,
+    "cv_dengeli_dogruluk": 0.6,
+    "onnx_fark": 0.0001
+  },
+  "metrics": {
+    "cv_auc": 0.5572,
+    "cv_auc_std": 0.1479,
+    "cv_dengeli_dogruluk": 0.5417,
+    "cv_dengeli_dogruluk_std": 0.0527,
+    "taban_auc": 0.5102,
+    "kat_sayisi": 5,
+    "onnx_sklearn_maks_fark": 5.88e-08,
+    "n_satir": 60,
+    "n_oturum": 20,
+    "n_oyuncu": 8,
+    "pozitif_oran": 0.3167
+  },
+  "katsayilar": {
+    "seviye": -0.0855,
+    "sahne_no": -0.0186,
+    "oturum_no": -0.5001,
+    "onceki_sahne_sure_sn": 0.0583,
+    "onceki_karar_sure_sn": -0.1382,
+    "onceki_riskli_sayisi": -0.3113,
+    "tutor_mesaj_onceki": 0.0,
+    "ipucu_acma_onceki": 0.0
+  },
+  "veri": {
+    "dosya": "data/oturumlar.csv",
+    "sha256": "c82b3b40a5c505378133126fc31a830b32f8407521dde47882ba56abb31c2049",
+    "kaynak": {
+      "gercek": 20
+    }
+  },
+  "seed": 13,
+  "sklearn_version": "1.9.1",
+  "python_version": "3.13",
+  "onnx_uretici": "tools/mini_onnx.py (skl2onnx yok)",
+  "platform": "x86_64"
+}

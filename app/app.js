@@ -178,13 +178,18 @@
     const goster = (p) => {
       if (state.screen !== 'decision' || S.decisions[state.step].id !== id) return;
       const esik = M.esik();
-      const mud = p !== null && p >= esik;
-      state.model[id] = { p, mudahale: mud };
+      const olurdu = p !== null && p >= esik;      // modelin kararı
+      const golge = p !== null && M.golge();        // kabul eşiğini geçemeyen aday: karar uygulanmaz
+      const mud = olurdu && !golge;
+      state.model[id] = { p, mudahale: mud, olurdu, golge };
       const rozet = app.querySelector('[data-cy=model-rozet]');
       if (rozet) {
         rozet.hidden = false;
+        rozet.dataset.karar = p === null ? 'yok' : (olurdu ? 'ederdi' : 'etmezdi');
         rozet.textContent = p === null ? 'Uyum modeli: kullanılamıyor (' + (M.durum.hata || 'yüklenemedi') + '), kural tabanlı akış'
-          : 'Uyum modeli · riskli seçim olasılığı ' + Math.round(p * 100) + '% · eşik ' + Math.round(esik * 100) + '% · ' + (mud ? 'tutor devreye girdi' : 'müdahale yok');
+          : golge
+            ? 'Uyum modeli (gölge mod) · riskli seçim olasılığı ' + Math.round(p * 100) + '% · eşik ' + Math.round(esik * 100) + '% · model müdahale ' + (olurdu ? 'EDERDİ' : 'ETMEZDİ') + '. Model kabul eşiğini geçemediği için oyunu değiştirmiyor.'
+            : 'Uyum modeli · riskli seçim olasılığı ' + Math.round(p * 100) + '% · eşik ' + Math.round(esik * 100) + '% · ' + (mud ? 'tutor devreye girdi' : 'müdahale yok');
       }
       if (!mud) return;
       const soru = T.firstQuestion(d, state.profile);
@@ -294,7 +299,8 @@
         const k = state.choices[d.id];
         return '<li><span class="t-tag">' + esc(d.tag) + '</span><span>' + k + ' · ' + esc(d.options[k].short) + '</span>' +
           (state.pressured[d.id] ? '<em class="pressure" data-cy="pressure-' + d.id + '">süre baskısı</em>' : '') +
-          (state.model[d.id] && state.model[d.id].mudahale ? '<em class="pressure tut" data-cy="mudahale-iz-' + d.id + '">tutor devreye girdi</em>' : '') + '</li>';
+          (state.model[d.id] && state.model[d.id].mudahale ? '<em class="pressure tut" data-cy="mudahale-iz-' + d.id + '">tutor devreye girdi</em>' : '') +
+          (state.model[d.id] && state.model[d.id].golge && state.model[d.id].olurdu ? '<em class="pressure golge" data-cy="golge-iz-' + d.id + '">gölge: model müdahale ederdi</em>' : '') + '</li>';
       }).join('') + '</ol>' +
       '<h3>Bugün öğrendiğim</h3><div class="lessons" data-cy="lessons">' +
       ordered.map((d) => '<label class="lesson ' + (d.id === goalId ? 'goal' : '') + '"><input type="checkbox" id="learned-' + d.id + '" data-cy="learned-' + d.id + '"><span><b>' + esc(d.lesson.term) + '</b>' + esc(d.lesson.text) + '</span></label>').join('') +

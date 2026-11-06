@@ -106,6 +106,14 @@ def onnx_aktar(model, X, yol: Path):
     return fark, uretici
 
 
+def _durum_bandi(c):
+    if c.get("mod") != "golge":
+        return "> **Durum: KABUL.** Eval kapısını (spec.md §12, E1–E5) geçti; uygulamada etkin."
+    return ("> ⚠️ **Durum: REDDEDİLDİ · GÖLGE ADAY.** Bu model kabul eşiğini geçemedi: " + "; ".join(c["kapi_hatalari"]) +
+            ". Uygulamada yalnız **gölge modda** çalışır: tahmin yapar ve gösterilir/kaydedilir, ama oyunun davranışını "
+            "**değiştirmez**. Gerçek bir kararda kullanmayın. Gerekçe: spec.md §15, RELEASE.md.")
+
+
 def model_karti(c):
     m = c["metrics"]
     oz = "\n".join(f"| {i + 1} | `{f['name']}` | {f['label']} | {f['birim']} |" for i, f in enumerate(c["features"]))
@@ -117,6 +125,8 @@ license: mit
 ---
 
 # {c["title"]}
+
+{_durum_bandi(c)}
 
 {c["description"]}
 
@@ -178,6 +188,9 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--veri", default=str(KOK / "data" / "oturumlar.csv"))
     ap.add_argument("--cikti", default=str(KOK / "model"))
+    ap.add_argument("--golge-aday", action="store_true",
+                    help="Eşik geçilmezse YİNE DURUR ama artefaktı 'gölge aday' olarak yazar: uygulama modeli çalıştırır, "
+                         "tahminini gösterir/kaydeder, oyunun davranışını DEĞİŞTİRMEZ (spec.md §15, ADR-10)")
     ap.add_argument("--izin-sentetik", action="store_true",
                     help="YALNIZ boru hattı denemesi: sentetik oturumlar da E1'e sayılır, config 'deneme' olarak işaretlenir")
     a = ap.parse_args()
@@ -213,8 +226,11 @@ def main():
         hatalar.append(f"E3 dengeli doğruluk {cv['cv_dengeli_dogruluk']:.3f} < {ESIKLER['cv_dengeli_dogruluk']}")
     if cv["cv_auc"] <= cv["taban_auc"]:
         hatalar.append(f"E4 ROC-AUC {cv['cv_auc']:.3f} ≤ taban {cv['taban_auc']:.3f}")
-    if hatalar:
+    if hatalar and not a.golge_aday:
         dur(" · ".join(hatalar), {"durum": "reddedildi", "hatalar": hatalar, "cv": cv, "esikler": ESIKLER}, rapor_yolu)
+    if hatalar:
+        print("⚠ EVAL KAPISI GEÇİLEMEDİ: " + " · ".join(hatalar))
+        print("  --golge-aday: artefakt GÖLGE ADAY olarak yazılıyor (mod=golge). Uygulama bu modelle oyunu DEĞİŞTİRMEZ.")
 
     model = model_kur().fit(X, y)
     cikti = Path(a.cikti)
@@ -233,6 +249,9 @@ def main():
                        "Yalnız eğitim uygulamasındaki tutorun ne zaman soru soracağına yardım eder; öğrenci hakkında karar vermek için KULLANILMAZ.",
         "surum": "2.0.0",
         "deneme": bool(a.izin_sentetik),
+        "durum": "reddedildi" if hatalar else "kabul",
+        "mod": "golge" if hatalar else "aktif",
+        "kapi_hatalari": hatalar,
         "target": HEDEF,
         "classes": [str(c) for c in model.classes_],
         "class_labels": {"0": "riskli olmayan seçim", "1": "riskli seçim"},
@@ -261,8 +280,12 @@ def main():
     (cikti / "config.json").write_text(json.dumps(config, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     (cikti / "README.md").write_text(model_karti(config), encoding="utf-8")
     rapor_yolu.parent.mkdir(parents=True, exist_ok=True)
-    rapor_yolu.write_text(json.dumps({"durum": "kabul", "cv": cv, "esikler": ESIKLER}, indent=2, ensure_ascii=False), encoding="utf-8")
-    print(f"✓ EVAL KAPISI GEÇİLDİ → {cikti}/ (model.onnx, config.json, README.md)")
+    rapor_yolu.write_text(json.dumps({"durum": config["durum"], "mod": config["mod"], "hatalar": hatalar, "cv": cv,
+                                      "esikler": ESIKLER}, indent=2, ensure_ascii=False), encoding="utf-8")
+    if hatalar:
+        print(f"✓ GÖLGE ADAY yazıldı → {cikti}/ (mod=golge; oyunu değiştirmez)")
+    else:
+        print(f"✓ EVAL KAPISI GEÇİLDİ → {cikti}/ (model.onnx, config.json, README.md)")
     print("  katsayılar:", config["katsayilar"])
 
 

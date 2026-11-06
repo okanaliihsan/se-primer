@@ -56,6 +56,14 @@
     return durum.config && typeof durum.config.karar_esigi === 'number' ? durum.config.karar_esigi : 0.5;
   }
 
+  /* Gölge mod: eval kapısını geçemeyen aday (config.mod === 'golge') çalışır ve tahmin yapar,
+     ama oyunun davranışını DEĞİŞTİREMEZ. Tek istisna: testlerin ve demonun müdahale politikasını
+     gösterebilmesi için açık bir URL parametresi (?golge=kapali). Canlı kullanıcı bunu görmez. */
+  function golge() {
+    if (q.get('golge') === 'kapali') return false;
+    return !!(durum.config && durum.config.mod === 'golge');
+  }
+
   /* ozellikler: { ad: değer } → riskli seçim olasılığı (sınıf "1") */
   async function tahmin(ozellikler) {
     await yukle();
@@ -70,7 +78,7 @@
     return p[i < 0 ? p.length - 1 : i];
   }
 
-  const api = { yukle, tahmin, esik, durum };
+  const api = { yukle, tahmin, esik, golge, durum };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.RiskModeli = api;
 })(typeof window !== 'undefined' ? window : globalThis);

@@ -1,9 +1,11 @@
 // spec.md §13 — KA-7 ve KA-8: modelin oyunun davranışını değiştirmesi.
 // Müdahale politikası, modelin gerçek olasılığına bağlı kalmasın diye eşik parametresiyle sınanır:
 // ?esik=0 → her olasılık eşiği geçer, ?esik=1.01 → hiçbiri geçmez. Model yine gerçekten çalışır (rozet olasılığı gösterir).
+// Yayındaki model eval kapısını geçemediği için GÖLGE moddadır (spec.md §15). KA-7/KA-8 politikanın kendisini sınar
+// (?golge=kapali), KA-10 ise canlıdaki gölge davranışını (müdahale hesaplanır ama uygulanmaz).
 
-const baslat = (esik, seviye = 'orta') => {
-  cy.visit(`/?esik=${esik}`);
+const baslat = (esik, seviye = 'orta', golge = false) => {
+  cy.visit(`/?esik=${esik}` + (golge ? '' : '&golge=kapali'));
   cy.get(`[data-cy=opt-level-${seviye}]`).click();
   cy.get('[data-cy=opt-role-devops]').click();
   cy.get('[data-cy=opt-goal-kriz]').click();
@@ -28,6 +30,16 @@ describe('Uyum modeli', () => {
     cy.get('[data-cy=model-mudahale]').should('not.exist');
     cy.get('[data-cy=hint-panel]').should('not.exist');
     cy.get('[data-cy=hint-toggle]').should('be.visible');
+  });
+
+  it('KA-10 · Gölge mod: model müdahale ederdi ama oyun değişmez', () => {
+    baslat(0, 'orta', true);
+    cy.get('[data-cy=model-rozet]').should('contain', 'gölge mod').and('contain', 'EDERDİ').and('contain', 'oyunu değiştirmiyor');
+    cy.get('[data-cy=model-mudahale]').should('not.exist');
+    cy.get('[data-cy=hint-panel]').should('not.exist');
+    cy.oyna('AAA');
+    cy.get('[data-cy=golge-iz-k1]').should('contain', 'gölge');
+    cy.get('[data-cy=mudahale-iz-k1]').should('not.exist');
   });
 
   it('Model yüklenemezse oyun kural tabanlı akışla oynanabilir kalır', () => {
