@@ -74,6 +74,7 @@ telefon (?mod=veri) ──► data/oturumlar.csv ──► python train.py ─�
 | `cypress/e2e/yollar.cy.js`, `kabul.cy.js` | **Regresyon:** v1'in 8 karar yolu ve KA-1…KA-6, model devredeyken de geçer |
 | `cypress/e2e/veri.cy.js` | Veri toplama modu: oyuncu kodu zorunlu, her oyun 3 satır, sayım doğru |
 | `tests/parite.py --kontrol` | Python tarafı: kayıtlı olasılıklar hâlâ aynı mı |
+| **Canlı kanıt** | [`tests/kanit/parite-canli-hf-onnxruntime-web.png`](tests/kanit/parite-canli-hf-onnxruntime-web.png): canlı sitede `onnxruntime-web`, model Hugging Face'in sabit commit'inden (`4715488`) iniyor; 5/5 vaka, en büyük fark 1,2e-7 |
 
 Son koşu: **23/23 geçti** (gerçek veriyle eğitilmiş gölge adayla; KA-10 gölge davranışını sınar). Testlerin gerçekten hata yakaladığı denendi: yedek motordaki sigmoid binde bir bozulunca parite testi 2,2e-4 farkı yakalayıp kırmızıya döndü.
 
