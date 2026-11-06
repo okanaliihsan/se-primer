@@ -47,7 +47,10 @@
     return '<div class="progress" aria-label="İlerleme: ' + done + '/' + total + '">' + dots + '</div>';
   }
 
-  const veriBandi = () => (VERI_MODU ? '<div class="veri-band" data-cy="veri-band">Veri toplama modu · kararlar anonim olarak bu cihazda kaydediliyor</div>' : '');
+  // Demo videosu için ekranda açıklama şeridi (?baslik=...). Uygulamanın davranışını değiştirmez.
+  const DEMO_BASLIK = Q.get('baslik');
+  const demoBandi = () => (DEMO_BASLIK ? '<div class="demo-band" data-cy="demo-baslik">' + esc(DEMO_BASLIK) + '</div>' : '');
+  const veriBandi = () => demoBandi() + (VERI_MODU ? '<div class="veri-band" data-cy="veri-band">Veri toplama modu · kararlar anonim olarak bu cihazda kaydediliyor</div>' : '');
 
   /* ---------- Ekran 1: Profil ---------- */
   function renderProfile() {

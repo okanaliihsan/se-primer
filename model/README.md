@@ -66,7 +66,7 @@ Eğitim: Python 3.13, scikit-learn 1.9.1. ONNX: tools/mini_onnx.py (skl2onnx yok
 ## Kullanım
 Commit'e sabitlenmiş URL'den indirin (sürüm: `RELEASE.md`):
 ```
-https://huggingface.co/<kullanici>/<repo>/resolve/<commit>/model.onnx
+https://huggingface.co/aliihsanokan/se-primer-risk/resolve/<commit>/model.onnx   # <commit>: GitHub repodaki RELEASE.md
 ```
 ```python
 import onnxruntime as ort, numpy as np

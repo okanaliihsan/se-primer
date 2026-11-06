@@ -2,18 +2,26 @@
 
 | | |
 |---|---|
-| Sürüm | **v2.0.0** (ilk model sürümü; v1 kural tabanlıydı) |
+| Sürüm | **v2.0.0-golge**: ilk model adayı. **Eval kapısını geçemedi → yalnız gölge modda yayında** (oyunu değiştirmez) |
 | Model reposu | `https://huggingface.co/<HF_KULLANICI>/se-primer-risk` |
 | Sabit commit | `<HF_COMMIT>` |
 | Tüketicilerin indirdiği URL | `https://huggingface.co/<HF_KULLANICI>/se-primer-risk/resolve/<HF_COMMIT>/model.onnx` |
 | Sözleşme | `.../resolve/<HF_COMMIT>/config.json` (özellik sırası, sınıflar, JSON şeması, karar eşiği, metrikler) |
 | Eğitim verisi | `data/oturumlar.csv`, SHA-256 `config.json → veri.sha256` |
-| Eval kapısı | spec.md §12 (E1–E5), eğitimden önce yazıldı (commit `45d45bc`) |
+| Eval kapısı | spec.md §12 (E1–E5), eğitimden önce yazıldı (commit `45d45bc`). Sonuç: **reddedildi** (E2 AUC 0,557 < 0,65; E3 dengeli doğruluk 0,542 < 0,60). Ayrıntı: spec.md §15 |
+
+## Bu sürümün durumu (önce bunu okuyun)
+
+Model iki kez eğitildi ve iki kez de **eval kapısında reddedildi** (15 oturumda E3, 20 oturumda E2+E3). Eşik düşürülmedi. Aday, `python train.py --golge-aday` ile **gölge aday** olarak paketlendi (`config.json → "mod": "golge"`) ve bu haliyle yayınlandı:
+
+- Uygulama modeli **gerçekten çalıştırır**: her karar ekranında olasılığı hesaplar, "müdahale ederdi/etmezdi" kararını rozette gösterir ve veri toplama modunda `model_p` sütununa yazar.
+- Ama müdahale kartı ve ipucu açılışı **devre dışıdır**. Oyuncunun deneyimi v1 ile aynıdır.
+- Yani aşağıdaki "Yeni sürümü güvenle devreye alma" planının **1. adımı (gölge dağıtım) bu sürümde fiilen uygulanmaktadır.** Kanarya adımına ancak bir aday eşiği geçince geçilir.
 
 ## v2.0'da ne değişti?
 
 - **v1.x (kural):** Uyum yalnız girişteki 3 soruya bağlıydı. "Yeni başladım" diyen herkes her kararda aynı ipucunu görüyordu; "deneyimli" diyen hiç görmüyordu. Oyunun içindeki davranış hiç kullanılmıyordu.
-- **v2.0 (model):** Her karar ekranı açıldığında, oyuncunun o ana kadarki davranışından (önceki ekranda ne kadar kaldığı, önceki kararı ne kadar sürede verdiği, kaç riskli seçim yaptığı, tutora kaç kez yazdığı, ipucu açıp açmadığı, kaçıncı oyunu olduğu) **riskli seçeneği seçme olasılığı** tahmin edilir. Olasılık ≥ 0,50 ise tutor seçimden önce bir soru sorar ("orta" seviyede ipucu da açılır). Altındaysa v1 akışı aynen sürer.
+- **v2.0 (model):** Her karar ekranı açıldığında, oyuncunun o ana kadarki davranışından (önceki ekranda ne kadar kaldığı, önceki kararı ne kadar sürede verdiği, kaç riskli seçim yaptığı, tutora kaç kez yazdığı, ipucu açıp açmadığı, kaçıncı oyunu olduğu) **riskli seçeneği seçme olasılığı** tahmin edilir. Olasılık ≥ 0,50 ise tutor seçimden önce bir soru sorar ("orta" seviyede ipucu da açılır). Altındaysa v1 akışı aynen sürer. **Bu sürümde bu politika gölgede: hesaplanır, uygulanmaz** (yukarıya bakın).
 - **Değişmeyen:** Hikâye, sonlar, tutorun "cevabı söylemez" kuralı ve v1'in tüm E2E testleri (regresyon).
 
 ## Neden `main` değil, commit?
@@ -30,12 +38,12 @@ Bir sorun çıkarsa (parite testi kırılırsa, müdahale oranı beklenmedik bi�
 
 | Sürüm | HF commit | Durum |
 |---|---|---|
-| v2.0.0 | `<HF_COMMIT>` | yayında |
+| v2.0.0-golge | `<HF_COMMIT>` | yayında, **yalnız gölge** (eval kapısı: reddedildi) |
 | v1.x | — (model yok, kural tabanlı) | yedek akış |
 
 ## Yeni sürümü güvenle devreye alma
 
-Bu proje tek bir statik sitede, sunucusuz çalıştığı için aşağıdaki adımlar **plan** olarak yazılmıştır. Bir sonraki model (v2.1) bu sırayla devreye alınır:
+Bir sonraki aday (v2.1) bu sırayla devreye alınır. **1. adım şu an v2.0.0-golge ile fiilen çalışıyor**; 2. ve 3. adımlar, eşiği geçen bir aday için plandır:
 
 **1. Gölge dağıtım (shadow).** v2.1, v2.0 ile birlikte tarayıcıya iner. Her karar ekranında **iki model de** çalışır, ama oyuncuya yalnız v2.0'ın kararı uygulanır. v2.1'in olasılığı `oturumlar.csv`'ye ayrı bir sütun (`model_p_golge`) olarak yazılır. Kabul ölçütü: ≥ 30 oturumda iki modelin müdahale kararları en az %80 örtüşür, ayrıştığı yerlerde v2.1'in tahmini gerçek seçime daha yakındır (gerçek etiket zaten veride var).
 **2. Kanarya (%5).** Oturum kimliğinin özetine göre oyuncuların %5'i v2.1'i gerçekten kullanır (`hash(oturum_id) % 100 < 5`). Kimin hangi sürümde olduğu `surum` sütununda yazılır. Bir hafta izlenen sinyaller: müdahale oranı, müdahaleden sonra riskli seçim oranı, oyunu yarıda bırakma oranı ve konsol hataları. Müdahale oranı v2.0'ın iki katını geçerse veya yarıda bırakma artarsa → geri alma.
@@ -61,7 +69,7 @@ Dersteki üç soruya göre üç seçenek:
 
 | Kontrol | Nerede | Sonuç |
 |---|---|---|
-| Eval kapısı E1–E4 | `train.py` | `config.json → metrics` |
+| Eval kapısı E1–E4 | `train.py` | **Reddedildi** (iki deneme, `raporlar/`); gölge aday `--golge-aday` ile |
 | ONNX ↔ sklearn (E5) | `train.py` | `metrics.onnx_sklearn_maks_fark` |
 | Python test kahini | `tests/parite.py --kontrol` | fark < 1e-4 |
 | Uygulama ↔ Python (diferansiyel) | `cypress/e2e/parite.cy.js` | 5/5 vaka < 1e-4 |

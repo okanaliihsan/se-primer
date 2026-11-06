@@ -178,7 +178,7 @@ Eğitim: Python {c["python_version"]}, scikit-learn {c["sklearn_version"]}. ONNX
 ## Kullanım
 Commit'e sabitlenmiş URL'den indirin (sürüm: `RELEASE.md`):
 ```
-https://huggingface.co/<kullanici>/<repo>/resolve/<commit>/model.onnx
+https://huggingface.co/aliihsanokan/se-primer-risk/resolve/<commit>/model.onnx   # <commit>: GitHub repodaki RELEASE.md
 ```
 ```python
 import onnxruntime as ort, numpy as np
