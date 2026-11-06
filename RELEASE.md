@@ -3,10 +3,10 @@
 | | |
 |---|---|
 | Sürüm | **v2.0.0-golge**: ilk model adayı. **Eval kapısını geçemedi → yalnız gölge modda yayında** (oyunu değiştirmez) |
-| Model reposu | `https://huggingface.co/<HF_KULLANICI>/se-primer-risk` |
-| Sabit commit | `<HF_COMMIT>` |
-| Tüketicilerin indirdiği URL | `https://huggingface.co/<HF_KULLANICI>/se-primer-risk/resolve/<HF_COMMIT>/model.onnx` |
-| Sözleşme | `.../resolve/<HF_COMMIT>/config.json` (özellik sırası, sınıflar, JSON şeması, karar eşiği, metrikler) |
+| Model reposu | `https://huggingface.co/aliihsanokan/se-primer-risk` |
+| Sabit commit | `471548857ca8f6b0c58f190a605a913da1f710e2` |
+| Tüketicilerin indirdiği URL | `https://huggingface.co/aliihsanokan/se-primer-risk/resolve/471548857ca8f6b0c58f190a605a913da1f710e2/model.onnx` |
+| Sözleşme | `.../resolve/471548857ca8f6b0c58f190a605a913da1f710e2/config.json` (özellik sırası, sınıflar, JSON şeması, karar eşiği, metrikler) |
 | Eğitim verisi | `data/oturumlar.csv`, SHA-256 `config.json → veri.sha256` |
 | Eval kapısı | spec.md §12 (E1–E5), eğitimden önce yazıldı (commit `45d45bc`). Sonuç: **reddedildi** (E2 AUC 0,557 < 0,65; E3 dengeli doğruluk 0,542 < 0,60). Ayrıntı: spec.md §15 |
 
@@ -38,7 +38,7 @@ Bir sorun çıkarsa (parite testi kırılırsa, müdahale oranı beklenmedik bi�
 
 | Sürüm | HF commit | Durum |
 |---|---|---|
-| v2.0.0-golge | `<HF_COMMIT>` | yayında, **yalnız gölge** (eval kapısı: reddedildi) |
+| v2.0.0-golge | `471548857ca8f6b0c58f190a605a913da1f710e2` | yayında, **yalnız gölge** (eval kapısı: reddedildi) |
 | v1.x | — (model yok, kural tabanlı) | yedek akış |
 
 ## Yeni sürümü güvenle devreye alma
