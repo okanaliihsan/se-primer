@@ -93,7 +93,6 @@ Son koşu: **23/23 geçti** (gerçek veriyle eğitilmiş gölge adayla; KA-10 g�
 - **Reddedilen/düzeltilen çıktılar:** Stitch'in uydurduğu hata kodu ve cevabı ele veren "risk" etiketleri tasarıma alınmadı (`design/stitch/README.md`). Kullanıcı testinde tutorun soru işaretsiz soruyu "gerekçe" sandığı görüldü; KA-6 eklendi ve tutor düzeltildi. Başlangıç reposundaki "ipucu gerekli mi" hedefi etiketlenemediği için değiştirildi.
 - **Model iki kez reddedildiğinde:** Claude eşiği düşürmeyi önermedi, gölge mod seçeneğini sundu; seçimi ben yaptım. İkinci turda oyuncu kodlarının `01` / `O1` diye farklı girildiği fark edildi; sonucu görmeden önce "farklı kişiler" kararını verdim ve veri olduğu gibi bırakıldı.
 - **Ölçümün önce, eğitimin sonra yapılması:** Kabul eşiği veri toplanmadan önce `spec.md`'ye yazılıp commit'lendi (`45d45bc`); `train.py` bu eşikleri yalnız okur.
-- **Kendi kontrol ettiklerim:** `[Ali İhsan: burayı kendi cümlelerinle doldur, ör. veri toplarken neyi gözlemledin, hangi kavramı ilk kez öğrendin]`
 
 ---
 
