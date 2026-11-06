@@ -7,15 +7,26 @@ Yazılım mühendisliği için **oynanan bir kitap**. 19 Temmuz 2024 CrowdStrike
 | **Öğrenci** | Ali İhsan Okan · 201118042 · 201118042@samsun.edu.tr |
 | **Ders** | YZM301 · The Primer v2 (Modelden Ürüne) · teslim 6 Kasım 2026 |
 | **Canlı uygulama (v2, GitHub Pages)** | https://okanaliihsan.github.io/se-primer/ · veri toplama modu: [`?mod=veri`](https://okanaliihsan.github.io/se-primer/?mod=veri) · diferansiyel test ekranı: [`?parite=1`](https://okanaliihsan.github.io/se-primer/?parite=1) |
-| **Hugging Face model (commit'e sabit)** | `<HF_COMMIT_URL>` |
+| **Hugging Face model (commit'e sabit)** | https://huggingface.co/aliihsanokan/se-primer-risk · sabit sürüm: `<HF_COMMIT_URL>` |
 | **Demo video (v2)** | `<VIDEO_LINKI>` |
 | **v1 (Ödev 6)** | https://se-primer-2844.ai.studio · [aşağıda](#bölüm-1-ödev-6) |
+
+## Sonuç: model eval kapısını geçemedi → gölge modda yayında
+
+| Deneme | Veri | ROC-AUC (≥ 0,65) | Dengeli doğruluk (≥ 0,60) | Sonuç |
+|---|---|---|---|---|
+| 1 | 15 gerçek oturum, 5 kişi | 0,687 ✅ | 0,545 ❌ | reddedildi |
+| 2 | 20 gerçek oturum, 8 kişi | 0,557 ❌ | 0,542 ❌ | reddedildi |
+
+Eşikler eğitimden önce yazılmıştı (`45d45bc`) ve **düşürülmedi**. Veri artınca AUC düştü: ilk sonuç büyük ihtimalle şanstı. Bu girdiler ve bu kadar veriyle riskli seçim tahmin edilemiyor. Veride iki şey daha görüldü: hiçbir oyuncu tutoru ya da ipucunu kullanmadı, ve kararların dörtte biri 3 saniyenin altında verildi.
+
+Ne yaptım: Aday, `python train.py --golge-aday` ile **gölge aday** olarak paketlendi (`config.json → "mod": "golge"`) ve yayınlandı. Uygulama modeli gerçekten çalıştırıyor, her karar ekranında olasılığı ve "müdahale **ederdi / etmezdi**" kararını gösteriyor, ama **oyunu değiştirmiyor**. Bu, dersteki gölge dağıtımın kendisi. Müdahale politikası kodda hazır ve test ediliyor (KA-7/8); eşiği geçen bir aday gelirse tek satırla (`mod: aktif`) devreye girer. Gerekçe ve bedeli: [`spec.md §15`](spec.md), [`RELEASE.md`](RELEASE.md).
 
 ## Kurulum (3 komut)
 
 ```bash
 pip install -r requirements.txt && npm install
-python train.py && python tests/parite.py          # eğit → eval kapısı → model/ + parite referansı
+python train.py --golge-aday && python tests/parite.py   # eğit → eval kapısı (bu veride reddeder) → gölge aday + parite referansı
 npm test                                           # siteyi açar, tüm Cypress testlerini koşar
 ```
 
@@ -28,7 +39,7 @@ npm test                                           # siteyi açar, tüm Cypress 
 | Tekrarlanabilir eğitim ve eval kapısı (15) | Tek komut, `random_state=13`, oturum gruplu 5 katlı CV, eşik altında hata verip durur | [`train.py`](train.py) |
 | Artefakt ve model kartı (10) | `model.onnx` + sözleşme/JSON şeması `config.json` + model kartı | [`model/`](model/) |
 | Yayın (15) | HF reposu, commit'e sabit URL, ödünleşim matrisi, gölge/kanarya/aşamalı geçiş, geri alma | [`RELEASE.md`](RELEASE.md) |
-| Uygulamada çıkarım (15) | Tarayıcıda `onnxruntime-web` (yedek: `onnx-mini`); model kararı tutorun davranışını değiştirir | [`app/model.js`](app/model.js), [`app/app.js`](app/app.js) → `uygulaModel` |
+| Uygulamada çıkarım (15) | Tarayıcıda `onnxruntime-web` (yedek: `onnx-mini`); model her kararda çalışır ve kararını gösterir. Model kapıyı geçemediği için **gölgede**: politika hazır ve testli, canlıda uygulanmıyor | [`app/model.js`](app/model.js), [`app/app.js`](app/app.js) → `uygulaModel` |
 | Diferansiyel + regresyon testleri (15) | Python oracle ↔ uygulama < 1e-4; v1'in tüm E2E testleri | [`tests/`](tests/), [`cypress/e2e/`](cypress/e2e/) |
 | Demo, README, sınav tasarımı (10) | Aynı sahnede iki oyuncu, iki farklı model kararı; 1 sayfalık sınav sorusu | video, bu dosya, [`SINAV_TASARIMI.md`](SINAV_TASARIMI.md) |
 | Bonus (+10) | Kendi sunucunda üçüncü tüketici (Flask + onnxruntime, Render.com) | [`server/`](server/), [`render.yaml`](render.yaml), [`tests/parite_sunucu.py`](tests/parite_sunucu.py) |
@@ -59,12 +70,12 @@ telefon (?mod=veri) ──► data/oturumlar.csv ──► python train.py ─�
 | Dosya | Ne sınar |
 |---|---|
 | `cypress/e2e/parite.cy.js` | **Diferansiyel test (KA-9):** 5 referans girdide uygulama ile Python oracle farkı < 1e-4 |
-| `cypress/e2e/model.cy.js` | KA-7 (eşik geçilince müdahale), KA-8 (eşik altında v1 akışı), model yüklenemezse oyun kural tabanlı çalışır |
+| `cypress/e2e/model.cy.js` | KA-7 (eşik geçilince müdahale), KA-8 (eşik altında v1 akışı), **KA-10 (gölge mod: karar gösterilir, oyun değişmez)**, model yüklenemezse oyun kural tabanlı çalışır |
 | `cypress/e2e/yollar.cy.js`, `kabul.cy.js` | **Regresyon:** v1'in 8 karar yolu ve KA-1…KA-6, model devredeyken de geçer |
 | `cypress/e2e/veri.cy.js` | Veri toplama modu: oyuncu kodu zorunlu, her oyun 3 satır, sayım doğru |
 | `tests/parite.py --kontrol` | Python tarafı: kayıtlı olasılıklar hâlâ aynı mı |
 
-Son koşu: **22/22 geçti** (veri toplama öncesi, boru hattı denemesi modeliyle). Testlerin gerçekten hata yakaladığı denendi: yedek motordaki sigmoid binde bir bozulunca parite testi 2,2e-4 farkı yakalayıp kırmızıya döndü.
+Son koşu: **23/23 geçti** (gerçek veriyle eğitilmiş gölge adayla; KA-10 gölge davranışını sınar). Testlerin gerçekten hata yakaladığı denendi: yedek motordaki sigmoid binde bir bozulunca parite testi 2,2e-4 farkı yakalayıp kırmızıya döndü.
 
 ## Dürüstlük notları
 
@@ -79,6 +90,7 @@ Son koşu: **22/22 geçti** (veri toplama öncesi, boru hattı denemesi modeliyl
 
 - **Claude (Claude Code, Opus 5.5):** Kodun ve belgelerin büyük kısmını yazdı (uygulama, telemetri, `train.py`, ONNX yazıcı, yedek çıkarım motoru, testler, RELEASE ve model kartı). Süreci ben yönettim: hedefi, eşiği ve kapsamı birlikte belirledik, her adımın çıktısını gözden geçirdim.
 - **Reddedilen/düzeltilen çıktılar:** Stitch'in uydurduğu hata kodu ve cevabı ele veren "risk" etiketleri tasarıma alınmadı (`design/stitch/README.md`). Kullanıcı testinde tutorun soru işaretsiz soruyu "gerekçe" sandığı görüldü; KA-6 eklendi ve tutor düzeltildi. Başlangıç reposundaki "ipucu gerekli mi" hedefi etiketlenemediği için değiştirildi.
+- **Model iki kez reddedildiğinde:** Claude eşiği düşürmeyi önermedi, gölge mod seçeneğini sundu; seçimi ben yaptım. İkinci turda oyuncu kodlarının `01` / `O1` diye farklı girildiği fark edildi; sonucu görmeden önce "farklı kişiler" kararını verdim ve veri olduğu gibi bırakıldı.
 - **Ölçümün önce, eğitimin sonra yapılması:** Kabul eşiği veri toplanmadan önce `spec.md`'ye yazılıp commit'lendi (`45d45bc`); `train.py` bu eşikleri yalnız okur.
 - **Kendi kontrol ettiklerim:** `[Ali İhsan: burayı kendi cümlelerinle doldur, ör. veri toplarken neyi gözlemledin, hangi kavramı ilk kez öğrendin]`
 
