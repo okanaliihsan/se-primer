@@ -9,12 +9,17 @@
     yerel: 'model/'    // GitHub Pages'teki kopya (yedek)
   };
 
-  const durum = { hazir: false, motor: null, kaynak: null, config: null, hata: null, oturum: null };
+  const durum = { hazir: false, motor: null, kaynak: null, config: null, hata: null, oturum: null, denemeler: [] };
   let yukleniyor = null;
 
   const q = new URLSearchParams(root.location ? root.location.search : '');
 
-  async function jsonAl(url) { const r = await fetch(url, { cache: 'no-store' }); if (!r.ok) throw new Error(url + ' ' + r.status); return r.json(); }
+  async function jsonAl(url) {
+    let r;
+    try { r = await fetch(url); } catch (e) { throw new Error('ağ/CORS hatası: ' + url + ' (' + (e.message || e) + ')'); }
+    if (!r.ok) throw new Error('HTTP ' + r.status + ': ' + url);
+    return r.json();
+  }
 
   async function oturumAc(taban) {
     const config = await jsonAl(taban + 'config.json');
@@ -43,7 +48,7 @@
           const o = await oturumAc(taban);
           Object.assign(durum, { hazir: true, motor: o.motor, kaynak: taban, config: o.config, oturum: o });
           return durum;
-        } catch (e) { durum.hata = String(e.message || e); }
+        } catch (e) { durum.hata = String(e.message || e); durum.denemeler.push({ kaynak: taban, hata: durum.hata }); }
       }
       return durum;
     })();

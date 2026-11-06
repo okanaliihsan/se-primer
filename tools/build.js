@@ -8,6 +8,9 @@ let html = read('index.html');
 for (const f of ['onnx-mini.js', 'telemetry.js', 'model.js', 'story.js', 'tutor.js', 'app.js']) {
   html = html.replace(`<script src="${f}"></script>`, () => `<script>\n${read(f)}\n</script>`);
 }
+let yapi = 'yerel';
+try { yapi = require('child_process').execSync('git rev-parse --short HEAD', { cwd: root }).toString().trim() + '+'; } catch (e) {}
+html = html.replace('<script src="https://cdn.jsdelivr.net', () => `<script>window.SE_PRIMER_YAPI = ${JSON.stringify(yapi + ' · ' + new Date().toISOString().slice(0, 16))};</script>\n<script src="https://cdn.jsdelivr.net`);
 const doc = `<!doctype html>\n<html lang="tr">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n${html.replace('<div id="app"', '</head>\n<body>\n<div id="app"')}\n</body>\n</html>\n`;
 fs.mkdirSync(path.join(root, 'dist'), { recursive: true });
 fs.writeFileSync(path.join(root, 'dist', 'index.html'), doc);

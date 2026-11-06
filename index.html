@@ -179,6 +179,7 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); ou
 </head>
 <body>
 <div id="app" aria-live="polite"></div>
+<script>window.SE_PRIMER_YAPI = "5f7aa56+ · 2026-11-06T13:22";</script>
 <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.22.0/dist/ort.min.js"></script>
 <script>if (window.ort) ort.env.wasm.wasmPaths = "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.22.0/dist/";</script>
 <script>
@@ -537,12 +538,17 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); ou
     yerel: 'model/'    // GitHub Pages'teki kopya (yedek)
   };
 
-  const durum = { hazir: false, motor: null, kaynak: null, config: null, hata: null, oturum: null };
+  const durum = { hazir: false, motor: null, kaynak: null, config: null, hata: null, oturum: null, denemeler: [] };
   let yukleniyor = null;
 
   const q = new URLSearchParams(root.location ? root.location.search : '');
 
-  async function jsonAl(url) { const r = await fetch(url, { cache: 'no-store' }); if (!r.ok) throw new Error(url + ' ' + r.status); return r.json(); }
+  async function jsonAl(url) {
+    let r;
+    try { r = await fetch(url); } catch (e) { throw new Error('ağ/CORS hatası: ' + url + ' (' + (e.message || e) + ')'); }
+    if (!r.ok) throw new Error('HTTP ' + r.status + ': ' + url);
+    return r.json();
+  }
 
   async function oturumAc(taban) {
     const config = await jsonAl(taban + 'config.json');
@@ -571,7 +577,7 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); ou
           const o = await oturumAc(taban);
           Object.assign(durum, { hazir: true, motor: o.motor, kaynak: taban, config: o.config, oturum: o });
           return durum;
-        } catch (e) { durum.hata = String(e.message || e); }
+        } catch (e) { durum.hata = String(e.message || e); durum.denemeler.push({ kaynak: taban, hata: durum.hata }); }
       }
       return durum;
     })();
@@ -1360,6 +1366,7 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); ou
   async function renderParite() {
     h('<main class="screen" data-cy="screen-parite"><p class="eyebrow">Diferansiyel test · uygulama tarafı</p><h1>Parite</h1>' +
       '<p class="story">Python (test kahini) ile aynı 5 girdiyi bu uygulamanın çıkarım motoruna veriyoruz.</p>' +
+      '<p class="based">Site sürümü: <span data-cy="yapi">' + esc(window.SE_PRIMER_YAPI || 'yerel') + '</span></p>' +
       '<p class="based">Motor: <span data-cy="motor">yükleniyor…</span> · Kaynak: <span data-cy="model-kaynak">—</span></p>' +
       '<div class="tablo-kap"><table class="parite"><thead><tr><th>#</th><th>Uygulama p</th><th>Python p</th><th>|fark|</th></tr></thead><tbody data-cy="parite-tablo"></tbody></table></div></main>');
     try {
@@ -1367,6 +1374,10 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); ou
       await M.yukle();
       app.querySelector('[data-cy=motor]').textContent = M.durum.motor || ('yok: ' + M.durum.hata);
       app.querySelector('[data-cy=model-kaynak]').textContent = M.durum.kaynak || '—';
+      if (M.durum.denemeler.length) {
+        app.querySelector('[data-cy=screen-parite]').insertAdjacentHTML('beforeend', '<p class="based" data-cy="kaynak-hatalari">Denenip başarısız olan kaynaklar: ' +
+          M.durum.denemeler.map((d) => esc(d.kaynak + ' → ' + d.hata)).join(' · ') + '</p>');
+      }
       const tb = app.querySelector('[data-cy=parite-tablo]');
       for (let i = 0; i < vakalar.vakalar.length; i++) {
         const v = vakalar.vakalar[i];

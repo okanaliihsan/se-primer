@@ -361,6 +361,7 @@
   async function renderParite() {
     h('<main class="screen" data-cy="screen-parite"><p class="eyebrow">Diferansiyel test · uygulama tarafı</p><h1>Parite</h1>' +
       '<p class="story">Python (test kahini) ile aynı 5 girdiyi bu uygulamanın çıkarım motoruna veriyoruz.</p>' +
+      '<p class="based">Site sürümü: <span data-cy="yapi">' + esc(window.SE_PRIMER_YAPI || 'yerel') + '</span></p>' +
       '<p class="based">Motor: <span data-cy="motor">yükleniyor…</span> · Kaynak: <span data-cy="model-kaynak">—</span></p>' +
       '<div class="tablo-kap"><table class="parite"><thead><tr><th>#</th><th>Uygulama p</th><th>Python p</th><th>|fark|</th></tr></thead><tbody data-cy="parite-tablo"></tbody></table></div></main>');
     try {
@@ -368,6 +369,10 @@
       await M.yukle();
       app.querySelector('[data-cy=motor]').textContent = M.durum.motor || ('yok: ' + M.durum.hata);
       app.querySelector('[data-cy=model-kaynak]').textContent = M.durum.kaynak || '—';
+      if (M.durum.denemeler.length) {
+        app.querySelector('[data-cy=screen-parite]').insertAdjacentHTML('beforeend', '<p class="based" data-cy="kaynak-hatalari">Denenip başarısız olan kaynaklar: ' +
+          M.durum.denemeler.map((d) => esc(d.kaynak + ' → ' + d.hata)).join(' · ') + '</p>');
+      }
       const tb = app.querySelector('[data-cy=parite-tablo]');
       for (let i = 0; i < vakalar.vakalar.length; i++) {
         const v = vakalar.vakalar[i];
